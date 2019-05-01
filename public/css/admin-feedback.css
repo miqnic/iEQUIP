@@ -1,0 +1,57 @@
+.container-fluid {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 55px;
+    padding-right: 125px;
+    padding-top: 50px;
+    padding-bottom:10px;
+    width: 100%;
+    background-color: white;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+    background-color: none;
+}
+a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+body {
+    background-color:white;
+    background-size: 100% 100vh;
+    background-repeat: no-repeat;
+}
+
+.modal-header {
+    background-color: #171717;
+    color: white;
+    border: 2px solid;
+}
+
+.modal-body {
+    font-size: 16px;
+}
+
+.feedback {
+    margin-top: 50px;
+    margin-left: 80px;
+    margin-right: 55px;
+}
+
+.media {
+	padding: 8px 30px 8px 30px;
+  margin-bottom: 30px;
+  background-color: #F8F8F8;
+  border-radius: 25px;
+}
+
+.media:hover {
+    background-color: #88BDBC;
+}
+
+#sort {
+    margin-left: 65px;
+}

@@ -1,0 +1,66 @@
+.container-fluid {
+    margin-bottom: 20px;
+    padding-bottom:10px;
+  }
+  
+  .card img {
+    width: 150px;
+    max-height: 150px;
+  }
+  
+  .media {
+    padding: 8px 30px 8px 30px;
+    margin-bottom: 30px;
+  }
+  
+  a {
+    color: black;
+    text-decoration: none;
+    background-color: none;
+  }
+  a:hover {
+    text-decoration: none;
+    color: black;
+  }
+  
+  #itemList .media {
+    background-color: white;
+  }
+  
+  #cart1 {
+    color: white;
+    text-decoration: none;
+    background-color: none;
+  }
+  
+  .content {
+    background-color: white;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  
+  body {
+    background-color: white;
+    background-size: 100% 100vh;
+    background-repeat: no-repeat;
+  }
+  
+  .header {
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 8px;
+    color: black;
+  }
+  
+  .modal-header {
+    background-color:white;
+    color: black;
+  }
+  
+  td {
+    font-size: 15px;
+    text-align: center;
+  }
