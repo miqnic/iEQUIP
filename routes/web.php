@@ -26,11 +26,11 @@ Route::group(['middleware' => ['admin']], function()
     Route::match(['get', 'post'],'/admin/feedbacks', 'PagesController@adminFeedbacks');
 
     Route::match(['get', 'post'],'/admin/art-tools', 'PagesController@adminArtEquip');
-    Route::match(['get', 'post'],'/admin/camera-equipment', 'EquipmentsController@showEquipment');
-    Route::match(['get', 'post'],'/admin/misc-equipment', 'PagesController@adminMiscEquip');
-    Route::match(['get', 'post'],'/admin/gaming-equipment', 'PagesController@adminGameEquip');
-    Route::match(['get', 'post'],'/admin/sports-equipment', 'PagesController@adminSportEquip');
-    Route::match(['get', 'post'],'/admin/laptops-accessories', 'PagesController@adminLapEquip');
+    Route::match(['get', 'post'],'/admin/camera-equipment', 'EquipmentsController@showCamEquipment');
+    Route::match(['get', 'post'],'/admin/misc-equipment', 'EquipmentsController@showMiscEquipment');
+    Route::match(['get', 'post'],'/admin/gaming-equipment', 'EquipmentsController@showGameEquipment');
+    Route::match(['get', 'post'],'/admin/sports-equipment', 'EquipmentsController@showSportEquipment');
+    Route::match(['get', 'post'],'/admin/laptops-accessories', 'EquipmentsController@showLapEquipment');
 });
 
 //Authorization for Student
@@ -40,7 +40,7 @@ Route::group(['middleware' => ['student']], function()
     Route::match(['get', 'post'],'/student/history', 'PagesController@studentHistory');
     Route::match(['get', 'post'],'/student/contact', 'PagesController@studentContact');
     Route::post('feedback','EmailsController@feedback');
-    Route::match(['get', 'post'],'/student/equipment', 'PagesController@studentEquip');
+    Route::match(['get', 'post'],'/student/equipment', 'EquipmentsController@showArtEquipment');
     Route::match(['get', 'post'],'/student/cart', 'PagesController@studentCart');
     Route::match(['get', 'post'],'/student/cart2', 'PagesController@studentCart2');
     Route::match(['get', 'post'],'/student/cart3', 'PagesController@studentCart3');

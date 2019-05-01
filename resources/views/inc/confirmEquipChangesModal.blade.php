@@ -1,4 +1,4 @@
-<div class="modal fade" id="confirm" tabindex="-1">
+<div class="modal fade" id="confirmEquipChanges" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
     
@@ -10,8 +10,8 @@
                 Are you sure about these changes?
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-success" data-dismiss="modal">Confirm</button>
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-success" data-target="#itemList-{{$equipment->equip_id}}" data-dismiss="modal">Confirm</button>
+                <button type="button" class="btn btn-outline-secondary" data-target="#itemList-{{$equipment->equip_id}}" data-dismiss="modal">Cancel</button>
             </div>
             </div>
         </div>

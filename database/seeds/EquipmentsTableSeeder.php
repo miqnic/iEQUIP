@@ -20,6 +20,7 @@ class EquipmentsTableSeeder extends Seeder
                 'equip_avail' => '0', //available
                 'equip_description' => '',
                 'equip_penalty' => '500',
+                'equip_baseprice' => '45990.00',
                 'equip_img' => '',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -30,9 +31,24 @@ class EquipmentsTableSeeder extends Seeder
                 'equip_name' => 'Canon EOS 80D DSLR Camera',
                 'transaction_id' => null,
                 'equip_category' => 'CAMACC',
-                'equip_avail' => '-1',
+                'equip_avail' => '0', //available
+                'equip_description' => '',
+                'equip_penalty' => '500',
+                'equip_baseprice' => '45990.00',
+                'equip_img' => '',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+                'returned' => false,
+            ],
+            [
+                'equip_id' => 'CANCAM0003',
+                'equip_name' => 'Canon EOS 80D DSLR Camera',
+                'transaction_id' => null,
+                'equip_category' => 'CAMACC',
+                'equip_avail' => '-1', //unavailable
                 'equip_description' => 'Currently Under Maintenance',
                 'equip_penalty' => '500',
+                'equip_baseprice' => '45990.00',
                 'equip_img' => '',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -46,6 +62,7 @@ class EquipmentsTableSeeder extends Seeder
                 'equip_avail' => '1', //borrowed
                 'equip_description' => '',
                 'equip_penalty' => '500',
+                'equip_baseprice' => '45990.00',
                 'equip_img' => '',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -59,6 +76,7 @@ class EquipmentsTableSeeder extends Seeder
                 'equip_avail' => '1', //borrowed
                 'equip_description' => '',
                 'equip_penalty' => '500',
+                'equip_baseprice' => '45990.00',
                 'equip_img' => '',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
