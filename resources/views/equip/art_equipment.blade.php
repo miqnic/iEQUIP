@@ -31,18 +31,20 @@
         
         <!--Item List-->
         <div class="row pb-3">
-            <div class="col-md-3">
-                <div class="card text-center pt-2">
-                    <img src="images/tablet.png" class="card-img-top align-self-center" alt="Item photo">
+            @foreach ($equipments as $equipment)
+                <div class="col-md-3">
+                  <div class="card text-center pt-2">
+                    <img src="images/camera.png" class="card-img-top align-self-center" alt="Item photo">
                     <div class="card-body">
-                        <h5 class="card-title text-truncate">Wacom CINTIQ 13HD Tablet</h5>
-                        <p class="card-text">Availability: 4/6</p>
-                        <button data-toggle="modal" data-target="#itemList" class="btn btn-dark btn-sm w-75">More Info</button>
+                      <h5 class="card-title text-truncate">{{$equipment->equip_name}}</h5>
+                      <p class="card-text">Availability: 4/4</p>
+                      <button data-toggle="modal" data-target="#itemList" class="btn btn-dark btn-sm w-75">More Info</button>
                     </div>
+                  </div>
                 </div>
-            </div>
+              @endforeach
     
-            <div class="col-md-3">
+            <!--<div class="col-md-3">
                 <div class="card text-center pt-2">
                     <img src="images/tablet2.png" class="card-img-top align-self-center" alt="Item photo">
                     <div class="card-body">
@@ -63,7 +65,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
     
         <!--MODAL SECTION-->
     

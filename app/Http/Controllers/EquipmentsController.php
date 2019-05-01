@@ -61,15 +61,45 @@ class EquipmentsController extends Controller
 
         return redirect('/admin/equipment')->with('success', 'Equipment Created');
     }
+
+    //SHOW EQUIPMENT START
     
-    public function showEquipment(){
+    public function showCamEquipment(){
         /*$equipment = Equipment::find($id);
         //please change show URL with {id}
         return view('posts.show')->with('equipment', $equipment);*/
 
-        $equipments =  Equipment::orderBy('equip_name', 'desc')->get();
+        $equipments =  Equipment::where('equip_category', 'CAMACC')->orderBy('equip_name', 'desc')->get();
         return view('equip.cam_equipment')->with('equipments',$equipments);
     } 
+
+    public function showArtEquipment(){
+        $equipments =  Equipment::where('equip_category', 'ART')->orderBy('equip_name', 'desc')->get();
+        return view('equip.art_equipment')->with('equipments',$equipments);
+    } 
+
+    public function showSportEquipment(){
+        $equipments =  Equipment::where('equip_category', 'SPRT')->orderBy('equip_name', 'desc')->get();
+        return view('equip.sport_equipment')->with('equipments',$equipments);
+    } 
+
+    public function showMiscEquipment(){
+        $equipments =  Equipment::where('equip_category', 'MISC')->orderBy('equip_name', 'desc')->get();
+        return view('equip.misc_equipment')->with('equipments',$equipments);
+    } 
+
+    public function showLapEquipment(){
+        $equipments =  Equipment::where('equip_category', 'LPTP')->orderBy('equip_name', 'desc')->get();
+        return view('equip.laptop_equipment')->with('equipments',$equipments);
+    }
+    
+    public function showGameEquipment(){
+        $equipments =  Equipment::where('equip_category', 'GMNG')->orderBy('equip_name', 'desc')->get();
+        return view('equip.gaming_equipment')->with('equipments',$equipments);
+    } 
+
+    //SHOW EQUIPMENT END
+
 
     public function deleteEquipment($equipID){
         $equipment = Equipment::find($equipID);

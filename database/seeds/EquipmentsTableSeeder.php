@@ -50,6 +50,19 @@ class EquipmentsTableSeeder extends Seeder
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
                 'returned' => false,
+            ],
+            [
+                'equip_id' => 'WACCIN0001',
+                'equip_name' => 'Wacom CINTIQ 13HD Tablet',
+                'equip_category' => 'ART',
+                'transaction_id' => 'TC19000017',
+                'equip_avail' => '1', //borrowed
+                'equip_description' => '',
+                'equip_penalty' => '500',
+                'equip_img' => '',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+                'returned' => false,
             ]
         ]);
     }

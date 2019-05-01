@@ -45,12 +45,12 @@ Route::group(['middleware' => ['student']], function()
     Route::match(['get', 'post'],'/student/cart2', 'PagesController@studentCart2');
     Route::match(['get', 'post'],'/student/cart3', 'PagesController@studentCart3');
 
-    Route::match(['get', 'post'],'/student/art-tools', 'PagesController@studentArtEquip');
-    Route::match(['get', 'post'],'/student/camera-equipment', 'EquipmentsController@showEquipment');
-    Route::match(['get', 'post'],'/student/misc-equipment', 'PagesController@studentMiscEquip');
-    Route::match(['get', 'post'],'/student/gaming-equipment', 'PagesController@studentGameEquip');
-    Route::match(['get', 'post'],'/student/sports-equipment', 'PagesController@studentSportEquip');
-    Route::match(['get', 'post'],'/student/laptops-accessories', 'PagesController@studentLapEquip');
+    Route::match(['get', 'post'],'/student/art-tools', 'EquipmentsController@showArtEquipment');
+    Route::match(['get', 'post'],'/student/camera-equipment', 'EquipmentsController@showCamEquipment');
+    Route::match(['get', 'post'],'/student/misc-equipment', 'EquipmentsController@showMiscEquipment');
+    Route::match(['get', 'post'],'/student/gaming-equipment', 'EquipmentsController@showGameEquipment');
+    Route::match(['get', 'post'],'/student/sports-equipment', 'EquipmentsController@showSportEquipment');
+    Route::match(['get', 'post'],'/student/laptops-accessories', 'EquipmentsController@showLapEquipment');
 });
 
 
