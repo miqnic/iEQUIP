@@ -19,7 +19,7 @@ Route::resource('equipments', 'EquipmentsController');
 //Authorization for Admin
 Route::group(['middleware' => ['admin']], function()
 {
-    Route::match(['get', 'post'], '/admin/home', 'PagesController@adminHome');
+    Route::match(['get', 'post'], '/admin/home', 'EquipmentsController@showCurrentlyBorrowed');
     Route::match(['get', 'post'],'/admin/request-history', 'PagesController@reqHistory');
     Route::match(['get', 'post'],'/admin/balances', 'PagesController@adminBalances');
     Route::match(['get', 'post'],'/admin/calendar', 'PagesController@adminCalendar');

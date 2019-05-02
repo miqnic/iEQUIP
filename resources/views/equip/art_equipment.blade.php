@@ -52,14 +52,14 @@
                     @endif
                   @endforeach
                 </p>
-                <button data-toggle="modal" data-target="#itemList-{{$equipment->equip_id}}" class="btn btn-dark btn-sm w-75">More Info</button>
+                <button data-toggle="modal" data-target="#itemList-{{$equipment->equipID}}" class="btn btn-dark btn-sm w-75">More Info</button>
               </div>
             </div>
           </div>
 
           <!--MODAL SECTION-->
 
-          <div class="modal fade" id="itemList-{{$equipment->equip_id}}" tabindex="-1">
+          <div class="modal fade" id="itemList-{{$equipment->equipID}}" tabindex="-1">
               <div class="modal-dialog modal-xl">
                 <div class="modal-content">
       
@@ -103,7 +103,7 @@
                               </small>-->
                             </div>
                             <div class="col-md-1 pt-2">
-                              <button type="button" data-target="#editItemModal-{{$equipment->equip_id}}" data-dismiss="modal" data-toggle="modal" class="btn btn-outline-secondary">Edit</button>
+                              <button type="button" data-target="#editItemModal-{{$equipment->equipID}}" data-dismiss="modal" data-toggle="modal" class="btn btn-outline-secondary">Edit</button>
                             </div>
                           </div>
                         </div>
@@ -125,7 +125,7 @@
                         @foreach ($equipments as $equipment_modal)
                           <tr>
                               @if ($equipment_modal->equip_name == $equipment->equip_name)
-                                <td class="align-middle">{{$equipment_modal->equip_id}}</td>
+                                <td class="align-middle">{{$equipment_modal->equipID}}</td>
                                 @if (Auth::user()->access_role == "ADMIN")
                                 <td class="align-middle">
                                     @if ($equipment_modal->equip_avail == 0)
@@ -140,16 +140,16 @@
                                 <td class="align-middle">{{$equipment_modal->equip_description}}</td>
                                 <td>
                                     @if (Auth::user()->access_role == "ADMIN")
-                                      <button type="button" data-target="#editStockModal-{{$equipment_modal->equip_id}}" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                      <button type="button" data-target="#deleteSingleModal-{{$equipment_modal->equip_id}}" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-danger">Delete</button>
+                                      <button type="button" data-target="#editStockModal-{{$equipment_modal->equipID}}" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                      <button type="button" data-target="#deleteSingleModal-{{$equipment_modal->equipID}}" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-danger">Delete</button>
                                     @else
-                                      <button type="button" data-target="#confirmReserveModal-{{$equipment_modal->equip_id}}" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-success">Reserve</button>
+                                      <button type="button" data-target="#confirmReserveModal-{{$equipment_modal->equipID}}" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-success">Reserve</button>
                                     @endif
                                 </td>
                               @endif
                           </tr>
 
-                          <!--Edit and Delete Modals for EACH equipment (by equip_id)-->
+                          <!--Edit and Delete Modals for EACH equipment (by equipID)-->
                           @include('inc.editStockModal', [$equipment_modal, $equipment])
                           @include('inc.deleteSingleModal', [$equipment])
 

@@ -13,7 +13,7 @@ class EquipmentsTableSeeder extends Seeder
     {
         DB::table('equipment')->insert([
             [
-                'equip_id' => 'CANCAM0001',
+                'equipID' => 'CANCAM0001',
                 'equip_name' => 'Canon EOS 80D DSLR Camera',
                 'transaction_id' => null,
                 'equip_category' => 'CAMACC',
@@ -27,7 +27,7 @@ class EquipmentsTableSeeder extends Seeder
                 'returned' => false,
             ],
             [
-                'equip_id' => 'CANCAM0002',
+                'equipID' => 'CANCAM0002',
                 'equip_name' => 'Canon EOS 80D DSLR Camera',
                 'transaction_id' => null,
                 'equip_category' => 'CAMACC',
@@ -41,7 +41,8 @@ class EquipmentsTableSeeder extends Seeder
                 'returned' => false,
             ],
             [
-                'equip_id' => 'CANCAM0003',
+
+                'equipID' => 'CANCAM0003',
                 'equip_name' => 'Canon EOS 80D DSLR Camera',
                 'transaction_id' => null,
                 'equip_category' => 'CAMACC',
@@ -55,7 +56,8 @@ class EquipmentsTableSeeder extends Seeder
                 'returned' => false,
             ],
             [
-                'equip_id' => 'NIKCAM0001',
+
+                'equipID' => 'NIKCAM0001',
                 'equip_name' => 'Nikon D3200 DSLR Camera',
                 'equip_category' => 'CAMACC',
                 'transaction_id' => 'TC19000017',
@@ -69,7 +71,8 @@ class EquipmentsTableSeeder extends Seeder
                 'returned' => false,
             ],
             [
-                'equip_id' => 'WACCIN0001',
+
+                'equipID' => 'WACCIN0001',
                 'equip_name' => 'Wacom CINTIQ 13HD Tablet',
                 'equip_category' => 'ART',
                 'transaction_id' => 'TC19000017',

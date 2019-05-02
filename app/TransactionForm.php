@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Equipment extends Model
+class TransactionForm extends Model
 {
     //Table Name
     protected $table ='transaction_forms';
@@ -13,9 +13,9 @@ class Equipment extends Model
     //Timestamps
     public $timestamps = true;
 
-    /*//Model Relationships
-    public function user(){
+    //Model Relationships
+    public function Equipment(){
         //an equipment belongs to a single user
-        return $this->belongsTo('App\User');
-    }*/
+        return $this->hasMany('App\Equipment', 'due_date', 'user_id');
+    }
 }

@@ -9,13 +9,13 @@ class Equipment extends Model
     //Table Name
     protected $table ='equipment';
     //Primary Key
-    public $primaryKey = 'equipID';
+    public $primaryKey = 'id';
     //Timestamps
     public $timestamps = true;
 
-    /*//Model Relationships
-    public function user(){
+    //Model Relationships
+    public function TransactionForm(){
         //an equipment belongs to a single user
-        return $this->belongsTo('App\User');
-    }*/
+        return $this->hasOne('App\TransactionForm', 'due_date', 'user_id');
+    }
 }

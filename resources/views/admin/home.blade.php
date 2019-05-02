@@ -15,9 +15,9 @@
 </div>
 
 <div class="container-fluid">
-    <table class = "table table-responsive-md text-center table-striped">
+    <table class = "table table-responsive-md text-center">
         <thead>
-        <tr class = "category">
+        <tr>
             <th>Equipment ID</th>
             <th>Equipment Name</th>
             <th>Transaction Number</th>
@@ -26,14 +26,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr class = "member">
-            <td>CANCAM0001</td>
-            <td>Canon EOS 80D DSLR Camera</td>
-            <td id = "transaction" data-toggle="modal" data-target ="#checkForm">TC19000001</td>
-            <td>9/19/2019</td>
-            <td id="student" data-toggle="modal" data-target ="#viewStudent">Rhej Christian J. Laurel</td>
-        </tr>
-        <tr class = "member">
+            @foreach ($equipments as $equipment)
+                <tr>
+                    <td>{{$equipment->equipID}}</td>
+                    <td>{{$equipment->equip_name}}</td>
+                    <td id = "transaction" data-toggle="modal" data-target ="#checkForm">{{$equipment->transaction_id}}</td>
+                    <td>9/19/2019</td>
+                    <td id="student" data-toggle="modal" data-target ="#viewStudent">Rhej Christian J. Laurel</td>
+                </tr>
+            @endforeach
+        
+        <!--<tr class = "member">
             <td>ZHISTA0001</td>
             <td>Zhiyun Crane 2 Stabilizer</td>
             <td id = "transaction" data-toggle="modal" data-target ="#checkForm">TC19000001</td>
@@ -53,7 +56,7 @@
             <td id = "transaction" data-toggle="modal" data-target ="#checkForm">TC19000027</td>
             <td>16/9/2019</td>
             <td id="student" data-toggle="modal" data-target ="#viewStudent">Rhej Christian J. Laurel</td>
-        </tr>
+        </tr>-->
         </tbody>
     </table>
 </div>
