@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    <title>{{ config('app.name') }} | Camera Equipment</title>
+    <title>{{ config('app.name') }} | Cameras & Accessories</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/admin-equiplist.css') }}">
 @endsection
 
@@ -41,6 +41,8 @@
                   @foreach ($countCurrAvail as $item)
                     @if (Arr::get($item, 'equip_name') == $equipment->equip_name)
                       {{Arr::get($item, 'record')}}
+                    @else
+                      0
                     @endif
                   @endforeach 
                   /
@@ -92,12 +94,13 @@
                               </small>
                             </div>
                             <div class="col-md-7">
+                              <!--Item Description
                               <small>
                               <strong>Image Sensor: </strong>22.3mm x 14.9mm CMOS<br>
                               <strong>Pixels: </strong>Approx. 24.2 megapixels<br>
                               <strong>Image Processor: </strong>DIGIC 6<br>
                               <strong>Lens Mount: </strong>EF/EF-S lens<br>
-                              </small>
+                              </small>-->
                             </div>
                             <div class="col-md-1 pt-2">
                               <button type="button" data-target="#editItemModal-{{$equipment->equip_id}}" data-dismiss="modal" data-toggle="modal" class="btn btn-outline-secondary">Edit</button>
@@ -164,18 +167,14 @@
 
           <!--Edit Modal for a SPECIFIC equipment (by equip_name)-->
           @include('inc.editItemModal', [$equipment, $countTotalAvail])
-
+          @include('inc.confirmEquipChangesModal', $equipment)
         @endforeach
       </div>
     </div>
 @endsection
 
 @section('modal')
-    
-    
     @include('inc.deleteConfirmationModal')
-    
     @include('inc.addEquipModal')
     @include('inc.delEquipModal')
-    @include('inc.confirmEquipChangesModal')
 @endsection
