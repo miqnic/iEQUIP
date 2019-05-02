@@ -9,7 +9,7 @@ class TransactionForm extends Model
     //Table Name
     protected $table ='transaction_forms';
     //Primary Key
-    public $primaryKey = 'transaction_id';
+    public $primaryKey = 'id';
     //Timestamps
     public $timestamps = true;
 

@@ -187,15 +187,13 @@ class EquipmentsController extends Controller
     } 
 
     public function showCurrentlyBorrowed(){
-        $due_date = TransactionForm::get()->pluck('due_date');
-        $student_id = TransactionForm::get()->pluck('user_id');
+        $transaction_forms = TransactionForm::get();
 
         $equipments = Equipment::where('equip_avail', '1')
                                 ->get();
         
         return view('admin.home')->with('equipments',$equipments)
-                                ->with('due_date',$due_date)
-                                ->with('student_id',$student_id);
+                                ->with('transaction_forms',$transaction_forms);
     }
 
     //SHOW EQUIPMENT END

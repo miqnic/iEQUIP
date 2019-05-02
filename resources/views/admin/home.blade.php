@@ -31,8 +31,12 @@
                     <td>{{$equipment->equipID}}</td>
                     <td>{{$equipment->equip_name}}</td>
                     <td id = "transaction" data-toggle="modal" data-target ="#checkForm">{{$equipment->transaction_id}}</td>
-                    <td>9/19/2019</td>
-                    <td id="student" data-toggle="modal" data-target ="#viewStudent">Rhej Christian J. Laurel</td>
+                    @foreach ($transaction_forms as $form)
+                        @if ($form->transaction_id == $equipment->transaction_id)
+                            <td>{{$form->due_date}}</td>
+                            <td id="student" data-toggle="modal" data-target ="#viewStudent">{{$form->user_id}}</td>
+                        @endif
+                    @endforeach
                 </tr>
             @endforeach
         
