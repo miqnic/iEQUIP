@@ -48,7 +48,7 @@ class EquipmentsController extends Controller
         }
 
         $this->validate($request, [
-            'equip_id' => 'required',
+            'equipID' => 'required',
             'equip_name' => 'required',
             'equip_category' => 'required',
             'equip_description' => 'required',
@@ -58,7 +58,7 @@ class EquipmentsController extends Controller
 
         //Create Equipment
         $equipment = new Equipment;
-        $equipment->equip_id = $request->input('equip_id');
+        $equipment->equipID = $request->input('equipID');
         $equipment->equip_name = $request->input('equip_name');
         $equipment->equip_category = $request->input('equip_category');
         $equipment->equip_description = $request->input('equip_description');
@@ -220,7 +220,7 @@ class EquipmentsController extends Controller
 
         //Update Equipment Details
         $equipment = Equipment::find($equipID);
-        $equipment->equip_id = $request->input('equip_id');
+        $equipment->equipID = $request->input('equipID');
         $equipment->equip_name = $request->input('equip_name');
         $equipment->equip_category = $request->input('equip_category');
         $equipment->equip_description = $request->input('equip_description');

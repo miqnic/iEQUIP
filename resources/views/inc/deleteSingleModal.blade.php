@@ -1,10 +1,10 @@
-<div class="modal fade" id="deleteSingleModal-{{$equipment_modal->equip_id}}" tabindex="-1">
+<div class="modal fade" id="deleteSingleModal-{{$equipment_modal->equipID}}" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
     
             <div class="modal-header">
                 <h4 class="modal-title">Deletion Confirmation</h4>
-                <button type="button" class="close" data-target="#itemList-{{$equipment->equip_id}}" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-target="#itemList-{{$equipment->equipID}}" data-dismiss="modal">&times;</button>
             </div>
     
             <div class="modal-body m-3">
@@ -12,8 +12,8 @@
             </div>
     
             <div class="modal-footer">
-                <button type="submit" class="btn btn-danger" data-target="#itemList-{{$equipment->equip_id}}" data-dismiss="modal" data-toggle="modal">Delete</button>
-                <button type="button" class="btn btn-outline-secondary" data-target="#itemList-{{$equipment->equip_id}}" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger" data-target="#itemList-{{$equipment->equipID}}" data-dismiss="modal" data-toggle="modal">Delete</button>
+                <button type="button" class="btn btn-outline-secondary" data-target="#itemList-{{$equipment->equipID}}" data-dismiss="modal">Cancel</button>
             </div>
     
             </div>

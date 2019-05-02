@@ -1,4 +1,4 @@
-<div class="modal fade" id="editItemModal-{{$equipment->equip_id}}" tabindex="-1">
+<div class="modal fade" id="editItemModal-{{$equipment->equipID}}" tabindex="-1">
         <div class="modal-dialog">
         <div class="modal-content">
 
@@ -96,7 +96,7 @@
 
             @include('inc.confirmEquipChangesModal', $equipment)
 
-            <button type="button" class="btn btn-outline-secondary" data-target="#itemList-{{$equipment->equip_id}}" data-dismiss="modal" data-toggle="modal">Cancel</button>
+            <button type="button" class="btn btn-outline-secondary" data-target="#itemList-{{$equipment->equipID}}" data-dismiss="modal" data-toggle="modal">Cancel</button>
             </div>
         </div>
         </div>
