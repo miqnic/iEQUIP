@@ -68,10 +68,10 @@ class PagesController extends Controller
     }
 
     public function adminBalances(){
-        $transaction_forms = TransactionForm::with('user')
+        /* $transaction_forms = TransactionForm::with('user')
                                     ->where('penalty', '>=', 1)
-                                    ->get();
-        return view('admin.balances')->with('transaction_forms',$transaction_forms);
+                                    ->get(); */
+        return view('admin.balances');/* ->with('transaction_forms',$transaction_forms) */
     }
 
     public function reqHistory(){
