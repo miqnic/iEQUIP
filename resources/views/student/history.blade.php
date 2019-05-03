@@ -2,7 +2,7 @@
 
 @section('head')
     <title>{{ config('app.name') }} | History</title>
-    <link rel="stylesheet" href="{{ asset('css/student-history.css') }}" type=text/css>
+    <link rel="stylesheet" href="{{ asset('css/history.css') }}" type=text/css>
 @endsection
 
 @section('navi')
@@ -10,10 +10,12 @@
 @endsection
 
 @section('content')
-<div class="container-fluid" id="con1">
-    <h2>Request History</h2><hr>
-    <p class="legend" style="color: red; background-color: white;">* Equipment/s not returned</p><br>
-    <table class="table table-striped">
+<div class="header">
+    <h2 class="border-bottom pb-2 pl-3">Request History</h2>
+    <p class="lead pl-3">Reservation and student details can be seen by clicking on the corresponding IDs. Use the search bar and sort buttons to filter data.</p>
+        
+    <p class="legend pl-3 pt-4" style="color: red;">* Equipment/s not returned</p><br>
+    <table class="table text-center" id="requestHistory">
       <thead>
         <tr>
           <th>Transaction Number</th>
@@ -21,28 +23,21 @@
           <th>Status</th>
         </tr>
       </thead>
-      <tbody>
-        <tr class = "member" data-toggle="modal" data-target ="#checkForm">
-          <td>TC19000005</td>
-          <td>27/01/2019</td>
-          <td>APPROVED</td>
-        </tr>
-        <tr class = "member notReturned" data-toggle="modal" data-target ="#checkForm-noReturn">
-          <td>TC19000005</td>
-          <td>22/01/2019</td>
-          <td>APPROVED</td>
-        </tr>
-        <tr class = "member" data-toggle="modal" data-target ="#checkForm">
-          <td>TC19000003</td>
-          <td>05/01/2019</td>
-          <td>CANCELLED</td>
-        </tr>
-        <tr class = "member" data-toggle="modal" data-target ="#checkForm">
-          <td>TC19000001</td>
-          <td>04/01/2019</td>
-          <td>DECLINED</td>
-        </tr>
-      </tbody>
+      <tbody class="text-center">
+          @foreach ($transaction_forms as $form)
+          <tr style="color: @if($form->approval==0)red @else black @endif;">
+              <td data-toggle="modal" data-target="#checkForm{{$form->transaction_id}}" id="transaction">{{$form->transaction_id}}</td>
+              <td>{{\Carbon\Carbon::parse($form->created_at)->toFormattedDateString()}}</td>
+              <td>
+                @if($form->approval==1)
+                  APPROVED
+                @else 
+                  DECLINED
+                @endif
+            </td>
+          </tr>
+          @endforeach
+        </tbody>
     </table>
   </div>
 @endsection

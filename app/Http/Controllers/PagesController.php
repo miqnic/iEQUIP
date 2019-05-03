@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\TransactionForm;
+use App\User;
 
 class PagesController extends Controller
 {
@@ -20,7 +22,8 @@ class PagesController extends Controller
     }
 
     public function studentHistory(){
-        return view('student.history');
+        $transaction_forms = TransactionForm::where('user_id', auth()->user()->user_id)->get();
+        return view('student.history')->with('transaction_forms',$transaction_forms);
     }
 
     public function studentCart(){
@@ -65,11 +68,15 @@ class PagesController extends Controller
     }
 
     public function adminBalances(){
-        return view('admin.balances');
+        $transaction_forms = TransactionForm::with('user')
+                                    ->where('penalty', '>=', 1)
+                                    ->get();
+        return view('admin.balances')->with('transaction_forms',$transaction_forms);
     }
 
     public function reqHistory(){
-        return view('admin.history');
+        $transaction_forms = TransactionForm::with('user', 'equipment')->get();
+        return view('admin.history')->with('transaction_forms',$transaction_forms);
     }
 
     public function adminCalendar(){
