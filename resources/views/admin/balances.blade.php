@@ -13,7 +13,7 @@
     <div class="header">
         <h2 class="border-bottom pb-2 pl-3">Balances</h2>
         <p class="lead pl-3">Reservation and student details can be seen by clicking on the corresponding name and transaction ID.</p>
-        <button type="button" name="addequip" class="btn float-right mr-3 mb-2" data-toggle="modal" data-target="#email"><img id="plus" src="images/envelope.png" height=30;>Email All</button>
+        <button type="button" name="addequip" class="btn float-right mr-3 mb-2" data-toggle="modal" data-target="#email"><img id="plus" src="img\envelope.png" height=30;>Email All</button>
     </div>
     
     <div class="container-fluid">
@@ -68,8 +68,8 @@
               <th>Student ID</th>
               <th>Student Name</th>
               <th>Transaction ID</th>
-              <th>Equipment Borrowed</th>
               <th>Equipment ID</th>
+              <th>Equipment Borrowed</th>
               <th>Quantity</th>
               <th>Penalty Fee</th>
               <th>Paid</th>
@@ -80,24 +80,32 @@
               @if($user->penalty>0)
                 @foreach($transaction_forms as $form)
                   @if($form->user_id==$user->user_id)
-                    @if($form->claiming==true && $form->returned==false && $form->due_date)
+                    {{-- @if($form->claiming==true && $form->returned==false && \Carbon\Carbon::parse($form->due_date)->diffInDays(Carbon::now()->toDateString())>=1) --}}
                       <tr>
                         <td class="align-middle">{{$user->user_id}}</td>
                         <td class="align-middle" id="student" data-toggle="modal" data-target = "#viewStudent{{$user->user_id}}">{{$user->first_name}} {{$user->last_name}}</td>
                         <td class="align-middle" id="transaction" data-toggle="modal" data-target = "#checkForm{{$form->transaction_id}}">{{$form->transaction_id}}</td>
-                          @foreach($equipments as $equipment)
-                            @if($form->transaction==$equipment->transaction_id)
-                              <td class="align-middle">{{$equipment->equip_name}}</td>
-                              <td class="align-middle">{{$equipment->equipID}}</td>
+                        <td class="align-middle">
+                            @foreach($equipments as $equipment)
+                              @if($form->transaction_id==$equipment->transaction_id)
+                                {{$equipment->equipID}}<br>
+                              @endif
+                            @endforeach
+                        </td>
+                        <td class="align-middle">
+                            @foreach($equipments as $equipment)
+                            @if($form->transaction_id==$equipment->transaction_id)
+                              {{$equipment->equip_name}}<br>
                             @endif
-                          @endforeach
-                          <td>2</td>
+                            @endforeach
+                        </td>
+                          <td class="align-middle">2</td>
                           @if($form->user_id==$user->user_id)
                             <td class="align-middle">P{{$user->penalty}}.00</td>
                           @endif
-                        <td><button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#confirm">Paid</button></td>
+                        <td class="align-middle"><button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#confirm">Paid</button></td>
                       </tr>
-                    @endif
+                    {{-- @endif --}}
                   @endif
                 @endforeach
               @endif

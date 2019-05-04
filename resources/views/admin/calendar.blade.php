@@ -66,6 +66,6 @@
 @endsection
 
 @section('modal')
-    @include('inc.checkFormModal')
-    @include('inc.viewStudentModal')
+{{--     @include('inc.checkFormModal')
+    @include('inc.viewStudentModal') --}}
 @endsection

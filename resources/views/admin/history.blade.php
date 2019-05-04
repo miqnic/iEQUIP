@@ -13,10 +13,11 @@
     <div class="header">
         <h2 class="border-bottom pb-2 pl-3">Request History</h2>
         <p class="lead pl-3">Reservation and student details can be seen by clicking on the corresponding IDs. Use the search bar and sort buttons to filter data.</p>
-        <button type="button" name="deleteHistory" class="btn btn-default float-right mr-3 mb-2" data-toggle="modal" data-target="#delete"><img id="minus" src="images/minus.png" height=18;>Delete All</button>
+        <button type="button" name="deleteHistory" class="btn btn-default float-right mr-3 mb-2" data-toggle="modal" data-target="#delete"><img id="minus" src="img/minus.png" height=18;>Delete All</button>
     </div>
   
     <div class="container-fluid">
+        <p class="legend pl-3 pt-4" style="color: red;">* Equipment/s not returned</p><br>
         <table class="table text-center" id="dataTables">
           <thead>
             <tr>
@@ -26,12 +27,11 @@
               <th>Submitted Date</th>
               <th>Start Date</th>
               <th>End Date</th>
-              <th>Returned Equipment</th>
             </tr>
           </thead>
           <tbody class="text-center">
             @foreach ($transaction_forms as $form)
-            <tr>
+            <tr @if($form->returned==0)style="color: red"; @endif>
                 <td data-toggle="modal" data-target="#checkForm{{$form->transaction_id}}" id="transaction">{{$form->transaction_id}}</td>
                 <td>{{$form->user_id}}</td>
                 @foreach($users as $user)
@@ -42,19 +42,6 @@
                 <td>{{\Carbon\Carbon::parse($form->created_at)->toFormattedDateString()}}</td>
                 <td>{{\Carbon\Carbon::parse($form->start_date)->toFormattedDateString()}}</td>
                 <td>{{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}</td>
-
-                @foreach($equipments as $equipment)
-                    @if($equipment->transaction_id==$form->transaction_id)
-                    <td>
-                        @if($equipment->returned==1)
-                        Yes
-                        @else 
-                        No
-                        @break
-                        @endif
-                    </td>
-                    @endif
-                @endforeach
             </tr>
             @endforeach
           </tbody>

@@ -34,7 +34,7 @@
                     </div>
                 </div>
 
-                <table class="table table-bordered">
+                <table class="table table-md table-bordered mt-3 text-center">
                     <thead>
                         <tr>
                             <th>Equipment Code</th>
@@ -45,7 +45,7 @@
                         @foreach($equipments as $equipment)
                         <tr>
                             @if($equipment->transaction_id==$form->transaction_id)
-                                <td>{{$equipment->equipID}}</td> <!--not yet working-->
+                                <td>{{$equipment->equipID}}</td>
                                 <td>{{$equipment->equip_name}}</td> 
                             @endif
                         </tr>
