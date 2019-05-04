@@ -11,7 +11,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-5 align-middle text-right">
         <div class="header">
             <h2 class="border-bottom pb-2 pl-3">Contact Us</h2><br>
             <h4>If you have problems/suggestions, kindly write us an email. You could also go to the 2nd Floor, iACADEMY Nexus, Yakal, Makati City.</h4><br>
@@ -43,7 +43,7 @@
 
             <div class="form-group">
                     {{Form::label('body', 'Body')}}
-                    {{Form::textarea('body', '',['id' => 'article-ckeditor','class' => 'form-control', 'placeholder' => 'Body'])}}
+                    {{Form::textarea('body', '',['class' => 'form-control', 'placeholder' => 'Body'])}}
             </div>
             
             {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
