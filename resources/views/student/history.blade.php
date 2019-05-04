@@ -15,7 +15,7 @@
     <p class="lead pl-3">Reservation and student details can be seen by clicking on the corresponding IDs. Use the search bar and sort buttons to filter data.</p>
         
     <p class="legend pl-3 pt-4" style="color: red;">* Equipment/s not returned</p><br>
-    <table class="table text-center" id="requestHistory">
+    <table class="table text-center" id="dataTables">
       <thead>
         <tr>
           <th>Transaction Number</th>

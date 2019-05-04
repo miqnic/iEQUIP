@@ -24,7 +24,7 @@
                         <p><strong>Start Date:</strong> {{\Carbon\Carbon::parse($form->start_date)->toFormattedDateString()}}</p>
                         <p><strong>End Date:</strong> {{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}</p>
                         <p><strong>Start Time:</strong> {{$form->start_time}}</p>
-                        <p><strong>End Time:</strong> {{$form->start_time}}</p>
+                        <p><strong>End Time:</strong> {{$form->end_time}}</p>
                     </div>
                     <div class="col-md-6">
                         <p><strong>Date Submitted:</strong> {{\Carbon\Carbon::parse($form->submitted_date)->toFormattedDateString()}}</p>
@@ -42,11 +42,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($form->equipment as $equip)
+                        @foreach($equipments as $equipment)
                         <tr>
-                            <td>{{$equip->equipID}}</td> <!--not yet working-->
-                            <td>{{$equip->equip_name}}</td> 
-                            <!--corresponding borrowedequip not appearing. throwing items with null transac IDs instead-->
+                            @if($equipment->transaction_id==$form->transaction_id)
+                                <td>{{$equipment->equipID}}</td> <!--not yet working-->
+                                <td>{{$equipment->equip_name}}</td> 
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

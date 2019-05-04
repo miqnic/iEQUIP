@@ -22,8 +22,7 @@ class PagesController extends Controller
     }
 
     public function studentHistory(){
-        $transaction_forms = TransactionForm::where('user_id', auth()->user()->user_id)->get();
-        return view('student.history')->with('transaction_forms',$transaction_forms);
+        return view('student.history');
     }
 
     public function studentCart(){
@@ -68,15 +67,11 @@ class PagesController extends Controller
     }
 
     public function adminBalances(){
-        /* $transaction_forms = TransactionForm::with('user')
-                                    ->where('penalty', '>=', 1)
-                                    ->get(); */
-        return view('admin.balances');/* ->with('transaction_forms',$transaction_forms) */
+        return view('admin.balances');
     }
 
     public function reqHistory(){
-        $transaction_forms = TransactionForm::with('user', 'equipment')->get();
-        return view('admin.history')->with('transaction_forms',$transaction_forms);
+        return view('admin.history');
     }
 
     public function adminCalendar(){

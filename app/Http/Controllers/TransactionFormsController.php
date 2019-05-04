@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Equipment;
+use App\User;
+use App\TransactionForm;
+
 use DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -121,5 +124,30 @@ class TransactionFormsController extends Controller
     {
         $form->delete();
         return redirect('student.home')->with('success', 'Form Removed');
+    }
+
+    public function adminBalances(){
+        $transaction_forms = TransactionForm::get();
+        $users = User::get();
+        $equipments = Equipment::get();
+        return view('admin.balances')->with('transaction_forms',$transaction_forms)
+                                    ->with('users',$users)
+                                    ->with('equipments',$equipments);
+    }
+
+    public function reqHistory(){
+        $transaction_forms = TransactionForm::get();
+        $users = User::get();
+        $equipments = Equipment::get();
+        return view('admin.history')->with('transaction_forms',$transaction_forms)
+                                    ->with('users',$users)
+                                    ->with('equipments',$equipments);
+    }
+
+    public function studentHistory(){
+        $transaction_forms = TransactionForm::where('user_id', auth()->user()->user_id)->get();
+        $equipments = Equipment::get();
+        return view('student.history')->with('transaction_forms',$transaction_forms)
+                                      ->with('equipments',$equipments);
     }
 }

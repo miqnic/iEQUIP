@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
                 'access_role' => 'STUDENT',
                 'course' => 'BSCS-SE',
                 'email' => '201701039@iacademy.edu.ph',
-                'penalty' => '0',
+                'penalty' => '100',
                 'password' => bcrypt('pinoynumbahwan'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
