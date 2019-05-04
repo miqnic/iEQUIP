@@ -16,7 +16,7 @@
 
     <script>
       $(document).ready( function () {
-        $('#requestHistory').DataTable( {
+        $('#dataTables').DataTable( {
         dom: 'Bfrtip',
         lengthMenu: [
             [ 10, 25, 50, -1 ],

@@ -38,6 +38,6 @@ class User extends Authenticatable
     ];
 
     public function transaction(){
-        return $this->hasMany('App\TransactionForm', 'id');
+        return $this->hasMany('App\TransactionForm', 'transaction_id');
     }
 }
