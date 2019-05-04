@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Equipment;
 use App\TransactionForm;
 use DB;
+use Session;
+use URL;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Input;
 
 class EquipmentsController extends Controller
 {
@@ -42,52 +45,83 @@ class EquipmentsController extends Controller
         return $this->belongsTo('App\Transaction','foreign_key');
     }
 
-    public function addEquipment(){
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function add(){
+        return view('inc.addEquipModal');
+    }
+    public function addEquipment(Request $request){
         if(auth()->user()->access_role != 'ADMIN'){
             return abort(403, 'Unauthorized action.');
         }
 
-        $this->validate($request, [
-            'equipID' => 'required',
-            'equip_name' => 'required',
-            'equip_category' => 'required',
-            'equip_description' => 'required',
-            'equip_penalty' => 'required',
-            'equip_img' => 'image|nullable|max:1999'
+        /*$this->validate($request, [
+            'itemID' => 'required',
+            'itemName' => 'required',
+            'category' => 'required',
+            'description' => 'nullable',
+            'penalty' => 'required',
+            'basePrice' => 'required',
+            'equipIMG' => 'image|nullable|max:1999'
         ]);
 
         //Create Equipment
-        $equipment = new Equipment;
-        $equipment->equipID = $request->input('equipID');
-        $equipment->equip_name = $request->input('equip_name');
-        $equipment->equip_category = $request->input('equip_category');
-        $equipment->equip_description = $request->input('equip_description');
-        $equipment->equip_penalty = $request->input('equip_penalty');
-        $equipment->equip_img = $fileNameToStore;
-
-        $equipment->equip_avail = '0'; //available
-        $equipment->returned = true;
-        $equipment->transaction_id = '';
+        $equipment = Equipment::create([
+            'equipID' =>  $request->itemID,
+            'equip_name' => $request->itemName,
+            'equip_description' => $request->description,
+            'equip_penalty' => $request->penalty,
+            'equip_baseprice' => $request->basePrice,
+            'equip_img' => $fileNameToStore,
+            'equip_avail' => '0',
+            'returned' => true,
+            'transaction_id' => '',
+        ]);*/
 
         //Handle File Upload
-        if($request->hasFile('equip_img')){
+        if($request->hasFile('equipIMG')){
             //Get a filename with the extension
-            $fileNameWithExt = $request->file('equip_img')->getClientOriginalName();
+            $fileNameWithExt = $request->file('equipIMG')->getClientOriginalName();
             //Get just filename
             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             //Get just extension
-            $extension = $request->file('equip_img')->getClientOriginalExtension();
+            $extension = $request->file('equipIMG')->getClientOriginalExtension();
             //Filename to store (has to be unique)
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
             //Upload Image
-            $path = $request->file('equip_img')->storeAs('public/equip_img', $fileNameToStore);
+            $path = $request->file('equipIMG')->storeAs('public/equipIMG', $fileNameToStore);
         } else {
             $fileNameToStore = 'noImage.jpg';
         }
 
-        $equipment->save();
+        $request->validate([
+            'itemID' => 'required',
+            'itemName' => 'required',
+            'category' => 'required',
+            'description' => 'nullable',
+            'penalty' => 'required',
+            'basePrice' => 'required',
+            'equipIMG' => 'image|nullable|max:1999'
+          ]);
+          $equipment = new Equipment([
+            'equipID' =>  $request->get('itemID'),
+            'equip_name' => $request->get('itemName'),
+            'equip_description' => $request->get('description'),
+            'equip_penalty' => $request->get('penalty'),
+            'equip_baseprice' => $request->get('basePrice'),
+            'equip_category' => $request->get('category'),
+            'equip_img' => $fileNameToStore,
+            'equip_avail' => '0',
+            'returned' => true,
+          ]);
+          $equipment->save();
+          //return redirect(URL::current());
 
-        return redirect('/admin/equipment')->with('success', 'Equipment Created');
+        return redirect(URL::current())->with('success', 'Equipment Created');
     }
 
     //SHOW EQUIPMENT START
@@ -197,53 +231,76 @@ class EquipmentsController extends Controller
     }
 
     //SHOW EQUIPMENT END
-
-    public function deleteEquipment($equipID){
-        $equipment = Equipment::find($equipID);
+    public function del(){
+        return view('inc.deleteEquipModal');
+    }
+    
+    public function delEquipment(Request $request){
+        $equipment = Equipment::get()->unique('equip_name');
         
         //Check if admin
         if(auth()->user()->access_role != 'ADMIN'){
             return abort(403, 'Unauthorized action.');
         }
 
-        $equipment->delete();
-        return redirect('/admin/equipment')->with('success', 'Equipment Removed');
-    } 
+        if(Input::get('checkbox-', false))
 
-    public function editEquipment(Request $request, $id){
+        $equipment->delete();
+        return redirect(URL::current())->with('success', 'Equipment Deleted');
+    }
+    
+    public function edit(){
+        return view('inc.editItemModal');
+    }
+    public function editEquipment(Request $request){
         //Check if admin
         if(auth()->user()->access_role != 'ADMIN'){
             return abort(403, 'Unauthorized action.');
         }
 
-        //Update Equipment Details
-        $equipment = Equipment::find($equipID);
-        $equipment->equipID = $request->input('equipID');
-        $equipment->equip_name = $request->input('equip_name');
-        $equipment->equip_category = $request->input('equip_category');
-        $equipment->equip_description = $request->input('equip_description');
-        $equipment->equip_penalty = $request->input('equip_penalty');
-
-        //Updating Equipment Image
-        if($request->hasFile('equip_img')){
+        if($request->hasFile('equipIMG')){
             //Get a filename with the extension
-            $fileNameWithExt = $request->file('equip_img')->getClientOriginalName();
+            $fileNameWithExt = $request->file('equipIMG')->getClientOriginalName();
             //Get just filename
             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             //Get just extension
-            $extension = $request->file('equip_img')->getClientOriginalExtension();
+            $extension = $request->file('equipIMG')->getClientOriginalExtension();
             //Filename to store (has to be unique)
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
             //Upload Image
-            $path = $request->file('equip_img')->storeAs('public/equip_imgs', $fileNameToStore);
+            $path = $request->file('equipIMG')->storeAs('public/equipIMG', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noImage.jpg';
         }
 
-        if($request->hasFile('equip_img')){
-            $equipment->equip_img = $fileNameToStore;
-        }
+        $request->validate([
+            'currentEquipName' => 'required',
+            'itemName' => 'required',
+            'category' => 'required',
+            'penalty' => 'required',
+            'basePrice' => 'required',
+            'description' => 'required',
+            'equipIMG' => 'image|nullable|max:1999'
+          ]);
+        
+          $currentEquipName = $request->get('currentEquipName');
+          $equipments = Equipment::get();
 
-        $equipment->save();
-
-        return redirect('/equipment')->with('success', 'Equipment Updated');
+          foreach($equipments as $equipment){
+              if($equipment->equip_name == $currentEquipName){
+                $equipment = [
+                    'equip_name' => $request->get('itemName'),
+                    'equip_description' => $request->get('description'),
+                    'equip_penalty' => $request->get('penalty'),
+                    'equip_baseprice' => $request->get('basePrice'),
+                    'equip_category' => $request->get('category'),
+                    'equip_img' => $fileNameToStore,
+                  ];
+              }
+            
+          }
+          
+          //return redirect(URL::current());
+          return redirect(URL::current())->with('success', 'Equipment Edited');
     } 
 }

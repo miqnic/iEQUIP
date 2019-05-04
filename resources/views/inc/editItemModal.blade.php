@@ -1,103 +1,63 @@
-<div class="modal fade" id="editItemModal-{{$equipment->equipID}}" tabindex="-1">
+<div class="modal fade" id="editItemModal-{{$equipment->equip_name}}" tabindex="-1">
         <div class="modal-dialog">
-        <div class="modal-content">
-
+            <div class="modal-content">
+    
             <div class="modal-header">
-            <h4 class="modal-title">Edit Item Details</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Equipment</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-
+            {!! Form::open(['action' => 'EquipmentsController@editEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="modal-body">
-            <form>
-                <label for="itemName">Item Name</label>
-                <input type="text" class="form-control" id="itemName" placeholder="Enter item name" value="{{$equipment->equip_name}}">
-                <div class="row">
-                <div class="col-md-4">
-                    <label class="pt-3" for="category">Category</label>
-                    <select id="category" class="form-control">
-                        @if ($equipment->equip_category == "CAMACC")
-                            <option selected>Cameras & Accessories</option>
-                            <option>Art Tools</option>
-                            <option>Sports Equipment</option>
-                            <option>Gaming Devices</option>
-                            <option>Laptops & Accessories</option>
-                            <option>Miscellaneous</option>
-                        @elseif ($equipment->equip_category == "ART")
-                            <option>Cameras & Accessories</option>
-                            <option selected>Art Tools</option>
-                            <option>Sports Equipment</option>
-                            <option>Gaming Devices</option>
-                            <option>Laptops & Accessories</option>
-                            <option>Miscellaneous</option>
-                        @elseif ($equipment->equip_category == "SPRT")
-                            <option>Cameras & Accessories</option>
-                            <option>Art Tools</option>
-                            <option selected>Sports Equipment</option>
-                            <option>Gaming Devices</option>
-                            <option>Laptops & Accessories</option>
-                            <option>Miscellaneous</option>
-                        @elseif ($equipment->equip_category == "MISC")
-                            <option>Cameras & Accessories</option>
-                            <option>Art Tools</option>
-                            <option>Sports Equipment</option>
-                            <option>Gaming Devices</option>
-                            <option>Laptops & Accessories</option>
-                            <option selected>Miscellaneous</option>
-                        @elseif ($equipment->equip_category == "LPTP")
-                            <option>Cameras & Accessories</option>
-                            <option>Art Tools</option>
-                            <option>Sports Equipment</option>
-                            <option>Gaming Devices</option>
-                            <option selected>Laptops & Accessories</option>
-                            <option>Miscellaneous</option>    
-                        @else
-                            <option>Cameras & Accessories</option>
-                            <option>Art Tools</option>
-                            <option>Sports Equipment</option>
-                            <option selected>Gaming Devices</option>
-                            <option>Laptops & Accessories</option>
-                            <option>Miscellaneous</option>     
-                        @endif
-                        
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label class="pt-3" for="remarks">Base Price (PHP)</label>
-                    <input type="text" class="form-control" id="itemName" placeholder="Enter amount" value="{{$equipment->equip_baseprice}}">
-                </div>
-                <div class="col-md-4">
-                    <label class="pt-3" for="remarks">Penalty Fee (PHP)</label>
-                    <input type="text" class="form-control" id="penalty" placeholder="Enter amount" value="{{$equipment->equip_penalty}}">
-                </div>
-                </div>
-                    <label class="pt-3" for="remarks">Specifications</label>
-                    <textarea class="form-control" name="remarks" rows="5" placeholder="Enter specifications here"></textarea>
-                <div class="row">
-                <div class="col-md-4">
-                <label class="pt-3" for="remarks">Item Quantity</label>
-                <input type="text" class="form-control" id="itemName" placeholder="Enter quantity" value=
-                    @foreach ($countTotalAvail as $item)
-                        @if (Arr::get($item, 'equip_name') == $equipment->equip_name)
-                            {{Arr::get($item, 'record')}}
-                        @endif
-                    @endforeach
-                >
-                </div>
-                <div class="col-md-4">
-                    <label class="pt-3" for="itemImage">Item Image</label>
-                    <input type="file">
-                </div>
-                </div>
-            </form>
+                    <div class="form-group">
+                        {{Form::hidden('currentEquipName', $equipment->equip_name)}}
+                        {{Form::label('itemName', 'Item Name')}}
+                        {{Form::text('itemName', '',['class' => 'form-control', 'placeholder' => 'Enter Item Name'])}}
+                        <div class="row">
+                            <div class="col-md-4">
+                                {{Form::label('category', 'Category')}}
+                                {{Form::select('category', array(
+                                    'CAMACC' => 'Cameras & Accessories',
+                                    'ART' => 'Art Tools',
+                                    'SPRT' => 'Sports Equipment',
+                                    'GMNG' => 'Gaming Devices',
+                                    'LPTP' => 'Laptops & Accessories',
+                                    'MISC' => 'Miscellaneous Equipment'), NULL, array('class' => 'form-control pt-3'))}}
+    
+                            </div>
+                            <div class="col-md-4">
+                                {{Form::label('basePrice', 'Base Price (PHP)', ['class' => 'pt-3'])}}
+                                {{Form::text('basePrice', '',['class' => 'form-control', 'placeholder' => 'Enter Base Price'])}}
+                            </div>
+                            <div class="col-md-4">
+                                {{Form::label('penalty', 'Penalty Fee (PHP)', ['class' => 'pt-3'])}}
+                                {{Form::text('penalty', '',['class' => 'form-control', 'placeholder' => 'Enter Penalty Price'])}}
+                            </div>
+                        </div>
+    
+                        {{Form::label('description', 'Specifications')}}
+                        {{Form::textarea('description', '',['id' => 'article-ckeditor','class' => 'form-control', 'placeholder' => 'Enter specifications here'])}}      
+    
+                        <div class="row">
+                            <div class="col-md-4">
+                                <!--Form::label('totalAmount', 'Item Quantity', ['class' => 'pt-3'])
+                                Form::text('totalAMount', '',['class' => 'form-control', 'placeholder' => 'Enter Item Quantity'])-->
+                            </div>
+                            <div class="col-md-6">
+                                {{Form::label('equipIMG', 'Specifications',['class' => 'pt-3'])}}
+                                {{Form::file('equipIMG')}}
+                            </div>
+                            {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
+                        </div>
+                    </div>
+                
             </div>
-
+    
             <div class="modal-footer">
-            <button type="submit" class="btn btn-success" data-target="#confirmEquipChanges" data-dismiss="modal" data-toggle="modal">Save Changes</button>
-
-            @include('inc.confirmEquipChangesModal', $equipment)
-
-            <button type="button" class="btn btn-outline-secondary" data-target="#itemList-{{$equipment->equipID}}" data-dismiss="modal" data-toggle="modal">Cancel</button>
+                
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirm" data-dismiss="modal">Add Equipment</button>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
             </div>
-        </div>
+            {!! Form::close() !!}
+            </div>
         </div>
     </div>

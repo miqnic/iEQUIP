@@ -13,6 +13,15 @@ class Equipment extends Model
     //Timestamps
     public $timestamps = true;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'equipID', 'equip_name', 'equip_description', 'equip_penalty', 'equip_baseprice', 'equip_img', 'equip_avail', 'returned', 'equip_category'
+    ];
+
     //Model Relationships
     public function TransactionForm(){
         //an equipment belongs to a single user
