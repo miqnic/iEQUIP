@@ -94,7 +94,55 @@
 @endsection
 
 @section('modal')
-    @include('inc.checkFormModal')
+    <div class="modal fade" id="checkForm" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                <h4 class="modal-title">Transaction Form Details</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row pb-3">
+                    <div class="col-md-7">
+                        <p><strong>Transaction Form:</strong><br>TC19000018</p>
+                        <p><strong>Student ID:</strong><br>201712345</p>
+                        <p><strong>Student Name:</strong><br>Rhej Christian J. Laurel</p>
+                        <p><strong>Reason:</strong><br>Class-related activity</p>
+
+                    </div>
+                    <div class="col-md-5">
+                        <p><strong>Start Date:</strong><br>01/22/2019</p>
+                        <p><strong>End Date:</strong><br>02/22/2019</p>
+                        <p><strong>Start Time:</strong><br>07:30AM</p>
+                        <p><strong>End Time:</strong><br>11:00AM</p>
+                    </div>
+                </div>
+
+                <table class="table table-bordered text-center">
+                    <thead>
+                    <tr>
+                        <th>Equipment Code</th>
+                        <th>Equipment Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>CANCAM0001</td>
+                        <td>Canon EOS 80D</td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+
+                <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- @include('inc.checkFormModal') --}}
 @endsection
 
 <!-- <a class="" href="{{ route('logout') }}"

@@ -2,7 +2,7 @@
 
 @section('head')
     <title>{{ config('app.name') }} | Request History</title>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/admin-history.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/history.css') }}">
 @endsection
 
 @section('navi')
@@ -17,7 +17,7 @@
     </div>
   
     <div class="container-fluid">
-        <table class="table table-bordered table-striped text-center" id="requestHistory">
+        <table class="table text-center" id="requestHistory">
           <thead>
             <tr>
               <th>Transaction ID</th>
@@ -29,43 +29,24 @@
               <th>Returned Equipment</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="text-center">
+            @foreach ($transaction_forms as $form)
             <tr>
-              <td class = "text-center align-middle" data-toggle="modal" data-target="#checkForm" id="transaction">TC19000015</td>
-              <td class = "text-center align-middle">201712345</td>
-              <td class = "text-center align-middle" data-toggle="modal" data-target="#viewStudent" id="student">Rhej Christian J. Laurel</td>
-              <td class = "text-center align-middle">12/01/2018</td>
-              <td class = "text-center align-middle">12/05/2018</td>
-              <td class = "text-center align-middle">12/15/2018</td>
-              <td class = "text-center align-middle">Yes</td>
+                <td data-toggle="modal" data-target="#checkForm{{$form->transaction_id}}" id="transaction">{{$form->transaction_id}}</td>
+                <td>{{$form->user_id}}</td>
+                <td data-toggle="modal" data-target="#viewStudent{{$form->user->user_id}}" id="student">{{$form->user->first_name}} {{$form->user->last_name}}</td>
+                <td>{{\Carbon\Carbon::parse($form->created_at)->toFormattedDateString()}}</td>
+                <td>{{\Carbon\Carbon::parse($form->start_date)->toFormattedDateString()}}</td>
+                <td>{{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}</td>
+                <td>
+                    @if($form->equipment[0]->returned==1)
+                    Yes
+                    @else 
+                    No
+                    @endif
+                </td>
             </tr>
-            <tr>
-              <td class = "text-center align-middle" data-toggle="modal" data-target="#checkForm" id="transaction">TC19000014</td>
-              <td class = "text-center align-middle">201767890</td>
-              <td class = "text-center align-middle" data-toggle="modal" data-target="#viewStudent" id="student" >Jose Maria M. Castillo</td>
-              <td class = "text-center align-middle">12/01/2018</td>
-              <td class = "text-center align-middle">12/03/2018</td>
-              <td class = "text-center align-middle">12/18/2018</td>
-              <td class = "text-center align-middle">Yes</td>
-            </tr>
-            <tr>
-              <td class = "text-center align-middle" data-toggle="modal" data-target="#checkForm" id="transaction">TC19000013</td>
-              <td class = "text-center align-middle">201713579</td>
-              <td class = "text-center align-middle" data-toggle="modal" data-target="#viewStudent" id="student">Joshua Joseph M. Mayo</td>
-              <td class = "text-center align-middle">12/01/2018</td>
-              <td class = "text-center align-middle">12/03/2018</td>
-              <td class = "text-center align-middle">12/18/2018</td>
-              <td class = "text-center align-middle">Yes</td>
-            </tr>
-            <tr>
-              <td class = "text-center align-middle" data-toggle="modal" data-target="#checkForm" id="transaction">TC19000012</td>
-              <td class = "text-center align-middle">201724680</td>
-              <td class = "text-center align-middle" data-toggle="modal" data-target="#viewStudent" id="student">Lenard P. Valdez</td>
-              <td class = "text-center align-middle">11/22/2018</td>
-              <td class = "text-center align-middle">11/25/2018</td>
-              <td class = "text-center align-middle">11/30/2018</td>
-              <td class = "text-center align-middle">No</td>
-            </tr>
+            @endforeach
           </tbody>
         </table>
 
@@ -90,7 +71,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="viewStudent" tabindex="-1">
+        <!--<div class="modal fade" id="viewStudent" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
 
@@ -167,7 +148,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
 
     <script>

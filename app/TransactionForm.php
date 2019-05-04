@@ -14,8 +14,12 @@ class TransactionForm extends Model
     public $timestamps = true;
 
     //Model Relationships
-    public function Equipment(){
+    public function equipment(){
         //an equipment belongs to a single user
-        return $this->hasMany('App\Equipment', 'due_date', 'user_id');
+        return $this->hasMany('App\Equipment', 'id');
+    }
+
+    public function user(){
+        return $this->belongsTo('App\User', 'id');
     }
 }
