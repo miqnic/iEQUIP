@@ -236,16 +236,19 @@ class EquipmentsController extends Controller
     }
     
     public function delEquipment(Request $request){
-        $equipment = Equipment::get()->unique('equip_name');
+        $equipments = Equipment::get()->unique('equip_name');
         
         //Check if admin
         if(auth()->user()->access_role != 'ADMIN'){
             return abort(403, 'Unauthorized action.');
         }
 
-        if(Input::get('checkbox-', false))
-
-        $equipment->delete();
+        foreach($equipments as $equipment){
+            if(Input::get("checkbox-$equipment->equip_name") === "$equipment->equip_name" && Input::get("inputEquipCategory") == $equipment->equip_category){
+                $equipment->delete();
+            }
+        }
+        
         return redirect(URL::current())->with('success', 'Equipment Deleted');
     }
     

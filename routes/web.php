@@ -38,7 +38,7 @@ Route::group(['middleware' => ['admin']], function()
     Route::get('edit','EquipmentsController@edit');
     Route::post('editEquipment','EquipmentsController@editEquipment'); 
 
-    Route::get('del','EquipmentsController@edit');
+    Route::get('del','EquipmentsController@del');
     Route::post('delEquipment','EquipmentsController@delEquipment'); 
 });
 

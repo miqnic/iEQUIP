@@ -1,4 +1,5 @@
-{!! Form::open(['action' => 'EquipmentsController@delEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+{!! Form::open(['action' => 'EquipmentsController@delEquipment', 'method' => "POST", 'enctype' => 'multipart/form-data']) !!}
+@csrf
 <div class="modal fade" id="delEquip" tabindex="-1">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
@@ -23,10 +24,11 @@
                             <td class="align-middle">
                                 <div class="checkbox pt-1">
                                         
-                                <label>{{Form::checkbox('checkbox-{{$equipment->equip_name}}','')}}</label>
+                                <label>{{Form::checkbox("checkbox-$equipment->equip_name","$equipment->equip_name")}}</label>
                                 </div>
                             </td>
                             <td class="align-middle">{{$equipment->equip_name}}</td>
+                            {{Form::hidden('inputEquipCategory', $equipment->equip_category )}}
                         </tr>
                     @endforeach
                     <!--<tr>
@@ -50,11 +52,11 @@
             </div>
     
             <div class="modal-footer">
-                    {{Form::submit('Delete Equipment', ['class' => 'btn btn-danger'])}}
+                {{Form::submit('Delete Equipment', ['class' => 'btn btn-danger'])}}
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
             </div>
     
             </div>
         </div>
         </div>
-        {!! Form::close() !!}
+{!! Form::close() !!}

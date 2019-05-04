@@ -7,6 +7,7 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         {!! Form::open(['action' => 'EquipmentsController@addEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+        @csrf
         <div class="modal-body">
                 <div class="form-group">
                     {{Form::label('itemID', 'Item ID')}}
@@ -47,7 +48,7 @@
                             {{Form::label('equipIMG', 'Specifications',['class' => 'pt-3'])}}
                             {{Form::file('equipIMG')}}
                         </div>
-                        {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
+                        
                     </div>
                 </div>
             
@@ -55,7 +56,7 @@
 
         <div class="modal-footer">
             
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirm" data-dismiss="modal">Add Equipment</button>
+                {{Form::submit('Add Equipment', ['class' => 'btn btn-success'])}}
             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
         </div>
         {!! Form::close() !!}
