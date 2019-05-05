@@ -18,7 +18,7 @@
   
     <div class="container-fluid">
         <p class="legend pl-3 pt-4" style="color: red;">* Equipment/s not returned</p><br>
-        <table class="table text-center" id="dataTables">
+        <table class="table table-striped table-bordered table-hover text-center" id="dataTables">
           <thead>
             <tr>
               <th>Transaction ID</th>

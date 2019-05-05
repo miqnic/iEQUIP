@@ -2,7 +2,7 @@
 
 @section('head')
     <title>{{ config('app.name') }} | History</title>
-    <link rel="stylesheet" href="{{ asset('css/history.css') }}" type=text/css>
+    <link rel="stylesheet"  type="text/css" href="{{ asset('css/history.css') }}">
 @endsection
 
 @section('navi')
@@ -15,7 +15,7 @@
     <p class="lead pl-3">Reservation and student details can be seen by clicking on the corresponding IDs. Use the search bar and sort buttons to filter data.</p>
         
     <p class="legend pl-3 pt-4" style="color: red;">* Equipment/s not returned</p><br>
-    <table class="table text-center" id="dataTables">
+    <table class="table table-striped table-bordered table-hover text-center" id="dataTables">
       <thead>
         <tr>
           <th>Transaction Number</th>
@@ -25,8 +25,8 @@
       </thead>
       <tbody class="text-center">
           @foreach ($transaction_forms as $form)
-          <tr @if($form->approval==0)style="color: red"; @endif>
-              <td data-toggle="modal" data-target="#checkForm{{$form->transaction_id}}" id="transaction">{{$form->transaction_id}}</td>
+          <tr @if($form->approval==0)style="color: red;" @endif  data-toggle="modal" data-target="#checkForm{{$form->transaction_id}}" id="transaction">
+              <td>{{$form->transaction_id}}</td>
               <td>{{\Carbon\Carbon::parse($form->created_at)->toFormattedDateString()}}</td>
               <td>
                 @if($form->approval==1)

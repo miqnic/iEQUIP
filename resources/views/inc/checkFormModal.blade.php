@@ -11,26 +11,50 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <h3>Transaction Form: {{$form->transaction_id}}</h3>
-                <h3>Status: 
-                    @if($form->approval==1)
-                        APPROVED
-                    @else 
-                        DECLINED
-                    @endif
-                </h3><br>
-                <div class="row">
+                <div class="alert @if($form->approval==1) alert-success @else alert-danger @endif" role="alert"> 
+                    <div class="row text-center">
+                        <div class="col-md-4 offset-md-1">
+                        Transaction Form:<br>
+                        <b>{{$form->transaction_id}}</b>
+                        </div>
+                        <div class="col-md-4 offset-md-2">
+                        Request Status:<br>
+                        <b> 
+                            @if($form->approval==1)
+                                APPROVED
+                            @else 
+                                DECLINED
+                            @endif
+                        </b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row pt-3 text-center">
+                    <div class="col-md-5">
+                        <p><strong>Date Submitted:</strong><br>{{\Carbon\Carbon::parse($form->submitted_date)->toFormattedDateString()}}</p>
+                        <p><strong>Date Approved:</strong><br>01/02/2019</p> <!--not yet working-->
+                    </div>
+                    <div class="col-md-7">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Start Date:</strong><br>{{\Carbon\Carbon::parse($form->start_date)->toFormattedDateString()}}</p>
+                                <p><strong>End Date:</strong><br>{{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Start Time:</strong><br>{{$form->start_time}}</p>
+                                <p><strong>End Time:</strong><br>{{$form->end_time}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row px-2 text-center">
                     <div class="col-md-6">
-                        <p><strong>Start Date:</strong> {{\Carbon\Carbon::parse($form->start_date)->toFormattedDateString()}}</p>
-                        <p><strong>End Date:</strong> {{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}</p>
-                        <p><strong>Start Time:</strong> {{$form->start_time}}</p>
-                        <p><strong>End Time:</strong> {{$form->end_time}}</p>
+                    <p><strong>Date Claimed:</strong><br>02/02/2019</p> <!--not yet working-->
                     </div>
                     <div class="col-md-6">
-                        <p><strong>Date Submitted:</strong> {{\Carbon\Carbon::parse($form->submitted_date)->toFormattedDateString()}}</p>
-                        <p><strong>Date Approved:</strong> 01/02/2019</p> <!--not yet working-->
-                        <p><strong>Date Claimed:</strong> 02/02/2019</p> <!--not yet working-->
-                        <p><strong>Date Returned:</strong> 02/02/2019</p> <!--not yet working-->
+                    <p><strong>Date Returned:</strong><br>02/02/2019</p> <!--not yet working-->
                     </div>
                 </div>
 
