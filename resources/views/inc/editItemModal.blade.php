@@ -3,7 +3,7 @@
             <div class="modal-content">
     
             <div class="modal-header">
-                <h4 class="modal-title">Add Equipment</h4>
+                <h4 class="modal-title">Edit Equipment</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             {!! Form::open(['action' => 'EquipmentsController@editEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
@@ -47,15 +47,13 @@
                                 {{Form::label('equipIMG', 'Specifications',['class' => 'pt-3'])}}
                                 {{Form::file('equipIMG')}}
                             </div>
-                            {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
                         </div>
                     </div>
                 
             </div>
     
             <div class="modal-footer">
-                
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirm" data-dismiss="modal">Add Equipment</button>
+                {{Form::submit('Edit Equipment', ['class' => 'btn btn-primary'])}}
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
             </div>
             {!! Form::close() !!}

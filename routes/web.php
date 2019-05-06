@@ -32,14 +32,14 @@ Route::group(['middleware' => ['admin']], function()
     Route::match(['get', 'post'],'/admin/sports-equipment', 'EquipmentsController@showSportEquipment');
     Route::match(['get', 'post'],'/admin/laptops-accessories', 'EquipmentsController@showLapEquipment');
 
-    Route::get('add','EquipmentsController@add');
-    Route::post('addEquipment','EquipmentsController@addEquipment'); 
+    Route::get('/add','EquipmentsController@add');
+    Route::post('/addEquipment','EquipmentsController@addEquipment'); 
 
-    Route::get('edit','EquipmentsController@edit');
-    Route::post('editEquipment','EquipmentsController@editEquipment'); 
+    Route::get('/edit','EquipmentsController@edit');
+    Route::post('/editEquipment','EquipmentsController@editEquipment'); 
 
-    Route::get('del','EquipmentsController@del');
-    Route::post('delEquipment','EquipmentsController@delEquipment'); 
+    Route::get('/del','EquipmentsController@del');
+    Route::post('/delEquipment','EquipmentsController@delEquipment'); 
 });
 
 //Authorization for Student

@@ -28,25 +28,8 @@
                                 </div>
                             </td>
                             <td class="align-middle">{{$equipment->equip_name}}</td>
-                            {{Form::hidden('inputEquipCategory', $equipment->equip_category )}}
                         </tr>
                     @endforeach
-                    <!--<tr>
-                    <td class="align-middle">
-                        <div class="checkbox pt-1">
-                        <label><input type="checkbox" value=""></label>
-                        </div>
-                    </td>
-                    <td class="align-middle">Wacom Intuos Pro Tablet</td>
-                    </tr>
-                    <tr>
-                    <td class="align-middle">
-                        <div class="checkbox pt-1">
-                        <label><input type="checkbox" value=""></label>
-                        </div>
-                    </td>
-                    <td class="align-middle">Wacom Bamboo Ink Stylus</td>
-                    </tr>-->
                 </tbody>
                 </table>
             </div>
