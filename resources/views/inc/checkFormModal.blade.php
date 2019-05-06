@@ -67,12 +67,12 @@
                     </thead>
                     <tbody>
                         @foreach($equipments as $equipment)
-                        <tr>
-                            @if($equipment->transaction_id==$form->transaction_id)
-                                <td>{{$equipment->equipID}}</td>
-                                <td>{{$equipment->equip_name}}</td> 
-                            @endif
+                        @if($equipment->transaction_id==$form->transaction_id)
+                        <tr @if($equipment->returned==0) style="color: red;"  @endif>
+                            <td>{{$equipment->equipID}}</td>
+                            <td>{{$equipment->equip_name}}</td>     
                         </tr>
+                        @endif
                         @endforeach
                     </tbody>
                 </table>
