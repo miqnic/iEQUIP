@@ -28,8 +28,15 @@ class TransactionFormsController extends Controller
      */
     public function index()
     {
-        $forms =  TransactionForm::orderBy('created_at', 'desc')->get();
-        return view('student.home')->with('forms',$forms);
+        $equipments = Equipment::get();
+        $transaction_forms = TransactionForm::where('user_id', auth()->user()->user_id)->get();
+        $recentForms =  TransactionForm::where(['user_id' => auth()->user()->user_id, 'approval' => 1])
+                                        ->orderBy('submitted_date', 'desc')
+                                        ->take(5)
+                                        ->get();
+        return view('student.home')->with('transaction_forms', $transaction_forms)
+                                   ->with('recentForms', $recentForms)
+                                   ->with('equipments',$equipments);
     }
 
     /**
@@ -81,10 +88,10 @@ class TransactionFormsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         $form = TransactionForm::find($id);
-        return view('student.home')->with('form', $form);
+        return view('student.home')->with('form',$form);
     }
 
     /**
@@ -124,6 +131,18 @@ class TransactionFormsController extends Controller
     {
         $form->delete();
         return redirect('student.home')->with('success', 'Form Removed');
+    }
+
+    public function adminHome(){
+        $transaction_forms = TransactionForm::where('approval', '!=', 0)
+                                            ->where('returned', '!=', 1)
+                                            ->orderBy('submitted_date', 'desc')
+                                            ->get();
+        $users = User::get();
+        $equipments = Equipment::get();
+        return view('admin.home')->with('equipments',$equipments)
+                                 ->with('users',$users)
+                                 ->with('transaction_forms',$transaction_forms);
     }
 
     public function adminBalances(){

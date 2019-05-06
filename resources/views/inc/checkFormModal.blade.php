@@ -11,7 +11,7 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <div class="mt-2 alert @if($form->approval==1) alert-success @else alert-danger @endif" role="alert"> 
+                <div class="mt-2 alert @if($form->approval==1) alert-success @elseif($form->approval==-1) alert-warning @else alert-danger @endif" role="alert"> 
                     <div class="row text-center">
                         <div class="col-md-4 offset-md-1">
                         Transaction Form:<br>
@@ -22,7 +22,9 @@
                         <b> 
                             @if($form->approval==1)
                                 APPROVED
-                            @else 
+                            @elseif($form->approval==-1)
+                                PENDING
+                            @else
                                 DECLINED
                             @endif
                         </b>
@@ -30,7 +32,7 @@
                     </div>
                 </div>
 
-                <div class="row pt-2 text-center">
+                {{-- <div class="row pt-2 text-center">
                     <div class="col-md-5">
                         <p><strong>Date Submitted:</strong><br>{{\Carbon\Carbon::parse($form->submitted_date)->toFormattedDateString()}}</p>
                         <p><strong>Date Approved:</strong><br>01/02/2019</p> <!--not yet working-->
@@ -48,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="row px-2 text-center">
                     <div class="col-md-6">
                     <p><strong>Date Claimed:</strong><br>02/02/2019</p> <!--not yet working-->
@@ -56,8 +58,28 @@
                     <div class="col-md-6">
                     <p><strong>Date Returned:</strong><br>02/02/2019</p> <!--not yet working-->
                     </div>
+                </div>--}}
+
+                <div class="formInfo row pt-3">
+                    <div class="col-md-6">
+                    <p>
+                        <strong>Date Submitted:</strong> {{\Carbon\Carbon::parse($form->submitted_date)->toFormattedDateString()}}<br>
+                        <strong>Date Claimed:</strong> 02/02/2019<br>
+                        <strong>Start Date:</strong> {{\Carbon\Carbon::parse($form->start_date)->toFormattedDateString()}}<br>
+                        <strong>Start Time:</strong> {{$form->start_time}}
+                    </p>
+                    </div>
+                    <div class="col-md-6">
+                    <p>
+                        <strong>Date Approved:</strong> 01/02/2019<br> <!--not yet working-->
+                        <strong>Date Returned:</strong> 02/02/2019<br>
+                        <strong>End Date:</strong> {{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}<br>
+                        <strong>End Time:</strong> {{$form->end_time}}
+                    </p>
+                    </div>
                 </div>
 
+                <p class="legend pl-3 pt-2 text-danger">* Equipment/s not returned</p>
                 <table class="table table-md table-bordered mt-3 text-center">
                     <thead>
                         <tr>
@@ -68,7 +90,7 @@
                     <tbody>
                         @foreach($equipments as $equipment)
                         @if($equipment->transaction_id==$form->transaction_id)
-                        <tr @if($equipment->returned==0) style="color: red;"  @endif>
+                        <tr @if($equipment->returned==0 && $form->approval==1) class="text-danger"  @endif>
                             <td>{{$equipment->equipID}}</td>
                             <td>{{$equipment->equip_name}}</td>     
                         </tr>

@@ -17,7 +17,7 @@
     </div>
   
     <div class="container-fluid">
-        <p class="legend pl-3 pt-4" style="color: red;">* Equipment/s not returned</p><br>
+        <p class="pl-3 pt-4 text-danger">* Equipment/s not returned</p><br>
         <table class="table table-striped table-bordered table-hover text-center" id="dataTables">
           <thead>
             <tr>
@@ -31,7 +31,7 @@
           </thead>
           <tbody class="text-center">
             @foreach ($transaction_forms as $form)
-            <tr @if($form->returned==0)style="color: red"; @endif>
+            <tr @if($form->returned==0 && $form->approval==1)class="text-danger"; @endif>
                 <td data-toggle="modal" data-target="#checkForm{{$form->transaction_id}}" id="transaction">{{$form->transaction_id}}</td>
                 <td>{{$form->user_id}}</td>
                 @foreach($users as $user)

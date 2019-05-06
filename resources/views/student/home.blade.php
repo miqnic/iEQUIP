@@ -36,21 +36,21 @@
                 </tr>
                 </thead>
                 <tbody class="text-center">
-                <tr data-toggle="modal" data-target ="#checkForm">
-                    <td class="align-middle">TC19000027</td>
-                    <td class="align-middle">05/02/2019</td>
-                    <td class="align-middle"><button type="button" class="btn btn-danger">Cancel</button></td>
+                @if($transaction_forms->isEmpty())
+                <tr>
+                    <td colspan="3">No pending requests</td>
                 </tr>
-                <tr data-toggle="modal" data-target ="#checkForm">
-                    <td class="align-middle">TC19000024</td>
-                    <td class="align-middle">01/02/2019</td>
-                    <td class="align-middle"><button type="button" class="btn btn-danger">Cancel</button></td>
-                </tr>
-                <tr ddata-toggle="modal" data-target ="#checkForm">
-                    <td>TC19000019</td>
-                    <td>2/02/2019</td>
-                    <td><button type="button" class="btn btn-danger">Cancel</button></td>
-                </tr>
+                @else
+                    @foreach($transaction_forms as $form)
+                        @if($form->approval==-1)
+                            <tr data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">
+                                <td class="align-middle">{{$form->transaction_id}}</td>
+                                <td class="align-middle">{{\Carbon\Carbon::parse($form->submitted_date)->toFormattedDateString()}}</td>
+                                <td class="align-middle"><button type="button" class="btn btn-danger">Cancel</button></td>
+                            </tr>
+                        @endif
+                    @endforeach
+                @endif
                 </tbody>
             </table>
         </div>
@@ -68,24 +68,22 @@
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    <tr data-toggle="modal" data-target ="#checkForm">
-                    <td class="align-middle">TC19000010</td>
-                    <td class="align-middle">02/02/2019</td>
-                    <td class="align-middle">04/02/2019</td>
-                    <td class="align-middle"><button type="button" class="btn btn-danger">Cancel</button></td>
+                @if($recentForms->isEmpty())
+                    <tr>
+                        <td colspan="3">No submitted requests</td>
                     </tr>
-                    <tr data-toggle="modal" data-target ="#checkForm">
-                    <td class="align-middle">TC19000002</td>
-                    <td class="align-middle">31/01/2019</td>
-                    <td class="align-middle">02/02/2019</td>
-                    <td class="align-middle"><button type="button" class="btn btn-danger">Cancel</button></td>
-                    </tr>
-                    <tr data-toggle="modal" data-target ="#checkForm">
-                    <td class="align-middle">TC19000001</td>
-                    <td class="align-middle">31/01/2019</td>
-                    <td class="align-middle">01/02/2019</td>
-                    <td class="align-middle"><button type="button" class="btn btn-danger">Cancel</button></td>
-                    </tr>
+                @else
+                    @foreach($recentForms as $form)
+                        @if($form->user_id==Auth::user()->user_id)
+                            <tr data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">
+                            <td class="align-middle">{{$form->transaction_id}}</td>
+                            <td class="align-middle">{{\Carbon\Carbon::parse($form->submitted_date)->toFormattedDateString()}}</td>
+                            <td class="align-middle">04/02/2019</td>
+                            <td class="align-middle"><button type="button" class="btn btn-danger">Cancel</button></td>
+                            </tr>
+                        @endif
+                    @endforeach
+                @endif
                 </tbody>
                 </table>
             </div>
@@ -95,58 +93,10 @@
 @endsection
 
 @section('modal')
-    <div class="modal fade" id="checkForm" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                <h4 class="modal-title">Transaction Form Details</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <div class="modal-body">
-                    <div class="row pb-3">
-                    <div class="col-md-7">
-                        <p><strong>Transaction Form:</strong><br>TC19000018</p>
-                        <p><strong>Student ID:</strong><br>201712345</p>
-                        <p><strong>Student Name:</strong><br>Rhej Christian J. Laurel</p>
-                        <p><strong>Reason:</strong><br>Class-related activity</p>
-
-                    </div>
-                    <div class="col-md-5">
-                        <p><strong>Start Date:</strong><br>01/22/2019</p>
-                        <p><strong>End Date:</strong><br>02/22/2019</p>
-                        <p><strong>Start Time:</strong><br>07:30AM</p>
-                        <p><strong>End Time:</strong><br>11:00AM</p>
-                    </div>
-                </div>
-
-                <table class="table table-bordered text-center">
-                    <thead>
-                    <tr>
-                        <th>Equipment Code</th>
-                        <th>Equipment Name</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>CANCAM0001</td>
-                        <td>Canon EOS 80D</td>
-                    </tr>
-                    </tbody>
-                </table>
-                </div>
-
-                <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- @include('inc.checkFormModal') --}}
+    {@include('inc.checkFormModal')
 @endsection
-
-<!-- <a class="" href="{{ route('logout') }}"
+{{-- 
+     <a class="" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                           document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
@@ -154,4 +104,4 @@
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
-                        </form>-->
+                        </form> --}}

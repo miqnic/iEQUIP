@@ -220,16 +220,6 @@ class EquipmentsController extends Controller
                                             ->with('countCurrAvail', $this->countCurrAvail);
     } 
 
-    public function showCurrentlyBorrowed(){
-        $transaction_forms = TransactionForm::get();
-
-        $equipments = Equipment::where('equip_avail', '1')
-                                ->get();
-        
-        return view('admin.home')->with('equipments',$equipments)
-                                ->with('transaction_forms',$transaction_forms);
-    }
-
     //SHOW EQUIPMENT END
     public function del(){
         return view('inc.deleteEquipModal');

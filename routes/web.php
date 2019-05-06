@@ -19,7 +19,7 @@ Route::resource('equipments', 'EquipmentsController');
 //Authorization for Admin
 Route::group(['middleware' => ['admin']], function()
 {
-    Route::match(['get', 'post'], '/admin/home', 'EquipmentsController@showCurrentlyBorrowed');
+    Route::match(['get', 'post'], '/admin/home', 'TransactionFormsController@adminHome');
     Route::match(['get', 'post'],'/admin/request-history', 'TransactionFormsController@reqHistory');
     Route::match(['get', 'post'],'/admin/balances', 'TransactionFormsController@adminBalances');
     Route::match(['get', 'post'],'/admin/calendar', 'TransactionFormsController@adminCalendar');
@@ -45,7 +45,7 @@ Route::group(['middleware' => ['admin']], function()
 //Authorization for Student
 Route::group(['middleware' => ['student']], function()
 {
-    Route::match(['get', 'post'],'/student/home', 'PagesController@studentHome');
+    Route::match(['get', 'post'],'/student/home', 'TransactionFormsController@index');
     Route::match(['get', 'post'],'/student/history', 'TransactionFormsController@studentHistory');
     Route::match(['get', 'post'],'/student/contact', 'PagesController@studentContact');
     Route::post('feedback','EmailsController@feedback');
