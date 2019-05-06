@@ -11,21 +11,28 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-5 align-middle text-right">
+    <div class="col-md-6 align-middle text-right pt-5 pr-4">
         <div class="header">
             <h2 class="border-bottom pb-2 pl-3">Contact Us</h2><br>
-            <h4>If you have problems/suggestions, kindly write us an email. You could also go to the 2nd Floor, iACADEMY Nexus, Yakal, Makati City.</h4><br>
-            <p>Tel. No. : +63 XXXXX XXXXX</p>
+            <p>
+                If you have problems/suggestions, kindly write us an email.<br>
+                You may also proceed to the Facilities Department, <br>
+                2nd Floor, iACADEMY Nexus, Yakal, Makati City.</p><br>
+            <p>
+                <b>Building Admin and Facilities</b><br>
+                adminfacilities@iacademy.edu.ph<br>
+                Tel.: 889 5555 ext. 2234 - 2235</p>
         </div>
     </div>
 
-    <div class="col-md-5 offset-2">
+    <div class="col-md-6 border-left pt-5 pb-5 pl-4">
             @if (session('status'))
             <div class="alert alert-success">
                 {{ session('status') }}
             </div>
         @endif
-        <div class="input-group-prepend">
+
+        <div class="input-group-prepend w-50">
             <span class="input-group-text" id="inlineFormCustomSelect">Type of feedback: </span>
             <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                 <option value="0" selected>Suggestion</option>
@@ -33,17 +40,17 @@
                 <option value="2">Others</option>
             </select>
         </div>
-        <div class="input-group">
 
+        <div class="input-group">
             {!! Form::open(['action' => 'EmailsController@feedback', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="form-group">
                 {{Form::label('subject', 'Subject')}}
-                {{Form::text('subject', '',['class' => 'form-control', 'placeholder' => 'Subject'])}}
+                {{Form::text('subject', '',['class' => 'form-control', 'placeholder' => 'Enter subject'])}}
             </div>
 
             <div class="form-group">
-                    {{Form::label('body', 'Body')}}
-                    {{Form::textarea('body', '',['class' => 'form-control', 'placeholder' => 'Body'])}}
+                    {{Form::label('body', 'Message')}}
+                    {{Form::textarea('body', '',['class' => 'form-control', 'rows' => '8', 'placeholder' => 'Enter message'])}}
             </div>
             
             {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}

@@ -30,13 +30,17 @@
               exportOptions: {
                   modifier: {
                       selected: null
-                  }
+                  },
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
               },
               download: 'open'
             },
             {
               extend: 'pdfHtml5',
               text: 'Export Selected Row/s as PDF',
+              exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              },
               download: 'open'
             }
         ],

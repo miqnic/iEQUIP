@@ -18,6 +18,11 @@
             .navbar-nav {
             font-size: 14px !important;
             }
+
+            .logout a, a:hover {
+              color: white;
+              text-decoration: none;
+            }
         </style>
 </head>
 <body>
@@ -99,7 +104,7 @@
     
                   <!-- Modal footer -->
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-warning">
+                    <button type="button" class="btn btn-primary logout">
                       <a class="" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                           document.getElementById('logout-form').submit();">

@@ -22,7 +22,7 @@ Route::group(['middleware' => ['admin']], function()
     Route::match(['get', 'post'], '/admin/home', 'EquipmentsController@showCurrentlyBorrowed');
     Route::match(['get', 'post'],'/admin/request-history', 'TransactionFormsController@reqHistory');
     Route::match(['get', 'post'],'/admin/balances', 'TransactionFormsController@adminBalances');
-    Route::match(['get', 'post'],'/admin/calendar', 'PagesController@adminCalendar');
+    Route::match(['get', 'post'],'/admin/calendar', 'TransactionFormsController@adminCalendar');
     Route::match(['get', 'post'],'/admin/feedbacks', 'PagesController@adminFeedbacks');
 
     Route::match(['get', 'post'],'/admin/art-tools', 'EquipmentsController@showArtEquipment');

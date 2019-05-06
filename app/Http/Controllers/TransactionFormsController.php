@@ -144,6 +144,15 @@ class TransactionFormsController extends Controller
                                     ->with('equipments',$equipments);
     }
 
+    public function adminCalendar(){
+        $transaction_forms = TransactionForm::where('returned', 0)->get();
+        $users = User::get();
+        $equipments = Equipment::get();
+        return view('admin.calendar')->with('transaction_forms',$transaction_forms)
+                                     ->with('users',$users) 
+                                     ->with('equipments',$equipments);
+    }
+
     public function studentHistory(){
         $transaction_forms = TransactionForm::where('user_id', auth()->user()->user_id)->get();
         $equipments = Equipment::get();
