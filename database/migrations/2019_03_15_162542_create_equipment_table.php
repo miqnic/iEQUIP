@@ -25,6 +25,7 @@ class CreateEquipmentTable extends Migration
             $table->mediumText('equip_description');
             $table->boolean('returned');
             $table->string('equip_img');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

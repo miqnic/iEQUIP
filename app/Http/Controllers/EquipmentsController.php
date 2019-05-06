@@ -8,6 +8,7 @@ use App\TransactionForm;
 use DB;
 use Session;
 use URL;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
 
@@ -59,29 +60,6 @@ class EquipmentsController extends Controller
             return abort(403, 'Unauthorized action.');
         }
 
-        /*$this->validate($request, [
-            'itemID' => 'required',
-            'itemName' => 'required',
-            'category' => 'required',
-            'description' => 'nullable',
-            'penalty' => 'required',
-            'basePrice' => 'required',
-            'equipIMG' => 'image|nullable|max:1999'
-        ]);
-
-        //Create Equipment
-        $equipment = Equipment::create([
-            'equipID' =>  $request->itemID,
-            'equip_name' => $request->itemName,
-            'equip_description' => $request->description,
-            'equip_penalty' => $request->penalty,
-            'equip_baseprice' => $request->basePrice,
-            'equip_img' => $fileNameToStore,
-            'equip_avail' => '0',
-            'returned' => true,
-            'transaction_id' => '',
-        ]);*/
-
         //Handle File Upload
         if($request->hasFile('equipIMG')){
             //Get a filename with the extension
@@ -121,7 +99,7 @@ class EquipmentsController extends Controller
           $equipment->save();
           //return redirect(URL::current());
 
-        return redirect(URL::current())->with('success', 'Equipment Created');
+          return redirect()->back()->with('success', 'Equipment Added!');
     }
 
     //SHOW EQUIPMENT START
@@ -244,12 +222,12 @@ class EquipmentsController extends Controller
         }
 
         foreach($equipments as $equipment){
-            if(Input::get("checkbox-$equipment->equip_name") === "$equipment->equip_name" && Input::get("inputEquipCategory") == $equipment->equip_category){
+            if(Input::get("checkbox-$equipment->equip_name") === "$equipment->equip_name"){
                 $equipment->delete();
             }
         }
         
-        return redirect(URL::current())->with('success', 'Equipment Deleted');
+        return redirect()->back()->with('warning', 'Equipment Deleted!');
     }
     
     public function edit(){
@@ -291,19 +269,19 @@ class EquipmentsController extends Controller
 
           foreach($equipments as $equipment){
               if($equipment->equip_name == $currentEquipName){
-                $equipment = [
-                    'equip_name' => $request->get('itemName'),
-                    'equip_description' => $request->get('description'),
-                    'equip_penalty' => $request->get('penalty'),
-                    'equip_baseprice' => $request->get('basePrice'),
-                    'equip_category' => $request->get('category'),
-                    'equip_img' => $fileNameToStore,
-                  ];
+                $equipment->update([
+                        'equip_name' => $request->get('itemName'),
+                        'equip_description' => $request->get('description'),
+                        'equip_penalty' => $request->get('penalty'),
+                        'equip_baseprice' => $request->get('basePrice'),
+                        'equip_category' => $request->get('category'),
+                        'equip_img' => $fileNameToStore,
+                    ]); 
               }
             
           }
           
           //return redirect(URL::current());
-          return redirect(URL::current())->with('success', 'Equipment Edited');
+          return redirect()->back()->with('success', 'Equipment Details Updated!');
     } 
 }

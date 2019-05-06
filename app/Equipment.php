@@ -3,15 +3,20 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Equipment extends Model
 {
+    use SoftDeletes;
+
     //Table Name
     protected $table ='equipment';
     //Primary Key
     public $primaryKey = 'id';
     //Timestamps
     public $timestamps = true;
+
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.

@@ -64,6 +64,7 @@
 <body>
     @yield('navi')
     <main class="container-fluid py-4">
+        @include('inc.messages')
         @yield('content')
     </main>
     @yield('modal')
