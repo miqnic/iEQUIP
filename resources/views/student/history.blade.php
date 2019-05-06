@@ -25,7 +25,7 @@
       </thead>
       <tbody class="text-center">
           @foreach ($transaction_forms as $form)
-          <tr @if($form->approval==0)style="color: red;" @endif  data-toggle="modal" data-target="#checkForm{{$form->transaction_id}}" id="transaction">
+          <tr @if($form->returned==0)style="color: red;" @endif  data-toggle="modal" data-target="#checkForm{{$form->transaction_id}}" id="transaction">
               <td>{{$form->transaction_id}}</td>
               <td>{{\Carbon\Carbon::parse($form->created_at)->toFormattedDateString()}}</td>
               <td>

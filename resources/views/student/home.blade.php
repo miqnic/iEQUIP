@@ -12,7 +12,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-3 mx-auto" style="display: block; width: auto; flex: 0 0 0">
-        <div class="card mt-5" style="width: 20rem;" id="con1">
+        <div class="card mt-5 ml-3" style="width: 20rem;" id="con1">
             <img class="card-img-top" src="img\user-account-box.jpg" alt="Sample photo">
             <div class="card-body text-center">
                 <h4 class="card-title">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h4>

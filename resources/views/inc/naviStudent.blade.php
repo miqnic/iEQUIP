@@ -144,13 +144,13 @@
                   <div class="modal-body">
                     <p class="cartbody">These are the equipments you have added.<br>Click "Checkout" to proceed.</p>
                     <table class="table table-bordered table-striped">
-                      <thead>
+                      <thead class="text-center align-middle">
                         <tr>
                           <th>Equipments</th>
                           <th>Quantity</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody class="text-center align-middle">
                         <tr>
                           <td>Canon EOS 80D DSLR Camera</td>
                           <td>1</td>

@@ -32,7 +32,7 @@
         header: {
             left: 'today prev,next',
             center: 'title',
-            right: 'resourceTimelineDay,resourceTimelineWeek, resourceTimelineMonth'
+            right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth,resourceTimelineYear'
         },
         businessHours: {
             // xdays of week. an array of zero-based day of week integers (0=Sunday)
@@ -44,6 +44,7 @@
         aspectRatio: 1.6,
         height: 600,
         defaultView: 'resourceTimelineDay',
+        eventTextColor: 'white',
         resourceGroupField: 'itemName',
         resources: [
           @foreach($equipments as $equipment)
@@ -101,6 +102,7 @@
         aspectRatio: 1.6,
         height: 600,
         defaultView: 'resourceTimelineDay',
+        eventTextColor: 'white',
         resourceGroupField: 'itemName',
         resources: [
           @foreach($equipments as $equipment)
@@ -129,8 +131,7 @@
               @endif
             @endforeach
           @endforeach
-        ],
-        textColor: 'white'
+        ]
         });
 
         calendar.render();
@@ -145,7 +146,7 @@
         header: {
             left: 'today prev,next',
             center: 'title',
-            right: 'resourceTimelineDay,resourceTimelineWeek'
+            right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth,resourceTimelineYear'
         },
         businessHours: {
             // xdays of week. an array of zero-based day of week integers (0=Sunday)
@@ -157,6 +158,7 @@
         aspectRatio: 1.6,
         height: 600,
         defaultView: 'resourceTimelineDay',
+        eventTextColor: 'white',
         resourceGroupField: 'itemName',
         resources: [
             { id: 'a', itemName: 'Sony Playstation 4 Slim Console', title: 'SONPLA0001' },
@@ -195,7 +197,7 @@
         header: {
             left: 'today prev,next',
             center: 'title',
-            right: 'resourceTimelineDay,resourceTimelineWeek'
+            right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth,resourceTimelineYear'
         },
         businessHours: {
             // xdays of week. an array of zero-based day of week integers (0=Sunday)
@@ -207,6 +209,7 @@
         aspectRatio: 1.6,
         height: 600,
         defaultView: 'resourceTimelineDay',
+        eventTextColor: 'white',
         resourceGroupField: 'itemName',
         resources: [
             { id: 'a', itemName: 'Apple Macbook Pro Laptop', title: 'MACPRO0001' },
@@ -245,7 +248,7 @@
         header: {
             left: 'today prev,next',
             center: 'title',
-            right: 'resourceTimelineDay,resourceTimelineWeek'
+            right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth,resourceTimelineYear'
         },
         businessHours: {
             // xdays of week. an array of zero-based day of week integers (0=Sunday)
@@ -257,6 +260,7 @@
         aspectRatio: 1.6,
         height: 600,
         defaultView: 'resourceTimelineDay',
+        eventTextColor: 'white',
         resourceGroupField: 'itemName',
         resources: [
             { id: 'a', itemName: 'Spalding NBA Official Game Ball Basketball', title: 'SPANBA0001' },
@@ -295,7 +299,7 @@
         header: {
             left: 'today prev,next',
             center: 'title',
-            right: 'resourceTimelineDay,resourceTimelineWeek'
+            right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth,resourceTimelineYear'
         },
         businessHours: {
             // xdays of week. an array of zero-based day of week integers (0=Sunday)
@@ -307,6 +311,7 @@
         aspectRatio: 1.6,
         height: 600,
         defaultView: 'resourceTimelineDay',
+        eventTextColor: 'white',
         resourceGroupField: 'itemName',
         resources: [
             { id: 'a', itemName: 'Swivel Chair', title: 'SWICHA0001' },

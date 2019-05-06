@@ -25,18 +25,18 @@ body {
     background-repeat: no-repeat;
 }
 
-.modal-header {
+/* .modal-header {
     background-color: #171717;
     color: white;
     border: 2px solid;
-}
+} */
 
 .modal-body {
     font-size: 16px;
 }
 
 .table {
-    border: none;
+    font-size: 15px;
 }
 
 .member:hover {
@@ -45,12 +45,4 @@ body {
 
 .content {
     margin-top: 30px;
-}
-
-thead {
-    font-size: 18px;
-}
-  
-tbody {
-    font-size: 16px;
 }

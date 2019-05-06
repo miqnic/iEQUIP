@@ -11,7 +11,7 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <div class="alert @if($form->approval==1) alert-success @else alert-danger @endif" role="alert"> 
+                <div class="mt-2 alert @if($form->approval==1) alert-success @else alert-danger @endif" role="alert"> 
                     <div class="row text-center">
                         <div class="col-md-4 offset-md-1">
                         Transaction Form:<br>
@@ -30,7 +30,7 @@
                     </div>
                 </div>
 
-                <div class="row pt-3 text-center">
+                <div class="row pt-2 text-center">
                     <div class="col-md-5">
                         <p><strong>Date Submitted:</strong><br>{{\Carbon\Carbon::parse($form->submitted_date)->toFormattedDateString()}}</p>
                         <p><strong>Date Approved:</strong><br>01/02/2019</p> <!--not yet working-->
