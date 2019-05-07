@@ -16,7 +16,7 @@
   </div>
 
   <div class="container-fluid">
-    <p class="pl-3 pt-4" style="color: red;">* Equipment/s not returned</p><br>
+    <p class="pl-3 pt-4" style="color: red;">* Equipment/s not returned</p>
     <table class="table table-striped table-bordered table-hover text-center" id="dataTables">
       <thead>
         <tr>

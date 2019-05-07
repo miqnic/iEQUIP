@@ -65,7 +65,7 @@
                     <td class="align-middle">
                         @if($form->approval==1)
                             <button type="button" class="btn btn-outline-primary" @if($form->claimed==1) disabled @endif>Claimed</button>
-                            <button type="button" class="btn btn-outline-primary" @if($form->claimed==0 || $form->returned==1) disabled @endif>Returned</button>
+                            <button type="button" class="btn btn-outline-primary" @if($form->claimed==0) disabled @endif>Returned</button>
                         @else 
                             <button type="button" class="btn btn-outline-danger">Decline</button>
                             <button type="button" class="btn btn-outline-success">Approve</button>

@@ -28,12 +28,12 @@ class TransactionFormsController extends Controller
      */
     public function index()
     {
-        $equipments = Equipment::get();
         $transaction_forms = TransactionForm::where('user_id', auth()->user()->user_id)->get();
         $recentForms =  TransactionForm::where(['user_id' => auth()->user()->user_id, 'approval' => 1])
-                                        ->orderBy('submitted_date', 'desc')
+                                        ->orderBy('transaction_id', 'desc')
                                         ->take(5)
                                         ->get();
+        $equipments = Equipment::get();
         return view('student.home')->with('transaction_forms', $transaction_forms)
                                    ->with('recentForms', $recentForms)
                                    ->with('equipments',$equipments);
@@ -134,9 +134,9 @@ class TransactionFormsController extends Controller
     }
 
     public function adminHome(){
-        $transaction_forms = TransactionForm::where('approval', '!=', 0)
+        $transaction_forms = TransactionForm::orderBy('transaction_id', 'desc')
+                                            ->where('approval', '!=', 0)
                                             ->where('returned', '!=', 1)
-                                            ->orderBy('submitted_date', 'desc')
                                             ->get();
         $users = User::get();
         $equipments = Equipment::get();
@@ -147,7 +147,8 @@ class TransactionFormsController extends Controller
 
     public function adminBalances(){
         $transaction_forms = TransactionForm::get();
-        $users = User::get();
+        $users = User::where('penalty','>',0)
+                     ->get();
         $equipments = Equipment::get();
         return view('admin.balances')->with('transaction_forms',$transaction_forms)
                                     ->with('users',$users)
