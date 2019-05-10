@@ -25,24 +25,33 @@
         </div>
     </div>
 
-    <div class="col-md-6 border-left pt-5 pb-5 pl-4">
+    <div class="col-md-6 border-left pt-2 pb-5 pl-4">
             @if (session('status'))
             <div class="alert alert-success">
                 {{ session('status') }}
             </div>
         @endif
 
-        <div class="input-group-prepend w-50">
-            <span class="input-group-text" id="inlineFormCustomSelect">Type of feedback: </span>
+        
+            
+            {{--<div class="input-group-prepend w-50">
+                 <span class="input-group-text" id="inlineFormCustomSelect">Type of feedback: </span>
             <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                 <option value="0" selected>Suggestion</option>
                 <option value="1">Complaint</option>
                 <option value="2">Others</option>
             </select>
-        </div>
-
+            
+            </div>--}}
         <div class="input-group">
             {!! Form::open(['action' => 'EmailsController@feedback', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+            <div class="form-group">
+                {{Form::label('feedbackType', 'Type of Feedback')}}
+                {{Form::select('feedbackType', array(0 => 'Suggestion', 1 => 'Complaint', 2 => 'Others'), 0, ['class' => 'form-control'])}}
+            </div>
+
+
+
             <div class="form-group">
                 {{Form::label('subject', 'Subject')}}
                 {{Form::text('subject', '',['class' => 'form-control', 'placeholder' => 'Enter subject'])}}

@@ -92,9 +92,3 @@ table {
 .progressbar li.active + li:after {
   background-color: #55b776;
 }
-
-.modal-header {
-  background-color: #171717;
-  color: white;
-  border: 2px solid;
-}

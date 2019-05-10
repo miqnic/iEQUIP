@@ -23,7 +23,8 @@ Route::group(['middleware' => ['admin']], function()
     Route::match(['get', 'post'],'/admin/request-history', 'TransactionFormsController@reqHistory');
     Route::match(['get', 'post'],'/admin/balances', 'TransactionFormsController@adminBalances');
     Route::match(['get', 'post'],'/admin/calendar', 'TransactionFormsController@adminCalendar');
-    Route::match(['get', 'post'],'/admin/feedbacks', 'PagesController@adminFeedbacks');
+    Route::match(['get', 'post'],'/admin/feedbacks', 'EmailsController@adminFeedbacks');
+/*     Route::get('/feedbacks/{id}/read', 'EmailsController@read'); */
 
     Route::match(['get', 'post'],'/admin/art-tools', 'EquipmentsController@showArtEquipment');
     Route::match(['get', 'post'],'/admin/camera-equipment', 'EquipmentsController@showCamEquipment');

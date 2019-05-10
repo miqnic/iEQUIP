@@ -52,7 +52,7 @@
                         @endif
                         @endforeach
                     </td>
-                    <td class="align-middle">{{$form->due_date}}</td>
+                    <td class="align-middle">{{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}</td>
                     <td class="align-middle">
                         <h5>
                         @if($form->approval==1)

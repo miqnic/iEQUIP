@@ -51,7 +51,7 @@ class TransactionsTableSeeder extends Seeder
                 'purpose' => 'CLASS',
                 'room_number' => '1001',
                 'submitted_date' => date('Y-m-d H:i:s'),
-                'approval' => '1', //pending
+                'approval' => '1', //approved
                 'claimed' => true,
                 'returned' => true,
             ]

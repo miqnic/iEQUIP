@@ -4,13 +4,22 @@
     <title>{{ config('app.name') }} | Calendar</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/admin.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/core-main.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-main.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/daygrid-main.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/timegrid-main.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/timeline-main.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/resourcetimeline-main.min.css') }}">
+
     
     <script type="text/javascript" src="{{ asset('js/core-main.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap-main.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/daygrid-main.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/timegrid-main.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/timeline-main.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/resourcecommon-main.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/resourcetimeline-main.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/resourcedaygrid-main.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/resourcetimegrid-main.min.js') }}"></script>
 
     <script>
 
@@ -28,11 +37,22 @@
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
         schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-        plugins: [ 'resourceTimeline' ],
+        plugins: [ 'resourceTimeline', 'bootstrap', 'resourceTimeGrid' ],
+        themeSystem: 'bootstrap',
+        eventClick: function(info) {
+            alert(info.event.title + '\nStart: ' + info.event.start + '\nEnd: ' + info.event.end);
+        },
         header: {
             left: 'today prev,next',
             center: 'title',
-            right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth,resourceTimelineYear'
+            right: 'resourceTimelineDay,resourceTimeGridFourDay,resourceTimelineWeek,resourceTimelineMonth,resourceTimelineYear'
+        },
+        views: {
+          resourceTimeGridFourDay: {
+            type: 'resourceTimeGrid',
+            duration: { days: 4 },
+            buttonText: '4 days'
+          }
         },
         businessHours: {
             // xdays of week. an array of zero-based day of week integers (0=Sunday)
@@ -83,14 +103,22 @@
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
         schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-        plugins: [ 'resourceTimeline' ],
+        plugins: [ 'resourceTimeline', 'bootstrap', 'resourceTimeGrid' ],
+        themeSystem: 'bootstrap',
         eventClick: function(info) {
             alert(info.event.title + '\nStart: ' + info.event.start + '\nEnd: ' + info.event.end);
         },
         header: {
             left: 'today prev,next',
             center: 'title',
-            right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth,resourceTimelineYear'
+            right: 'resourceTimelineDay,resourceTimeGridFourDay,resourceTimelineWeek,resourceTimelineMonth,resourceTimelineYear'
+        },
+        views: {
+          resourceTimeGridFourDay: {
+            type: 'resourceTimeGrid',
+            duration: { days: 4 },
+            buttonText: '4 days'
+          }
         },
         businessHours: {
             // xdays of week. an array of zero-based day of week integers (0=Sunday)
@@ -142,11 +170,22 @@
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
         schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-        plugins: [ 'resourceTimeline' ],
+        plugins: [ 'resourceTimeline', 'bootstrap', 'resourceTimeGrid' ],
+        themeSystem: 'bootstrap',
+        eventClick: function(info) {
+            alert(info.event.title + '\nStart: ' + info.event.start + '\nEnd: ' + info.event.end);
+        },
         header: {
             left: 'today prev,next',
             center: 'title',
-            right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth,resourceTimelineYear'
+            right: 'resourceTimelineDay,resourceTimeGridFourDay,resourceTimelineWeek,resourceTimelineMonth,resourceTimelineYear'
+        },
+        views: {
+          resourceTimeGridFourDay: {
+            type: 'resourceTimeGrid',
+            duration: { days: 4 },
+            buttonText: '4 days'
+          }
         },
         businessHours: {
             // xdays of week. an array of zero-based day of week integers (0=Sunday)
@@ -193,11 +232,22 @@
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
         schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-        plugins: [ 'resourceTimeline' ],
+        plugins: [ 'resourceTimeline', 'bootstrap', 'resourceTimeGrid' ],
+        themeSystem: 'bootstrap',
+        eventClick: function(info) {
+            alert(info.event.title + '\nStart: ' + info.event.start + '\nEnd: ' + info.event.end);
+        },
         header: {
             left: 'today prev,next',
             center: 'title',
-            right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth,resourceTimelineYear'
+            right: 'resourceTimelineDay,resourceTimeGridFourDay,resourceTimelineWeek,resourceTimelineMonth,resourceTimelineYear'
+        },
+        views: {
+          resourceTimeGridFourDay: {
+            type: 'resourceTimeGrid',
+            duration: { days: 4 },
+            buttonText: '4 days'
+          }
         },
         businessHours: {
             // xdays of week. an array of zero-based day of week integers (0=Sunday)
@@ -244,11 +294,22 @@
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
         schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-        plugins: [ 'resourceTimeline' ],
+        plugins: [ 'resourceTimeline', 'bootstrap', 'resourceTimeGrid' ],
+        themeSystem: 'bootstrap',
+        eventClick: function(info) {
+            alert(info.event.title + '\nStart: ' + info.event.start + '\nEnd: ' + info.event.end);
+        },
         header: {
             left: 'today prev,next',
             center: 'title',
-            right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth,resourceTimelineYear'
+            right: 'resourceTimelineDay,resourceTimeGridFourDay,resourceTimelineWeek,resourceTimelineMonth,resourceTimelineYear'
+        },
+        views: {
+          resourceTimeGridFourDay: {
+            type: 'resourceTimeGrid',
+            duration: { days: 4 },
+            buttonText: '4 days'
+          }
         },
         businessHours: {
             // xdays of week. an array of zero-based day of week integers (0=Sunday)
@@ -295,11 +356,22 @@
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
         schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-        plugins: [ 'resourceTimeline' ],
+        plugins: [ 'resourceTimeline', 'bootstrap', 'resourceTimeGrid' ],
+        themeSystem: 'bootstrap',
+        eventClick: function(info) {
+            alert(info.event.title + '\nStart: ' + info.event.start + '\nEnd: ' + info.event.end);
+        },
         header: {
             left: 'today prev,next',
             center: 'title',
-            right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth,resourceTimelineYear'
+            right: 'resourceTimelineDay,resourceTimeGridFourDay,resourceTimelineWeek,resourceTimelineMonth,resourceTimelineYear'
+        },
+        views: {
+          resourceTimeGridFourDay: {
+            type: 'resourceTimeGrid',
+            duration: { days: 4 },
+            buttonText: '4 days'
+          }
         },
         businessHours: {
             // xdays of week. an array of zero-based day of week integers (0=Sunday)

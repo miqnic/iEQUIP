@@ -2,7 +2,6 @@
 
 @section('head')
     <title>{{ config('app.name') }} | Home</title>
-    <link rel="stylesheet" href="{{ asset('css/student-homepage.css') }}" type=text/css>
 @endsection
 
 @section('navi')
@@ -12,7 +11,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-3 mx-auto" style="display: block; width: auto; flex: 0 0 0">
-        <div class="card mt-5 ml-3" style="width: 20rem;" id="con1">
+        <div class="card mt-4 ml-3" style="width: 20rem;" id="con1">
             <img class="card-img-top" src="img\user-account-box.jpg" alt="Sample photo">
             <div class="card-body text-center">
                 <h4 class="card-title">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h4>
@@ -43,9 +42,9 @@
                 @else
                     @foreach($transaction_forms as $form)
                         @if($form->approval==-1)
-                            <tr data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">
-                                <td class="align-middle">{{$form->transaction_id}}</td>
-                                <td class="align-middle">{{\Carbon\Carbon::parse($form->submitted_date)->toFormattedDateString()}}</td>
+                            <tr>
+                                <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{$form->transaction_id}}</td>
+                                <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{\Carbon\Carbon::parse($form->submitted_date)->toFormattedDateString()}}</td>
                                 <td class="align-middle"><button type="button" class="btn btn-danger">Cancel</button></td>
                             </tr>
                         @endif
@@ -75,10 +74,10 @@
                 @else
                     @foreach($recentForms as $form)
                         @if($form->user_id==Auth::user()->user_id)
-                            <tr data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">
-                            <td class="align-middle">{{$form->transaction_id}}</td>
-                            <td class="align-middle">{{\Carbon\Carbon::parse($form->submitted_date)->toFormattedDateString()}}</td>
-                            <td class="align-middle">04/02/2019</td>
+                            <tr>
+                            <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{$form->transaction_id}}</td>
+                            <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{\Carbon\Carbon::parse($form->submitted_date)->toFormattedDateString()}}</td>
+                            <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">04/02/2019</td>
                             <td class="align-middle"><button type="button" class="btn btn-danger">Cancel</button></td>
                             </tr>
                         @endif
