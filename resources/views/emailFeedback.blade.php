@@ -64,7 +64,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
 
-    <body style="background-color: #e1e1ff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.5rem; color: #212529; overflow-x:hidden; margin-top: 50px; margin-bottom: 50px;">
+    <body style="background-color: #f5f9fc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.5rem; color: #212529; overflow-x:hidden; margin-top: 50px; margin-bottom: 50px;">
         <div style="width:100%; margin-right:auto; margin-left:auto;">
             <div style="text-align: center; display: block;">
                 <!--iACADEMY Logo-->
@@ -89,8 +89,16 @@
                     <small>
                         <b>Sender:</b> {{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <br>
                         <b>Course:</b> {{ Auth::user()->course}} <br>
-                        <b>Student Number:</b> {{ Auth::user()->student_id }} <br>
+                        <b>Student Number:</b> {{ Auth::user()->user_id }} <br>
                         <b>Email:</b> {{ Auth::user()->email }} <br>
+                        <b>Type of Feedback:</b> 
+                        @if($feedbackType==0)
+                            Suggestion
+                        @elseif($feedbackType==1)
+                            Complaint
+                        @else 
+                            Others 
+                        @endif
                     </small>
                 </div>
                 <div style="padding-top:30px; text-align: justify">
