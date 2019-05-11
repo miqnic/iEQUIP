@@ -12,15 +12,6 @@
         $('#option'+$(this).val()).show();
       }).val(1); // reflect the div shown 
     });
-
-    $(function () {
-      $('.filter').hide();
-      $('#filter1').show();
-      $('#filterBy').on("change",function () {
-        $('.filter').hide();
-        $('#filter'+$(this).val()).show();
-      }).val(1); // reflect the div shown 
-    });
     </script>
 @endsection
 
@@ -53,35 +44,24 @@
               <option value="3">Type of Feedback</option>
           </select>
       </div>
-      <div class="col-md-2 pt-2 ml-4">
-        Filter:
-          <select class="form-control" id="filterBy">
-              <option value="1">All</option>
-              <option value="2">Unread</option>
-              <option value="3">Read</option>
-          </select>
-      </div>
     </div>
 
     <div class="sort" id="option1">
       <div class="mx-4 mt-4">
-        <div class="accordion" id="feedback">
+        <div class="accordion" id="feedback1">
           @foreach($newest as $new)
           <div class="card">
             <div class="card-header" id="feedbackPost{{$new->id}}" data-toggle="collapse" data-target="#collapse{{$new->id}}" aria-expanded="true" aria-controls="collapse{{$new->id}}">
-              <h6 class="text-primary">
-                <span class="float-left @if($new->read==0)font-weight-bold @endif "><b>{{\Carbon\Carbon::parse($new->created_at)->toDayDateTimeString()}}</b> | {{$new->user_id}} | {{$new->subject}}</span>
+              <h5 class="pt-2 pb-3 text-primary">
+                <span class="float-left"><b>{{\Carbon\Carbon::parse($new->created_at)->toDayDateTimeString()}}</b> | {{$new->user_id}} | {{$new->subject}}</span>
                 <span class="float-right"><i class="fas fa-chevron-down fa-xs"></i></span>
-              </h6>
+              </h5>
             </div>
           
-            <div id="collapse{{$new->id}}" class="collapse" aria-labelledby="feedbackPost{{$new->id}}" data-parent="#feedback">
+            <div id="collapse{{$new->id}}" class="collapse" aria-labelledby="feedbackPost{{$new->id}}" data-parent="#feedback1">
               <div class="card-body mx-4">
                 <p>
-                    {!! Form::open(['action' => 'EmailsController@read', 'method' => 'POST']) !!}
-                    {{ Form::hidden('feedbackid', $new->id) }}
-                    {{Form::submit('Mark as Read', ['class' => 'btn btn-primary float-right'])}}
-                    {!! Form::close() !!}
+                    <button class="btn btn-primary float-right">Mark as Read</button>
                     @foreach($users as $user)
                     @if($user->user_id==$new->user_id)
                     <b>Student Name:</b> {{$user->first_name}} {{$user->last_name}}<br>
@@ -111,23 +91,20 @@
     
     <div class="sort" id="option2">
       <div class="mx-4 mt-4">
-        <div class="accordion" id="feedback">
+        <div class="accordion" id="feedback2">
           @foreach($oldest as $old)
           <div class="card">
             <div class="card-header" id="feedbackPost{{$old->id}}" data-toggle="collapse" data-target="#collapse{{$old->id}}" aria-expanded="true" aria-controls="collapse{{$old->id}}">
-              <h6 class="text-primary">
-                <span class="float-left @if($old->read==0)font-weight-bold @endif ">{{\Carbon\Carbon::parse($old->created_at)->toDayDateTimeString()}} | {{$old->user_id}} | {{$old->subject}}</span>
+              <h5 class="pt-2 pb-3 text-primary">
+                <span class="float-left"><b>{{\Carbon\Carbon::parse($old->created_at)->toDayDateTimeString()}}</b> | {{$old->user_id}} | {{$old->subject}}</span>
                 <span class="float-right"><i class="fas fa-chevron-down fa-xs"></i></span>
-              </h6>
+              </h5>
             </div>
           
-            <div id="collapse{{$old->id}}" class="collapse" aria-labelledby="feedbackPost{{$old->id}}" data-parent="#feedback">
+            <div id="collapse{{$old->id}}" class="collapse" aria-labelledby="feedbackPost{{$old->id}}" data-parent="#feedback2">
               <div class="card-body mx-4">
                 <p>
-                {!! Form::open(['action' => 'EmailsController@read', 'method' => 'POST']) !!}
-                {{ Form::hidden('feedbackid', $old->id) }}
-                {{Form::submit('Mark as Read', ['class' => 'btn btn-primary float-right'])}}
-                {!! Form::close() !!}
+                <button class="btn btn-primary float-right">Mark as Read</button>
                     @foreach($users as $user)
                     @if($user->user_id==$old->user_id)
                     <b>Student Name:</b> {{$user->first_name}} {{$user->last_name}}<br>
@@ -157,23 +134,20 @@
 
     <div class="sort" id="option3">
       <div class="mx-4 mt-4">
-        <div class="accordion" id="feedback">
+        <div class="accordion" id="feedback3">
           @foreach($types as $type)
           <div class="card">
             <div class="card-header" id="feedbackPost{{$type->id}}" data-toggle="collapse" data-target="#collapse{{$type->id}}" aria-expanded="false" aria-controls="collapse{{$type->id}}">
-              <h6 class="text-primary">
-                <span class="float-left @if($type->read==0)font-weight-bold @endif "><b>{{\Carbon\Carbon::parse($new->created_at)->toDayDateTimeString()}}</b> | {{$type->user_id}} | {{$type->subject}}</span>
+              <h5 class="pt-2 pb-3 text-primary">
+                <span class="float-left"><b>{{\Carbon\Carbon::parse($new->created_at)->toDayDateTimeString()}}</b> | {{$type->user_id}} | {{$type->subject}}</span>
                 <span class="float-right"><i class="fas fa-chevron-down fa-xs"></i></span>
-              </h6>
+              </h5>
             </div>
           
-            <div id="collapse{{$type->id}}" class="collapse" aria-labelledby="feedbackPost{{$type->id}}" data-parent="#feedback">
+            <div id="collapse{{$type->id}}" class="collapse" aria-labelledby="feedbackPost{{$type->id}}" data-parent="#feedback3">
               <div class="card-body mx-4">
                 <p>
-                    {!! Form::open(['action' => 'EmailsController@read', 'method' => 'POST']) !!}
-                    {{ Form::hidden('feedbackid', $type->id) }}
-                    {{Form::submit('Mark as Read', ['class' => 'btn btn-primary float-right'])}}
-                    {!! Form::close() !!}
+                    <button class="btn btn-primary float-right">Mark as Read</button>
                     @foreach($users as $user)
                     @if($user->user_id==$type->user_id)
                     <b>Student Name:</b> {{$user->first_name}} {{$user->last_name}}<br>
@@ -201,143 +175,119 @@
       </div>
     </div>
 
-    <div class="filter" id="filter1">
-      <div class="mx-4 mt-4">
-        <div class="accordion" id="feedback3">
-          @foreach($filterAll as $all)
-          <div class="card">
-            <div class="card-header" id="feedbackPost{{$all->id}}" data-toggle="collapse" data-target="#collapse{{$all->id}}" aria-expanded="false" aria-controls="collapse{{$all->id}}">
-              <h6 class="text-primary">
-                <span class="float-left @if($all->read==0)font-weight-bold @endif "><b>{{\Carbon\Carbon::parse($new->created_at)->toDayDateTimeString()}}</b> | {{$all->user_id}} | {{$all->subject}}</span>
-                <span class="float-right"><i class="fas fa-chevron-down fa-xs"></i></span>
-              </h6>
-            </div>
-          
-            <div id="collapse{{$all->id}}" class="collapse" aria-labelledby="feedbackPost{{$all->id}}" data-parent="#feedback3">
-              <div class="card-body mx-4">
-                <p>
-                    {!! Form::open(['action' => 'EmailsController@read', 'method' => 'POST']) !!}
-                    {{ Form::hidden('feedbackid', $all->id) }}
-                    {{Form::submit('Mark as Read', ['class' => 'btn btn-primary float-right'])}}
-                    {!! Form::close() !!}
-                    @foreach($users as $user)
-                    @if($user->user_id==$all->user_id)
-                    <b>Student Name:</b> {{$user->first_name}} {{$user->last_name}}<br>
-                    <b>Course:</b> {{$user->course}}<br>
-                    @endif
-                    @endforeach
-                    <b>Type of Feedback:</b> 
-                    @if($all->feedback_type==0)
-                      Suggestion
-                    @elseif($all->feedback_type==1)
-                      Complaint
-                    @else 
-                      Others
-                    @endif
-                </p>
-                <p>
-                    <b>Message:</b><br>
-                    {{$all->body}}
-                </p>
-              </div>
-            </div>
-          </div>
-          @endforeach
-        </div>
-      </div>
-    </div>
 
-    <div class="filter" id="filter2">
-      <div class="mx-4 mt-4">
-        <div class="accordion" id="feedback">
-          @foreach($filterUnread as $unread)
-          <div class="card">
-            <div class="card-header" id="feedbackPost{{$unread->id}}" data-toggle="collapse" data-target="#collapse{{$unread->id}}" aria-expanded="false" aria-controls="collapse{{$unread->id}}">
-              <h6 class="text-primary">
-                <span class="float-left @if($unread->read==0)font-weight-bold @endif "><b>{{\Carbon\Carbon::parse($new->created_at)->toDayDateTimeString()}}</b> | {{$unread->user_id}} | {{$unread->subject}}</span>
-                <span class="float-right"><i class="fas fa-chevron-down fa-xs"></i></span>
-              </h6>
-            </div>
-          
-            <div id="collapse{{$unread->id}}" class="collapse" aria-labelledby="feedbackPost{{$unread->id}}" data-parent="#feedback">
-              <div class="card-body mx-4">
-                <p>
-                    {!! Form::open(['action' => 'EmailsController@read', 'method' => 'POST']) !!}
-                    {{ Form::hidden('feedbackid', $unread->id) }}
-                    {{Form::submit('Mark as Read', ['class' => 'btn btn-primary float-right'])}}
-                    {!! Form::close() !!}
-                    @foreach($users as $user)
-                    @if($user->user_id==$unread->user_id)
-                    <b>Student Name:</b> {{$user->first_name}} {{$user->last_name}}<br>
-                    <b>Course:</b> {{$user->course}}<br>
-                    @endif
-                    @endforeach
-                    <b>Type of Feedback:</b> 
-                    @if($unread->feedback_type==0)
-                      Suggestion
-                    @elseif($unread->feedback_type==1)
-                      Complaint
-                    @else 
-                      Others
-                    @endif
-                </p>
-                <p>
-                    <b>Message:</b><br>
-                    {{$unread->body}}
-                </p>
-              </div>
+    {{-- <div class="mx-4 mt-4">
+      <div class="accordion" id="feedback">
+        <div class="card">
+          <div class="card-header" id="feedbackPost1" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <h5 class="pt-2 pb-3 text-primary">
+              <span class="float-left"><b>02/02/19</b> | Student ID: 201702012 | Subject: Item Defect</span>
+              <span class="float-right"><i class="fas fa-chevron-down fa-xs"></i></span>
+            </h5>
+          </div>
+      
+          <div id="collapseOne" class="collapse" aria-labelledby="feedbackPost1" data-parent="#feedback">
+            <div class="card-body mx-4">
+              <p>
+                  <button class="btn btn-primary float-right">Mark as Read</button>
+                  <b>Student Name:</b> Nicole Kaye Bilon<br>
+                  <b>Course:</b> BSCS-SE<br>
+                  <b>Type of Feedback:</b> Complaint
+              </p>
+              <p>
+                  <b>Message:</b><br>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+                  sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
             </div>
           </div>
-          @endforeach
         </div>
-      </div>
-    </div>
+        <div class="card">
+          <div class="card-header" id="feedbackPost2" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              <h5 class="pt-2 pb-3 text-primary">
+                  <span class="float-left"><b>02/02/19</b> | Student ID: 201702012 | Subject: Item Defect</span>
+                  <span class="float-right"><i class="fas fa-chevron-down fa-xs"></i></span>
+              </h5>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#feedback">
+            <div class="card-body mx-4">
+              <p>
+                  <button class="btn btn-primary float-right">Mark as Read</button>
+                  <b>Student Name:</b> Nicole Kaye Bilon<br>
+                  <b>Course:</b> BSCS-SE<br>
+                  <b>Type of Feedback:</b> Complaint
+              </p>
 
-    <div class="filter" id="filter3">
-      <div class="mx-4 mt-4">
-        <div class="accordion" id="feedback">
-          @foreach($filterRead as $read)
-          <div class="card">
-            <div class="card-header" id="feedbackPost{{$read->id}}" data-toggle="collapse" data-target="#collapse{{$read->id}}" aria-expanded="false" aria-controls="collapse{{$read->id}}">
-              <h6 class="text-primary">
-                <span class="float-left @if($read->read==0)font-weight-bold @endif "><b>{{\Carbon\Carbon::parse($new->created_at)->toDayDateTimeString()}}</b> | {{$read->user_id}} | {{$read->subject}}</span>
-                <span class="float-right"><i class="fas fa-chevron-down fa-xs"></i></span>
-              </h6>
-            </div>
-          
-            <div id="collapse{{$read->id}}" class="collapse" aria-labelledby="feedbackPost{{$read->id}}" data-parent="#feedback">
-              <div class="card-body mx-4">
-                <p>
-                    {!! Form::open(['action' => 'EmailsController@read', 'method' => 'POST']) !!}
-                    {{ Form::hidden('feedbackid', $read->id) }}
-                    {{Form::submit('Mark as Read', ['class' => 'btn btn-primary float-right'])}}
-                    {!! Form::close() !!}
-                    @foreach($users as $user)
-                    @if($user->user_id==$read->user_id)
-                    <b>Student Name:</b> {{$user->first_name}} {{$user->last_name}}<br>
-                    <b>Course:</b> {{$user->course}}<br>
-                    @endif
-                    @endforeach
-                    <b>Type of Feedback:</b> 
-                    @if($read->feedback_type==0)
-                      Suggestion
-                    @elseif($read->feedback_type==1)
-                      Complaint
-                    @else 
-                      Others
-                    @endif
-                </p>
-                <p>
-                    <b>Message:</b><br>
-                    {{$read->body}}
-                </p>
-              </div>
+              <p>
+                  <b>Message:</b><br>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+                  sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
             </div>
           </div>
-          @endforeach
+        </div>
+        <div class="card">
+          <div class="card-header" id="feedbackPost3" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            <h5 class="pt-2 pb-3 text-primary">
+                <span class="float-left"><b>02/02/19</b> | Student ID: 201702012 | Subject: Item Defect</span>
+                <span class="float-right"><i class="fas fa-chevron-down fa-xs"></i></span>
+            </h5>
+          </div>
+          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#feedback">
+            <div class="card-body mx-4">
+                <p>
+                    <button class="btn btn-primary float-right">Mark as Read</button>
+                    <b>Student Name:</b> Nicole Kaye Bilon<br>
+                    <b>Course:</b> BSCS-SE<br>
+                    <b>Type of Feedback:</b> Complaint
+                </p>
+
+                <p>
+                    <b>Message:</b><br>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="feedbackPost4" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            <h5 class="pt-2 pb-3 text-primary">
+              <span class="float-left"><b>02/02/19</b> | Student ID: 201702012 | Subject: Item Defect</span>
+              <span class="float-right"><i class="fas fa-chevron-down fa-xs"></i></span>
+            </h5>
+          </div>
+          <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#feedback">
+            <div class="card-body mx-4">
+                <p>
+                    <button class="btn btn-primary float-right">Mark as Read</button>
+                    <b>Student Name:</b> Nicole Kaye Bilon<br>
+                    <b>Course:</b> BSCS-SE<br>
+                    <b>Type of Feedback:</b> Complaint
+                </p>
+
+                <p>
+                    <b>Message:</b><br>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('modal')

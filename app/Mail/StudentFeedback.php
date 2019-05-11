@@ -14,7 +14,6 @@ class StudentFeedback extends Mailable
     use Queueable, SerializesModels;
     public $subject;
     public $body;
-    public $feedbackType;
 
     /**
      * Create a new message instance.
@@ -25,7 +24,6 @@ class StudentFeedback extends Mailable
     {
         $this->subject = $request->subject;
         $this->body = $request->body;
-        $this->feedbackType = $request->feedbackType;
         
     }
 
@@ -38,8 +36,7 @@ class StudentFeedback extends Mailable
     {
         return $this->view('emailFeedback')->with([
             'subject' => $this->subject,
-            'body' => $this->body,
-            'type' => $this->feedbackType
+            'body' => $this->body
         ]);
     }
 }
