@@ -3,6 +3,21 @@
 @section('head')
     <title>{{ config('app.name') }} | Cart</title>
     <link rel="stylesheet" href="{{ asset('css/cart1.css') }}" type=text/css>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+    $( function() {
+        var spinner1 = $( "#qty1" ).spinner({ 
+            min: 1,
+            max: 6
+        });
+        var spinner2 = $( "#qty2" ).spinner({
+            min: 1,
+            max: 6
+        });
+    });
+    </script>
 @endsection
 
 @section('navi')
@@ -36,7 +51,9 @@
                     <br>
                     <small class="pl-2">CANCAM0002</small>
                     </td>
-                <td class="text-center align-middle">2</td>
+                <td class="text-center align-middle">
+                    <input id="qty1" name="quantity" value="2" style="width:25px;">
+                </td>
                 <td class="text-center align-middle"><button type="button" class="btn btn-danger">Remove</button></td>
             </tr>
             <tr>
@@ -45,7 +62,9 @@
                     <br>
                     <small class="pl-2">SPANBA0005</small>
                 </td>
-                <td class="text-center align-middle">1</td>
+                <td class="text-center align-middle">
+                    <input id="qty2" name="quantity" value="1" style="width:25px;">
+                </td>
                 <td class="text-center align-middle"><button type="button" class="btn btn-danger">Remove</button></td>
             </tr>
         </tbody>

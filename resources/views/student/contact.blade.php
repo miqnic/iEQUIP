@@ -44,10 +44,10 @@
             
             </div>--}}
         <div class="input-group">
-            {!! Form::open(['action' => 'EmailsController@feedback', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+            {!! Form::open(['action' => 'FeedbacksController@feedback', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="form-group">
                 {{Form::label('feedbackType', 'Type of Feedback')}}
-                {{Form::select('feedbackType', array(0 => 'Suggestion', 1 => 'Complaint', 2 => 'Others'), 0, ['class' => 'form-control'])}}
+                {{Form::select('feedbackType', array(0 => 'Suggestion', 1 => 'Complaint', 2 => 'Others'), 0, ['class' => 'form-control custom-select'])}}
             </div>
 
 

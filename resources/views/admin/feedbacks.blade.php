@@ -5,18 +5,22 @@
 
     <script>
     $(function () {
+      $('.filter').hide();
       $('.sort').hide();
       $('#option1').show();
       $('#sortBy').on("change",function () {
+        $('.filter').hide();
         $('.sort').hide();
         $('#option'+$(this).val()).show();
       }).val(1); // reflect the div shown 
     });
 
     $(function () {
+      $('.sort').hide();
       $('.filter').hide();
       $('#filter1').show();
       $('#filterBy').on("change",function () {
+        $('.sort').hide();
         $('.filter').hide();
         $('#filter'+$(this).val()).show();
       }).val(1); // reflect the div shown 
@@ -45,17 +49,17 @@
     </div> --}}
 
     <div class="row">
-      <div class="col-md-2 pt-2 ml-4">
+      <div class="col-md-1 pt-2 ml-4">
         Sort by:
-          <select class="form-control" id="sortBy">
+          <select class="custom-select custom-select-sm" id="sortBy">
               <option value="1">Newest</option>
               <option value="2">Oldest</option>
               <option value="3">Type of Feedback</option>
           </select>
       </div>
-      <div class="col-md-2 pt-2 ml-4">
+      <div class="col-md-1 pt-2">
         Filter:
-          <select class="form-control" id="filterBy">
+          <select class="custom-select custom-select-sm" id="filterBy">
               <option value="1">All</option>
               <option value="2">Unread</option>
               <option value="3">Read</option>
@@ -78,7 +82,7 @@
             <div id="collapse{{$new->id}}" class="collapse" aria-labelledby="feedbackPost{{$new->id}}" data-parent="#feedback">
               <div class="card-body mx-4">
                 <p>
-                    {!! Form::open(['action' => 'EmailsController@read', 'method' => 'POST']) !!}
+                    {!! Form::open(['action' => 'FeedbacksController@read', 'method' => 'POST']) !!}
                     {{ Form::hidden('feedbackid', $new->id) }}
                     {{Form::submit('Mark as Read', ['class' => 'btn btn-primary float-right'])}}
                     {!! Form::close() !!}
@@ -124,7 +128,7 @@
             <div id="collapse{{$old->id}}" class="collapse" aria-labelledby="feedbackPost{{$old->id}}" data-parent="#feedback">
               <div class="card-body mx-4">
                 <p>
-                {!! Form::open(['action' => 'EmailsController@read', 'method' => 'POST']) !!}
+                {!! Form::open(['action' => 'FeedbacksController@read', 'method' => 'POST']) !!}
                 {{ Form::hidden('feedbackid', $old->id) }}
                 {{Form::submit('Mark as Read', ['class' => 'btn btn-primary float-right'])}}
                 {!! Form::close() !!}
@@ -170,7 +174,7 @@
             <div id="collapse{{$type->id}}" class="collapse" aria-labelledby="feedbackPost{{$type->id}}" data-parent="#feedback">
               <div class="card-body mx-4">
                 <p>
-                    {!! Form::open(['action' => 'EmailsController@read', 'method' => 'POST']) !!}
+                    {!! Form::open(['action' => 'FeedbacksController@read', 'method' => 'POST']) !!}
                     {{ Form::hidden('feedbackid', $type->id) }}
                     {{Form::submit('Mark as Read', ['class' => 'btn btn-primary float-right'])}}
                     {!! Form::close() !!}
@@ -208,7 +212,7 @@
           <div class="card">
             <div class="card-header" id="feedbackPost{{$all->id}}" data-toggle="collapse" data-target="#collapse{{$all->id}}" aria-expanded="false" aria-controls="collapse{{$all->id}}">
               <h6 class="text-primary">
-                <span class="float-left @if($all->read==0)font-weight-bold @endif "><b>{{\Carbon\Carbon::parse($new->created_at)->toDayDateTimeString()}}</b> | {{$all->user_id}} | {{$all->subject}}</span>
+                <span class="float-left @if($all->read==0)font-weight-bold @endif "><b>{{\Carbon\Carbon::parse($all->created_at)->toDayDateTimeString()}}</b> | {{$all->user_id}} | {{$all->subject}}</span>
                 <span class="float-right"><i class="fas fa-chevron-down fa-xs"></i></span>
               </h6>
             </div>
@@ -216,7 +220,7 @@
             <div id="collapse{{$all->id}}" class="collapse" aria-labelledby="feedbackPost{{$all->id}}" data-parent="#feedback3">
               <div class="card-body mx-4">
                 <p>
-                    {!! Form::open(['action' => 'EmailsController@read', 'method' => 'POST']) !!}
+                    {!! Form::open(['action' => 'FeedbacksController@read', 'method' => 'POST']) !!}
                     {{ Form::hidden('feedbackid', $all->id) }}
                     {{Form::submit('Mark as Read', ['class' => 'btn btn-primary float-right'])}}
                     {!! Form::close() !!}
@@ -254,7 +258,7 @@
           <div class="card">
             <div class="card-header" id="feedbackPost{{$unread->id}}" data-toggle="collapse" data-target="#collapse{{$unread->id}}" aria-expanded="false" aria-controls="collapse{{$unread->id}}">
               <h6 class="text-primary">
-                <span class="float-left @if($unread->read==0)font-weight-bold @endif "><b>{{\Carbon\Carbon::parse($new->created_at)->toDayDateTimeString()}}</b> | {{$unread->user_id}} | {{$unread->subject}}</span>
+                <span class="float-left @if($unread->read==0)font-weight-bold @endif "><b>{{\Carbon\Carbon::parse($all->created_at)->toDayDateTimeString()}}</b> | {{$unread->user_id}} | {{$unread->subject}}</span>
                 <span class="float-right"><i class="fas fa-chevron-down fa-xs"></i></span>
               </h6>
             </div>
@@ -262,7 +266,7 @@
             <div id="collapse{{$unread->id}}" class="collapse" aria-labelledby="feedbackPost{{$unread->id}}" data-parent="#feedback">
               <div class="card-body mx-4">
                 <p>
-                    {!! Form::open(['action' => 'EmailsController@read', 'method' => 'POST']) !!}
+                    {!! Form::open(['action' => 'FeedbacksController@read', 'method' => 'POST']) !!}
                     {{ Form::hidden('feedbackid', $unread->id) }}
                     {{Form::submit('Mark as Read', ['class' => 'btn btn-primary float-right'])}}
                     {!! Form::close() !!}
@@ -300,7 +304,7 @@
           <div class="card">
             <div class="card-header" id="feedbackPost{{$read->id}}" data-toggle="collapse" data-target="#collapse{{$read->id}}" aria-expanded="false" aria-controls="collapse{{$read->id}}">
               <h6 class="text-primary">
-                <span class="float-left @if($read->read==0)font-weight-bold @endif "><b>{{\Carbon\Carbon::parse($new->created_at)->toDayDateTimeString()}}</b> | {{$read->user_id}} | {{$read->subject}}</span>
+                <span class="float-left @if($read->read==0)font-weight-bold @endif "><b>{{\Carbon\Carbon::parse($all->created_at)->toDayDateTimeString()}}</b> | {{$read->user_id}} | {{$read->subject}}</span>
                 <span class="float-right"><i class="fas fa-chevron-down fa-xs"></i></span>
               </h6>
             </div>
@@ -308,7 +312,7 @@
             <div id="collapse{{$read->id}}" class="collapse" aria-labelledby="feedbackPost{{$read->id}}" data-parent="#feedback">
               <div class="card-body mx-4">
                 <p>
-                    {!! Form::open(['action' => 'EmailsController@read', 'method' => 'POST']) !!}
+                    {!! Form::open(['action' => 'FeedbacksController@read', 'method' => 'POST']) !!}
                     {{ Form::hidden('feedbackid', $read->id) }}
                     {{Form::submit('Mark as Read', ['class' => 'btn btn-primary float-right'])}}
                     {!! Form::close() !!}

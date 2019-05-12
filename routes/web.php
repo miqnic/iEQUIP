@@ -12,7 +12,7 @@
 */
 //Landing Page (Login)
 Route::get('/', 'PagesController@index');
-Route::resource('emails', 'EmailsController');
+Route::resource('emails', 'FeedbacksController');
 Route::resource('forms', 'TransactionFormsController');
 Route::resource('equipments', 'EquipmentsController');
 
@@ -23,7 +23,7 @@ Route::group(['middleware' => ['admin']], function()
     Route::match(['get', 'post'],'/admin/request-history', 'TransactionFormsController@reqHistory');
     Route::match(['get', 'post'],'/admin/balances', 'TransactionFormsController@adminBalances');
     Route::match(['get', 'post'],'/admin/calendar', 'TransactionFormsController@adminCalendar');
-    Route::match(['get', 'post'],'/admin/feedbacks', 'EmailsController@adminFeedbacks');
+    Route::match(['get', 'post'],'/admin/feedbacks', 'FeedbacksController@adminFeedbacks');
 
     Route::match(['get', 'post'],'/admin/art-tools', 'EquipmentsController@showArtEquipment');
     Route::match(['get', 'post'],'/admin/camera-equipment', 'EquipmentsController@showCamEquipment');
@@ -41,7 +41,7 @@ Route::group(['middleware' => ['admin']], function()
     Route::get('/del','EquipmentsController@del');
     Route::post('/delEquipment','EquipmentsController@delEquipment'); 
 
-    Route::post('/readfeedback','EmailsController@read');
+    Route::post('/readfeedback','FeedbacksController@read');
 });
 
 //Authorization for Student
@@ -49,8 +49,9 @@ Route::group(['middleware' => ['student']], function()
 {
     Route::match(['get', 'post'],'/student/home', 'TransactionFormsController@index');
     Route::match(['get', 'post'],'/student/history', 'TransactionFormsController@studentHistory');
+    Route::match(['get', 'post'],'/student/calendar', 'TransactionFormsController@adminCalendar');
     Route::match(['get', 'post'],'/student/contact', 'PagesController@studentContact');
-    Route::post('feedback','EmailsController@feedback');
+    Route::post('feedback','FeedbacksController@feedback');
     //Route::match(['get', 'post'],'/student/equipment', 'EquipmentsController@showArtEquipment');
     Route::match(['get', 'post'],'/student/cart', 'PagesController@studentCart');
     Route::match(['get', 'post'],'/student/cart2', 'PagesController@studentCart2');

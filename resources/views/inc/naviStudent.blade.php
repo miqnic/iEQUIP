@@ -53,6 +53,9 @@
                 <li class="nav-item">
                   <a class="nav-link" href="history">History</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="calendar">Calendar</a>
+                </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Equipments</a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
