@@ -2,10 +2,6 @@
     margin-bottom: 20px;
     padding-bottom:10px;
   }
-
-  body {
-    background-color: white;
-  }
   
   .header {
     margin-bottom: 15px;
@@ -35,3 +31,6 @@
     margin-bottom: 5px;
   }
   
+  table {
+    font-size: 15px;
+  }

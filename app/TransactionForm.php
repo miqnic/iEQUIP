@@ -16,10 +16,10 @@ class TransactionForm extends Model
     //Model Relationships
     public function equipment(){
         //an equipment belongs to a single user
-        return $this->hasMany('App\Equipment', 'id');
+        return $this->hasMany('App\Equipment', 'equipID', 'equip_name', 'returned');
     }
 
     public function user(){
-        return $this->belongsTo('App\User', 'id');
+        return $this->belongsTo('App\User', 'user_id', 'first_name', 'last_name', 'penalty');
     }
 }
