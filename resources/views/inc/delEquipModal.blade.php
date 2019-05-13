@@ -1,5 +1,3 @@
-{!! Form::open(['action' => 'EquipmentsController@delEquipment', 'method' => "POST", 'enctype' => 'multipart/form-data']) !!}
-@csrf
 <div class="modal fade" id="delEquip" tabindex="-1">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
@@ -19,27 +17,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($equipments->unique('equip_name') as $equipment)
-                        <tr>
-                            <td class="align-middle">
-                                <div class="checkbox pt-1">
-                                        
-                                <label>{{Form::checkbox("checkbox-$equipment->equip_name","$equipment->equip_name")}}</label>
-                                </div>
-                            </td>
-                            <td class="align-middle">{{$equipment->equip_name}}</td>
-                        </tr>
-                    @endforeach
+                    <tr>
+                    <td class="align-middle">
+                        <div class="checkbox pt-1">
+                        <label><input type="checkbox" value=""></label>
+                        </div>
+                    </td>
+                    <td class="align-middle">Wacom CINTIQ 13HD Tablet</td>
+                    </tr>
+                    <tr>
+                    <td class="align-middle">
+                        <div class="checkbox pt-1">
+                        <label><input type="checkbox" value=""></label>
+                        </div>
+                    </td>
+                    <td class="align-middle">Wacom Intuos Pro Tablet</td>
+                    </tr>
+                    <tr>
+                    <td class="align-middle">
+                        <div class="checkbox pt-1">
+                        <label><input type="checkbox" value=""></label>
+                        </div>
+                    </td>
+                    <td class="align-middle">Wacom Bamboo Ink Stylus</td>
+                    </tr>
                 </tbody>
                 </table>
             </div>
     
             <div class="modal-footer">
-                {{Form::submit('Delete Equipment', ['class' => 'btn btn-danger'])}}
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target = "#deleteModal" data-dismiss="modal">Delete Equipment</button>
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
             </div>
     
             </div>
         </div>
         </div>
-{!! Form::close() !!}

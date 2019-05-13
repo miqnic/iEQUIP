@@ -29,10 +29,7 @@
     font-size: 16px;
   }
   
-  table {
-    font-size: 15px;
-  }
-/*   h2 {
+  h2 {
     font-size: 23px;
     color: black;
     padding-top: 5px;
@@ -46,11 +43,11 @@
   
   h5 {
     font-size: 20px;
-  } */
+  }
   
   body {
     background-color:white;
-    background-size: 100vh;
+    background-size: 100% 100vh;
     background-repeat: no-repeat;
   }
   
@@ -65,14 +62,22 @@
     padding-bottom: 5px;
   }
   
-/*   .modal-header {
+  .modal-header {
     background-color: #171717;
     color: white;
     border: 2px solid;
-  } */
+  }
   
   .modal-body {
-    font-size: 15px;
+    font-size: 16px;
+  }
+  
+  .table {
+    border: none;
+  }
+  
+  .member:hover {
+    background-color: LightBlue;
   }
   
   .notReturned {
@@ -83,7 +88,7 @@
     background-color: yellow;
   }
   
-/*   thead {
+  thead {
     font-size: 18px;
   }
   
@@ -93,4 +98,4 @@
   
   p{
     font-size: 16px;
-  } */
+  }

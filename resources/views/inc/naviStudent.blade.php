@@ -7,28 +7,17 @@
     
             @media (min-width: 768px) {
             .bd-placeholder-img-lg {
-              font-size: 3.5rem;
+                font-size: 3.5rem;
             }
             }
     
             body.modal-open div.modal-backdrop {
-              z-index: 0;
+                z-index: 0;
             }
     
             .navbar-nav {
             font-size: 14px !important;
             }
-
-            .logout a, a:hover {
-              color: white;
-              text-decoration: none;
-            }
-
-            .cartBtn a, a:hover {
-              color: white;
-              text-decoration: none;
-            }
-            
         </style>
     </head>
 <body>
@@ -111,7 +100,7 @@
     
                   <!-- Modal footer -->
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-primary logout">
+                    <button type="button" class="btn btn-warning">
                       <a class="" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                           document.getElementById('logout-form').submit();">
@@ -142,15 +131,15 @@
     
                   <!-- Modal body -->
                   <div class="modal-body">
-                    <p class="cartbody">These are the equipments you have added.<br>Click "Checkout" to proceed.</p>
+                    <p class="cartbody">These are the equipments you have reserved.<br>Click "Confirm" if you want to check out.</p>
                     <table class="table table-bordered table-striped">
-                      <thead class="text-center align-middle">
+                      <thead>
                         <tr>
                           <th>Equipments</th>
                           <th>Quantity</th>
                         </tr>
                       </thead>
-                      <tbody class="text-center align-middle">
+                      <tbody>
                         <tr>
                           <td>Canon EOS 80D DSLR Camera</td>
                           <td>1</td>
@@ -169,8 +158,8 @@
     
                   <!-- Modal footer -->
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-success cartBtn">
-                      <a href="cart">Checkout</a>
+                    <button type="button" class="btn btn-success">
+                      <a href = "cart" id="cart1">Check out</a>
                     </button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                   </div>

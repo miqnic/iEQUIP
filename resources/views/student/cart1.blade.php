@@ -18,35 +18,54 @@
     </ul>
 </div>
   
-<div class="formtable mx-auto w-75">
+<div class="formtable">
     <table class="table table-striped">
-        <thead class="text-center align-middle">
+        <thead>
             <tr>
+                <th><br></th>
+                <th><br></th>
+                <th>Equipment ID</th>
+                <th><br></th>
+                <th><br></th>
+                <th><br></th>
+                <th><br></th>
                 <th>Equipment Name</th>
-                <th>Quantity</th>
-                <th></th>
+                <th><br></th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td class="pl-5 align-middle">
-                    Canon EOS 80D DSLR Camera
-                    <br>
-                    <small class="pl-2">CANCAM0001</small>
-                    <br>
-                    <small class="pl-2">CANCAM0002</small>
-                    </td>
-                <td class="text-center align-middle">2</td>
-                <td class="text-center align-middle"><button type="button" class="btn btn-danger">Remove</button></td>
+                <td><br></td>
+                <td><br></td>
+                <td>CANCAM0001</td>
+                <td><br></td>
+                <td><br></td>
+                <td><br></td>
+                <td><br></td>
+                <td>Canon EOS 80D</td>
+                <td><button type="button" class="btn btn-danger">Remove</button></td>
             </tr>
             <tr>
-                <td class="pl-5 align-middle">
-                    Spalding NBA Official Game Ball Basketball
-                    <br>
-                    <small class="pl-2">SPANBA0005</small>
-                </td>
-                <td class="text-center align-middle">1</td>
-                <td class="text-center align-middle"><button type="button" class="btn btn-danger">Remove</button></td>
+                <td><br></td>
+                <td><br></td>
+                <td>SPANBA0005</td>
+                <td><br></td>
+                <td><br></td>
+                <td><br></td>
+                <td><br></td>
+                <td>Spalding NBA Official Game Ball Basketball</td>
+                <td><button type="button" class="btn btn-danger">Remove</button></td>
+            </tr>
+            <tr>
+                <td><br></td>
+                <td><br></td>
+                <td>CANCAM0002</td>
+                <td><br></td>
+                <td><br></td>
+                <td><br></td>
+                <td><br></td>
+                <td>Canon EOS 80D</td>
+                <td><button type="button" class="btn btn-danger">Remove</button></td>
             </tr>
         </tbody>
     </table>
@@ -55,13 +74,13 @@
 <div class="wrapper text-center">
     <div class="btn-group text-center mt-2" role="group" aria-label="Basic example">
         <button type="button" class="btn btn-outline-secondary btn-lg" disabled>Previous</button>
-        <button type="button" class="btn btn-outline-primary btn-lg"><a href="cart2">Next</a></button>
+        <a href="cart2"><button type="button" class="btn btn-outline-primary btn-lg">Next</button></a>
     </div>
 </div>
 @endsection
 
 @section('modal')
-    {{-- @include('inc.checkFormModal') --}}
+    @include('inc.checkFormModal')
     @include('inc.awayModalContact')
     @include('inc.awayModalEquip')
     @include('inc.awayModalHist')

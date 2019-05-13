@@ -11,69 +11,56 @@
 
 @section('content')
 <div class="header">
-    <h2 class="border-bottom pb-2 pl-3">Current Transactions</h2>
-    <p class="lead pl-3">Statuses of approved and pending transactions can be updated here.</p>
+    <h2 class="border-bottom pb-2 pl-3">Currently Reserved Equipment</h2>
 </div>
 
 <div class="container-fluid">
-    <table class="table table-striped table-hover text-center" id="activeForms">
+    <table class = "table table-responsive-md text-center">
         <thead>
         <tr>
-            <th>Transaction Number</th>
-            <th>Student ID</th>
             <th>Equipment ID</th>
             <th>Equipment Name</th>
+            <th>Transaction Number</th>
             <th>Due Date</th>
-            <th>Status</th>
-            <th></th>
+            <th>Student Name</th>
         </tr>
         </thead>
         <tbody>
-            @if($equipments->isEmpty())
+            @foreach ($equipments as $equipment)
                 <tr>
-                    <td colspan="5">No active/pending requests</td>
+                    <td>{{$equipment->equipID}}</td>
+                    <td>{{$equipment->equip_name}}</td>
+                    <td id = "transaction" data-toggle="modal" data-target ="#checkForm">{{$equipment->transaction_id}}</td>
+                    @foreach ($transaction_forms as $form)
+                        @if ($form->transaction_id == $equipment->transaction_id)
+                            <td>{{$form->due_date}}</td>
+                            <td id="student" data-toggle="modal" data-target ="#viewStudent">{{$form->user_id}}</td>
+                        @endif
+                    @endforeach
                 </tr>
-            @else
-            @foreach($transaction_forms as $form)
-                <tr>
-                    <td class="align-middle" id="transaction" data-toggle="modal" data-target = "#checkForm{{$form->transaction_id}}">{{$form->transaction_id}}</td>
-                    <td class="align-middle" id="student" data-toggle="modal" data-target = "#viewStudent{{$form->user_id}}">{{$form->user_id}}</td>
-                    <td class="align-middle">
-                        @foreach($equipments as $equipment)
-                            @if($form->transaction_id==$equipment->transaction_id)
-                            {{$equipment->equipID}}<br>
-                            @endif
-                        @endforeach
-                    </td>
-                    <td class="align-middle">
-                        @foreach($equipments as $equipment)
-                        @if($form->transaction_id==$equipment->transaction_id)
-                            {{$equipment->equip_name}}<br>
-                        @endif
-                        @endforeach
-                    </td>
-                    <td class="align-middle">{{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}</td>
-                    <td class="align-middle">
-                        <h5>
-                        @if($form->approval==1)
-                        <span class="badge badge-success">Approved</span>
-                        @else
-                        <span class="badge badge-warning">Pending</span>
-                        @endif
-                        </h5>
-                    </td>
-                    <td class="align-middle">
-                        @if($form->approval==1)
-                            <button type="button" class="btn btn-outline-primary" @if($form->claimed==1) disabled @endif>Claimed</button>
-                            <button type="button" class="btn btn-outline-primary" @if($form->claimed==0) disabled @endif>Returned</button>
-                        @else 
-                            <button type="button" class="btn btn-outline-danger">Decline</button>
-                            <button type="button" class="btn btn-outline-success">Approve</button>
-                        @endif
-                    </td>
-                </tr>
-          @endforeach
-            @endif
+            @endforeach
+        
+        <!--<tr class = "member">
+            <td>ZHISTA0001</td>
+            <td>Zhiyun Crane 2 Stabilizer</td>
+            <td id = "transaction" data-toggle="modal" data-target ="#checkForm">TC19000001</td>
+            <td>9/19/2019</td>
+            <td id="student" data-toggle="modal" data-target ="#viewStudent">Miqaela Nicole D. Banguilan</td>
+        </tr>
+        <tr class = "member">
+            <td>WACCIN0002</td>
+            <td>Wacom CINTIQ 13HD Tablet</td>
+            <td id = "transaction" data-toggle="modal" data-target ="#checkForm">TC19000008</td>
+            <td>7/01/2020</td>
+            <td id="student" data-toggle="modal" data-target ="#viewStudent">Joshua Joseph M. Mayo</td>
+        </tr>
+        <tr class = "member">
+            <td>SPANBA0005</td>
+            <td>Spalding NBA Official Game Ball Basketball</td>
+            <td id = "transaction" data-toggle="modal" data-target ="#checkForm">TC19000027</td>
+            <td>16/9/2019</td>
+            <td id="student" data-toggle="modal" data-target ="#viewStudent">Rhej Christian J. Laurel</td>
+        </tr>-->
         </tbody>
     </table>
 </div>

@@ -2,7 +2,7 @@
 
 @section('head')
     <title>{{ config('app.name') }} | History</title>
-    <link rel="stylesheet"  type="text/css" href="{{ asset('css/history.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/history.css') }}" type=text/css>
 @endsection
 
 @section('navi')
@@ -10,14 +10,12 @@
 @endsection
 
 @section('content')
-  <div class="header">
+<div class="header">
     <h2 class="border-bottom pb-2 pl-3">Request History</h2>
     <p class="lead pl-3">Reservation and student details can be seen by clicking on the corresponding IDs. Use the search bar and sort buttons to filter data.</p>
-  </div>
-
-  <div class="container-fluid">
-    <p class="pl-3 pt-4" style="color: red;">* Equipment/s not returned</p>
-    <table class="table table-striped table-bordered table-hover text-center" id="dataTables">
+        
+    <p class="legend pl-3 pt-4" style="color: red;">* Equipment/s not returned</p><br>
+    <table class="table text-center" id="requestHistory">
       <thead>
         <tr>
           <th>Transaction Number</th>
@@ -27,15 +25,13 @@
       </thead>
       <tbody class="text-center">
           @foreach ($transaction_forms as $form)
-          <tr @if($form->returned==0 && $form->approval==1)class="text-danger" @endif  data-toggle="modal" data-target="#checkForm{{$form->transaction_id}}" id="transaction">
-              <td>{{$form->transaction_id}}</td>
+          <tr style="color: @if($form->approval==0)red @else black @endif;">
+              <td data-toggle="modal" data-target="#checkForm{{$form->transaction_id}}" id="transaction">{{$form->transaction_id}}</td>
               <td>{{\Carbon\Carbon::parse($form->created_at)->toFormattedDateString()}}</td>
               <td>
                 @if($form->approval==1)
                   APPROVED
-                @elseif($form->approval==-1)
-                  PENDING
-                @else
+                @else 
                   DECLINED
                 @endif
             </td>

@@ -25,8 +25,7 @@ class CreateTransactionFormsTable extends Migration
             $table->string('purpose');
             $table->string('room_number');
             $table->integer('approval');
-            $table->boolean('claimed');
-            $table->boolean('returned');
+            $table->boolean('claiming');
             $table->rememberToken();
 
             $table->foreign('user_id')->references('user_id')->on('users');

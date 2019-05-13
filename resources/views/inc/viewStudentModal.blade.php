@@ -1,5 +1,5 @@
 @foreach($transaction_forms as $form)
-    <div class="modal" id="viewStudent{{$form->user_id}}">
+    <div class="modal" id="viewStudent{{$form->user->user_id}}">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -12,18 +12,14 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="row">
-                    <div class="col-md-3 pt-3">
+                    <div class="col-md-3">
                         <img src = "images\user-account-box.jpg" height= 100;>
                     </div>
                     <div class="col-md-9">
-                        @foreach($users as $user)
-                            @if($user->user_id==$form->user_id)
-                                <p><strong>Student ID: </strong>{{$user->user_id}}</p>
-                                <p><strong>Student Name: </strong>{{$user->first_name}} {{$user->last_name}}</p>
-                                <p><strong>Course: </strong>{{$user->course}}</p>
-                                <p><strong>Penalty: </strong>PHP{{$user->penalty}}.00</p>
-                            @endif
-                        @endforeach
+                        <p><strong>Student ID: </strong>{{$form->user->user_id}}</p>
+                        <p><strong>Student Name: </strong>{{$form->user->first_name}} {{$form->user->last_name}}</p>
+                        <p><strong>Course: </strong>{{$form->user->course}}</p>
+                        <p><strong>Penalty: </strong>PHP{{$form->user->penalty}}.00</p>
                     </div>
                     </div>
 

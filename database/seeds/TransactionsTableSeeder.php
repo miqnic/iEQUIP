@@ -24,36 +24,20 @@ class TransactionsTableSeeder extends Seeder
                 'room_number' => '901',
                 'submitted_date' => date('Y-m-d H:i:s'),
                 'approval' => '1', //approved
-                'claimed' => true,
-                'returned' => false,
+                'claiming' => false,
             ],
             [
                 'transaction_id' => 'TC19000018',
                 'user_id' => '201701039',
                 'start_date' => Carbon::parse('2019-01-01'),
-                'due_date' => Carbon::parse('2019-12-12'),
+                'due_date' => Carbon::parse('2019-01-01'),
                 'start_time' => Carbon::parse('07:30:00'),
                 'end_time' => Carbon::parse('11:00:00'),
                 'purpose' => 'PROJECT',
                 'room_number' => '910',
                 'submitted_date' => date('Y-m-d H:i:s'),
-                'approval' => '-1', //pending
-                'claimed' => false,
-                'returned' => false,
-            ],
-            [
-                'transaction_id' => 'TC19000019',
-                'user_id' => '000000000',
-                'start_date' => Carbon::parse('2019-01-29'),
-                'due_date' => Carbon::parse('2019-01-31'),
-                'start_time' => Carbon::parse('07:30:00'),
-                'end_time' => Carbon::parse('11:30:00'),
-                'purpose' => 'CLASS',
-                'room_number' => '1001',
-                'submitted_date' => date('Y-m-d H:i:s'),
-                'approval' => '1', //approved
-                'claimed' => true,
-                'returned' => true,
+                'approval' => '0', //pending
+                'claiming' => false,
             ]
             [
                 'transaction_id' => 'TC19000019',

@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Equipment;
-use App\User;
-use App\TransactionForm;
-
 use DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -28,15 +25,8 @@ class TransactionFormsController extends Controller
      */
     public function index()
     {
-        $transaction_forms = TransactionForm::where('user_id', auth()->user()->user_id)->get();
-        $recentForms =  TransactionForm::where(['user_id' => auth()->user()->user_id, 'approval' => 1])
-                                        ->orderBy('transaction_id', 'desc')
-                                        ->take(5)
-                                        ->get();
-        $equipments = Equipment::get();
-        return view('student.home')->with('transaction_forms', $transaction_forms)
-                                   ->with('recentForms', $recentForms)
-                                   ->with('equipments',$equipments);
+        $forms =  TransactionForm::orderBy('created_at', 'desc')->get();
+        return view('student.home')->with('forms',$forms);
     }
 
     /**
@@ -88,10 +78,10 @@ class TransactionFormsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
         $form = TransactionForm::find($id);
-        return view('student.home')->with('form',$form);
+        return view('student.home')->with('form', $form);
     }
 
     /**
@@ -131,52 +121,5 @@ class TransactionFormsController extends Controller
     {
         $form->delete();
         return redirect('student.home')->with('success', 'Form Removed');
-    }
-
-    public function adminHome(){
-        $transaction_forms = TransactionForm::orderBy('transaction_id', 'desc')
-                                            ->where('approval', '!=', 0)
-                                            ->where('returned', '!=', 1)
-                                            ->get();
-        $users = User::get();
-        $equipments = Equipment::get();
-        return view('admin.home')->with('equipments',$equipments)
-                                 ->with('users',$users)
-                                 ->with('transaction_forms',$transaction_forms);
-    }
-
-    public function adminBalances(){
-        $transaction_forms = TransactionForm::get();
-        $users = User::where('penalty','>',0)
-                     ->get();
-        $equipments = Equipment::get();
-        return view('admin.balances')->with('transaction_forms',$transaction_forms)
-                                    ->with('users',$users)
-                                    ->with('equipments',$equipments);
-    }
-
-    public function reqHistory(){
-        $transaction_forms = TransactionForm::get();
-        $users = User::get();
-        $equipments = Equipment::get();
-        return view('admin.history')->with('transaction_forms',$transaction_forms)
-                                    ->with('users',$users)
-                                    ->with('equipments',$equipments);
-    }
-
-    public function adminCalendar(){
-        $transaction_forms = TransactionForm::where('returned', 0)->get();
-        $users = User::get();
-        $equipments = Equipment::get();
-        return view('admin.calendar')->with('transaction_forms',$transaction_forms)
-                                     ->with('users',$users) 
-                                     ->with('equipments',$equipments);
-    }
-
-    public function studentHistory(){
-        $transaction_forms = TransactionForm::where('user_id', auth()->user()->user_id)->get();
-        $equipments = Equipment::get();
-        return view('student.history')->with('transaction_forms',$transaction_forms)
-                                      ->with('equipments',$equipments);
     }
 }

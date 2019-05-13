@@ -15,7 +15,7 @@ class EquipmentsTableSeeder extends Seeder
             [
                 'equipID' => 'CANCAM0001',
                 'equip_name' => 'Canon EOS 80D DSLR Camera',
-                'transaction_id' => 'TC19000019',
+                'transaction_id' => null,
                 'equip_category' => 'CAMACC',
                 'equip_avail' => '0', //available
                 'equip_description' => '',
@@ -24,7 +24,7 @@ class EquipmentsTableSeeder extends Seeder
                 'equip_img' => '',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-                'returned' => true,
+                'returned' => false,
             ],
             [
                 'equipID' => 'CANCAM0002',
@@ -44,7 +44,7 @@ class EquipmentsTableSeeder extends Seeder
 
                 'equipID' => 'CANCAM0003',
                 'equip_name' => 'Canon EOS 80D DSLR Camera',
-                'transaction_id' => 'TC19000018',
+                'transaction_id' => null,
                 'equip_category' => 'CAMACC',
                 'equip_avail' => '-1', //unavailable
                 'equip_description' => 'Currently Under Maintenance',

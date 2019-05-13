@@ -41,6 +41,8 @@
                   @foreach ($countCurrAvail as $item)
                     @if (Arr::get($item, 'equip_name') == $equipment->equip_name)
                       {{Arr::get($item, 'record')}}
+                    @else
+                        0
                     @endif
                   @endforeach 
                   /
@@ -101,7 +103,7 @@
                               </small>-->
                             </div>
                             <div class="col-md-1 pt-2">
-                              <button type="button" data-target="#editItemModal-{{$equipment->equip_name}}" data-dismiss="modal" data-toggle="modal" class="btn btn-outline-secondary">Edit</button>
+                              <button type="button" data-target="#editItemModal-{{$equipment->equipID}}" data-dismiss="modal" data-toggle="modal" class="btn btn-outline-secondary">Edit</button>
                             </div>
                           </div>
                         </div>
@@ -166,8 +168,6 @@
           <!--Edit Modal for a SPECIFIC equipment (by equip_name)-->
           @include('inc.confirmEquipChangesModal', $equipment)
           @include('inc.editItemModal', [$equipment, $countTotalAvail])
-          @include('inc.addEquipModal', $equipment)
-          @include('inc.delEquipModal', $equipment)
 
         @endforeach
       </div>
@@ -176,4 +176,6 @@
 
 @section('modal')
     @include('inc.deleteConfirmationModal')
+    @include('inc.addEquipModal')
+    @include('inc.delEquipModal')
 @endsection

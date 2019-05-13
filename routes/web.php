@@ -19,12 +19,11 @@ Route::resource('equipments', 'EquipmentsController');
 //Authorization for Admin
 Route::group(['middleware' => ['admin']], function()
 {
-    Route::match(['get', 'post'], '/admin/home', 'TransactionFormsController@adminHome');
-    Route::match(['get', 'post'],'/admin/request-history', 'TransactionFormsController@reqHistory');
-    Route::match(['get', 'post'],'/admin/balances', 'TransactionFormsController@adminBalances');
-    Route::match(['get', 'post'],'/admin/calendar', 'TransactionFormsController@adminCalendar');
-    Route::match(['get', 'post'],'/admin/feedbacks', 'EmailsController@adminFeedbacks');
-/*     Route::get('/feedbacks/{id}/read', 'EmailsController@read'); */
+    Route::match(['get', 'post'], '/admin/home', 'EquipmentsController@showCurrentlyBorrowed');
+    Route::match(['get', 'post'],'/admin/request-history', 'PagesController@reqHistory');
+    Route::match(['get', 'post'],'/admin/balances', 'PagesController@adminBalances');
+    Route::match(['get', 'post'],'/admin/calendar', 'PagesController@adminCalendar');
+    Route::match(['get', 'post'],'/admin/feedbacks', 'PagesController@adminFeedbacks');
 
     Route::match(['get', 'post'],'/admin/art-tools', 'EquipmentsController@showArtEquipment');
     Route::match(['get', 'post'],'/admin/camera-equipment', 'EquipmentsController@showCamEquipment');
@@ -32,22 +31,13 @@ Route::group(['middleware' => ['admin']], function()
     Route::match(['get', 'post'],'/admin/gaming-equipment', 'EquipmentsController@showGameEquipment');
     Route::match(['get', 'post'],'/admin/sports-equipment', 'EquipmentsController@showSportEquipment');
     Route::match(['get', 'post'],'/admin/laptops-accessories', 'EquipmentsController@showLapEquipment');
-
-    Route::get('/add','EquipmentsController@add');
-    Route::post('/addEquipment','EquipmentsController@addEquipment'); 
-
-    Route::get('/edit','EquipmentsController@edit');
-    Route::post('/editEquipment','EquipmentsController@editEquipment'); 
-
-    Route::get('/del','EquipmentsController@del');
-    Route::post('/delEquipment','EquipmentsController@delEquipment'); 
 });
 
 //Authorization for Student
 Route::group(['middleware' => ['student']], function()
 {
-    Route::match(['get', 'post'],'/student/home', 'TransactionFormsController@index');
-    Route::match(['get', 'post'],'/student/history', 'TransactionFormsController@studentHistory');
+    Route::match(['get', 'post'],'/student/home', 'PagesController@studentHome');
+    Route::match(['get', 'post'],'/student/history', 'PagesController@studentHistory');
     Route::match(['get', 'post'],'/student/contact', 'PagesController@studentContact');
     Route::post('feedback','EmailsController@feedback');
     //Route::match(['get', 'post'],'/student/equipment', 'EquipmentsController@showArtEquipment');
