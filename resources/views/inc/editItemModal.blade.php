@@ -1,4 +1,14 @@
-<div class="modal fade" id="editItemModal-{{$equipment->equip_name}}" tabindex="-1">
+@foreach ($equipments->unique('equip_name') as $equipment)
+@php
+    $spaces = '/\s*/m';
+    $replace = '';
+
+    $string= $equipment->equip_name;
+
+    $trimmedString = preg_replace($spaces, $replace, $string);
+@endphp
+
+<div class="modal fade" id="editItemModal-{{$trimmedString}}" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
     
@@ -9,6 +19,18 @@
             {!! Form::open(['action' => 'EquipmentsController@editEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             @csrf
             <div class="modal-body">
+                    <div class="mt-2 alert alert-primary" role="alert"> 
+                            <div class="row text-center">
+                                <div class="col-md-4 offset-md-1">
+                                    Equipment ID:<br>
+                                    <b>{{$equipment->equipID}}</b>
+                                </div>
+                                <div class="col-md-4 offset-md-2">
+                                    Equipment Name:<br>
+                                    <b>{{$equipment->equip_name}}</b>
+                                </div>
+                            </div>
+                        </div>
                     <div class="form-group">
                         {{Form::hidden('currentEquipName', $equipment->equip_name)}}
                         {{Form::label('itemName', 'Item Name')}}
@@ -59,4 +81,6 @@
             {!! Form::close() !!}
             </div>
         </div>
-    </div>
+</div>
+    
+@endforeach

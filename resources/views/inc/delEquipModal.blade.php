@@ -23,8 +23,7 @@
                         <tr>
                             <td class="align-middle">
                                 <div class="checkbox pt-1">
-                                        
-                                <label>{{Form::checkbox("checkbox-$equipment->equip_name","$equipment->equip_name")}}</label>
+                                <label>{{Form::checkbox('checkbox[]',"$equipment->equip_name")}}</label>
                                 </div>
                             </td>
                             <td class="align-middle">{{$equipment->equip_name}}</td>

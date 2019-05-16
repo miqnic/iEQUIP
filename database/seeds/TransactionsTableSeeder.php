@@ -26,6 +26,8 @@ class TransactionsTableSeeder extends Seeder
                 'approval' => '1', //approved
                 'claimed' => true,
                 'returned' => false,
+                'claimed_date' => null,
+                'returned_date' => null,
             ],
             [
                 'transaction_id' => 'TC19000018',
@@ -37,9 +39,11 @@ class TransactionsTableSeeder extends Seeder
                 'purpose' => 'CLASS',
                 'room_number' => '910',
                 'submitted_date' => date('Y-m-d H:i:s'),
-                'approval' => '-1', //pending
+                'approval' => '0', //pending
                 'claimed' => false,
                 'returned' => false,
+                'claimed_date' => null,
+                'returned_date' => null,
             ],
             [
                 'transaction_id' => 'TC19000019',
@@ -54,6 +58,24 @@ class TransactionsTableSeeder extends Seeder
                 'approval' => '1', //approved
                 'claimed' => true,
                 'returned' => true,
+                'claimed_date' => null,
+                'returned_date' => null,
+            ],
+            [
+                'transaction_id' => 'TC19000020',
+                'user_id' => '201701039',
+                'start_date' => Carbon::parse('2019-01-01'),
+                'due_date' => Carbon::parse('2019-12-12'),
+                'start_time' => Carbon::parse('07:30:00'),
+                'end_time' => Carbon::parse('11:00:00'),
+                'purpose' => 'CLASS',
+                'room_number' => '910',
+                'submitted_date' => date('Y-m-d H:i:s'),
+                'approval' => '-2', //cancelled
+                'claimed' => false,
+                'returned' => false,
+                'claimed_date' => null,
+                'returned_date' => null,
             ]
         ]);
     }

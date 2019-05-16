@@ -29,50 +29,66 @@
         </tr>
         </thead>
         <tbody>
-            @if($equipments->isEmpty())
+            @if($transaction_forms->isEmpty())
                 <tr>
-                    <td colspan="5">No active/pending requests</td>
+                    <td colspan="7">No active/pending requests</td>
                 </tr>
             @else
-            @foreach($transaction_forms as $form)
-                <tr>
-                    <td class="align-middle" id="transaction" data-toggle="modal" data-target = "#checkForm{{$form->transaction_id}}">{{$form->transaction_id}}</td>
-                    <td class="align-middle" id="student" data-toggle="modal" data-target = "#viewStudent{{$form->user_id}}">{{$form->user_id}}</td>
-                    <td class="align-middle">
-                        @foreach($equipments as $equipment)
-                            @if($form->transaction_id==$equipment->transaction_id)
-                            {{$equipment->equipID}}<br>
-                            @endif
-                        @endforeach
-                    </td>
-                    <td class="align-middle">
-                        @foreach($equipments as $equipment)
-                        @if($form->transaction_id==$equipment->transaction_id)
-                            {{$equipment->equip_name}}<br>
-                        @endif
-                        @endforeach
-                    </td>
-                    <td class="align-middle">{{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}</td>
-                    <td class="align-middle">
-                        <h5>
-                        @if($form->approval==1)
-                        <span class="badge badge-success">Approved</span>
-                        @else
-                        <span class="badge badge-warning">Pending</span>
-                        @endif
-                        </h5>
-                    </td>
-                    <td class="align-middle">
-                        @if($form->approval==1)
-                            <button type="button" class="btn btn-outline-primary" @if($form->claimed==1) disabled @endif>Claimed</button>
-                            <button type="button" class="btn btn-outline-primary" @if($form->claimed==0) disabled @endif>Returned</button>
-                        @else 
-                            <button type="button" class="btn btn-outline-danger">Decline</button>
-                            <button type="button" class="btn btn-outline-success">Approve</button>
-                        @endif
-                    </td>
-                </tr>
-          @endforeach
+                @foreach($transaction_forms as $form)
+                    @if ($form->returned != 1 || $form->approval != -1 || $form->approval != -2)
+                        <tr>
+                            <td class="align-middle" id="transaction" data-toggle="modal" data-target = "#checkForm{{$form->transaction_id}}">{{$form->transaction_id}}</td>
+                            <td class="align-middle" id="student" data-toggle="modal" data-target = "#viewStudent{{$form->user_id}}">{{$form->user_id}}</td>
+                            <td class="align-middle">
+                                @foreach($equipments as $equipment)
+                                    @if($form->transaction_id==$equipment->transaction_id)
+                                    {{$equipment->equipID}}<br>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td class="align-middle">
+                                @foreach($equipments as $equipment)
+                                @if($form->transaction_id==$equipment->transaction_id)
+                                    {{$equipment->equip_name}}<br>
+                                @endif
+                                @endforeach
+                            </td>
+                            <td class="align-middle">{{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}</td>
+                            <td class="align-middle">
+                                <h5>
+                                @if($form->approval==1)
+                                <span class="badge badge-success">Approved</span>
+                                @else
+                                <span class="badge badge-warning">Pending</span>
+                                @endif
+                                </h5>
+                            </td>
+                            <td class="align-middle">
+                                @if($form->approval==1)
+                                        @if ($form->claimed == 1)
+                                            <button class="btn btn-outline-primary" disabled>Claimed</button>
+                                            <button data-toggle="modal" data-target="#returnEquip-{{$form->transaction_id}}" class="btn btn-outline-primary">Returned</button>
+                                        @else
+                                            {!! Form::open(['action' => 'TransactionFormsController@afterApproval', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                                                {{Form::hidden('currentForm', $form->transaction_id)}}
+                                                {{ Form::submit('Claimed', array('class' => 'btn btn-outline-primary','name'=>'claimed')) }}
+                                            {!! Form::close() !!}
+                                            <button data-toggle="modal" data-target="#returnEquip-{{$form->transaction_id}}" class="btn btn-outline-primary" disabled>Returned</button>
+                                        @endif
+                                        
+                                @else 
+                                    {!! Form::open(['action' => 'TransactionFormsController@transactionApproval', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                                        {{Form::hidden('currentForm', $form->transaction_id)}}
+                                        {{ Form::submit('Decline', array('class' => 'btn btn-outline-danger','name'=>'decision', 'value'=>'decline')) }}
+                                        {{ Form::submit('Approve', array('class' => 'btn btn-outline-success','name'=>'decision', 'value'=>'approve')) }}
+                                    {!! Form::close() !!}
+                                @endif
+                            </td>
+                        </tr>
+                    @endif
+                @endforeach
+
+                
             @endif
         </tbody>
     </table>
@@ -80,6 +96,9 @@
 @endsection
 
 @section('modal')
-    @include('inc.checkFormModal')
-    @include('inc.viewStudentModal')
+@if (!$transaction_forms->isEmpty())
+@include('inc.checkFormModal')
+@include('inc.viewStudentModal')
+@include('inc.returnEquipModal')
+@endif
 @endsection

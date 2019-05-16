@@ -9,7 +9,7 @@
   @if(Auth::user()->access_role == "ADMIN")
     @include('inc.naviAdmin')
   @else
-    @include('inc.naviStudent')
+    @include('inc.naviStudent', [$totalEquip, $lastTransaction, $countCart])
   @endif
 @endsection
 
@@ -27,6 +27,9 @@
                     <button type="button" name="delEquip" class="btn btn-default" data-toggle="modal" data-target="#delEquip"><img id="minus" src="images/minus.png" height=18;> Delete Equipment</button>
                 </div>
             </div>
+
+            @include('inc.addEquipModal')
+            @include('inc.delEquipModal')
         @endif
 
       <!--Item List-->
@@ -138,19 +141,26 @@
                                 <td class="align-middle">{{$equipment_modal->equip_description}}</td>
                                 <td>
                                     @if (Auth::user()->access_role == "ADMIN")
-                                      <button type="button" data-target="#editStockModal-{{$equipment_modal->equipID}}" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                      <button type="button" data-target="#deleteSingleModal-{{$equipment_modal->equipID}}" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-danger">Delete</button>
+                                      <button type="button" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-outline-secondary" data-target="#editStockModal-{{$equipment_modal->equipID}}">Edit</button>
+                                      <button type="button" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-danger" data-target="#deleteSingleModal-{{$equipment_modal->equipID}}">Delete</button>
+
+                                      <!--Edit and Delete Modals for EACH equipment (by equipID)-->
+                                      @include('inc.editStockModal', [$equipment_modal, $equipment])
+                                      @include('inc.deleteSingleModal', $equipment_modal)
                                     @else
-                                      <button type="button" data-target="#confirmReserveModal-{{$equipment_modal->equipID}}" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-success">Reserve</button>
+                                        @php
+                                        $spaces = '/\s*/m';
+                                        $replace = '';
+
+                                        $string= $equipment->equip_name;
+
+                                        $trimmedString = preg_replace($spaces, $replace, $string);
+                                      @endphp
+                                    <button type="button" data-dismiss="modal" data-toggle="modal" class="btn btn-outline-secondary" data-target="#editItemModal-{{$trimmedString}}" >Edit</button>
                                     @endif
                                 </td>
                               @endif
                           </tr>
-
-                          <!--Edit and Delete Modals for EACH equipment (by equipID)-->
-                          @include('inc.editStockModal', [$equipment_modal, $equipment])
-                          @include('inc.deleteSingleModal', [$equipment])
-
                         @endforeach
                       </tbody>
                     </table>
@@ -166,9 +176,6 @@
           <!--Edit Modal for a SPECIFIC equipment (by equip_name)-->
           @include('inc.confirmEquipChangesModal', $equipment)
           @include('inc.editItemModal', [$equipment, $countTotalAvail])
-          @include('inc.addEquipModal', $equipment)
-          @include('inc.delEquipModal', $equipment)
-
         @endforeach
       </div>
     </div>

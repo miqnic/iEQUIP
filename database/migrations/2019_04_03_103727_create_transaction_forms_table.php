@@ -17,16 +17,23 @@ class CreateTransactionFormsTable extends Migration
             $table->bigIncrements('id')->unique();
             $table->string('transaction_id')->unique();
             $table->string('user_id');
-            $table->date('start_date');
-            $table->date('due_date');
-            $table->timestamp('submitted_date');
-            $table->time('start_time');
-            $table->time('end_time');
-            $table->string('purpose');
-            $table->string('room_number');
-            $table->integer('approval');
-            $table->boolean('claimed');
-            $table->boolean('returned');
+
+            $table->date('start_date')->nullable();
+            $table->time('start_time')->nullable();
+            $table->date('due_date')->nullable();
+            $table->time('end_time')->nullable();
+
+            $table->string('purpose')->nullable();
+            $table->string('room_number')->nullable();
+            $table->integer('approval')->nullable();
+            $table->boolean('claimed')->nullable();
+            $table->boolean('returned')->nullable();
+            
+            $table->timestamp('submitted_date')->nullable();
+            $table->timestamp('claimed_date')->nullable();
+            $table->timestamp('returned_date')->nullable();
+            $table->timestamp('approval_date')->nullable();
+            $table->timestamp('cancelled_date')->nullable();
             $table->rememberToken();
 
             $table->foreign('user_id')->references('user_id')->on('users');

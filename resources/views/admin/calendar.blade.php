@@ -409,7 +409,12 @@
 @endsection
 
 @section('navi')
-    @include('inc.naviAdmin')
+    @if (Auth::user()->role_access == 'ADMIN')
+      @include('inc.naviAdmin')        
+    @else
+      @include('inc.naviStudent', [$equipments, $lastTransaction, $countCart]) 
+    @endif
+    
 @endsection
 
 @section('content')

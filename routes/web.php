@@ -41,21 +41,32 @@ Route::group(['middleware' => ['admin']], function()
     Route::get('/del','EquipmentsController@del');
     Route::post('/delEquipment','EquipmentsController@delEquipment'); 
 
+    Route::post('/delSingleEquip','EquipmentsController@delSingleEquipment');
+
     Route::post('/readfeedback','FeedbacksController@read');
+
+    Route::post('/appdectrans','TransactionFormsController@transactionApproval');
+
+    Route::post('/clarettrans','TransactionFormsController@afterApproval');
+
+    Route::post('/returnEquip','EquipmentsController@returnEquipment');
+
+    Route::post('/editSingleEquip','EquipmentsController@editSingleEquipment');
+    
 });
 
 //Authorization for Student
 Route::group(['middleware' => ['student']], function()
 {
-    Route::match(['get', 'post'],'/student/home', 'TransactionFormsController@index');
+    Route::match(['get', 'post'],'/student/home', 'TransactionFormsController@studentHome');
     Route::match(['get', 'post'],'/student/history', 'TransactionFormsController@studentHistory');
     Route::match(['get', 'post'],'/student/calendar', 'TransactionFormsController@adminCalendar');
-    Route::match(['get', 'post'],'/student/contact', 'PagesController@studentContact');
+    Route::match(['get', 'post'],'/student/contact', 'TransactionFormsController@studentContact');
     Route::post('feedback','FeedbacksController@feedback');
     //Route::match(['get', 'post'],'/student/equipment', 'EquipmentsController@showArtEquipment');
-    Route::match(['get', 'post'],'/student/cart', 'PagesController@studentCart');
-    Route::match(['get', 'post'],'/student/cart2', 'PagesController@studentCart2');
-    Route::match(['get', 'post'],'/student/cart3', 'PagesController@studentCart3');
+    Route::match(['get', 'post'],'/student/cart', 'TransactionFormsController@cart1');
+    Route::match(['get', 'post'],'/student/cart2', 'TransactionFormsController@cart2');
+    Route::match(['get', 'post'],'/student/cart3', 'TransactionFormsController@cart3');
 
     Route::match(['get', 'post'],'/student/art-tools', 'EquipmentsController@showArtEquipment');
     Route::match(['get', 'post'],'/student/camera-equipment', 'EquipmentsController@showCamEquipment');
@@ -63,6 +74,11 @@ Route::group(['middleware' => ['student']], function()
     Route::match(['get', 'post'],'/student/gaming-equipment', 'EquipmentsController@showGameEquipment');
     Route::match(['get', 'post'],'/student/sports-equipment', 'EquipmentsController@showSportEquipment');
     Route::match(['get', 'post'],'/student/laptops-accessories', 'EquipmentsController@showLapEquipment');
+
+    Route::post('/reserveEquip','EquipmentsController@reserveEquipment');
+    Route::post('/submitForm','TransactionFormsController@submitForm');
+    Route::post('/cancel','TransactionFormsController@cancelForm');
+    
 });
 
 

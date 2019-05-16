@@ -154,18 +154,20 @@
                         </tr>
                       </thead>
                       <tbody class="text-center align-middle">
-                        <tr>
-                          <td>Canon EOS 80D DSLR Camera</td>
-                          <td>1</td>
-                        </tr>
-                        <tr>
-                          <td>Nikon D3200 DSLR Camera</td>
-                          <td>1</td>
-                        </tr>
-                        <tr>
-                          <td>Sony PlayStation 4 Slim Console</td>
-                          <td>1</td>
-                        </tr>
+                          @foreach ($totalEquip->unique('equip_name') as $equipment)
+                              @if ($equipment->transaction_id == $lastTransaction->transaction_id)
+                                <tr>
+                                  <td>{{$equipment->equip_name}}</td>
+                                  <td>
+                                    @foreach ($countCart as $item)
+                                      @if (Arr::get($item, 'equip_name') == $equipment->equip_name)
+                                        {{Arr::get($item, 'record')}}
+                                      @endif
+                                    @endforeach 
+                                  </td>
+                                </tr>
+                              @endif
+                          @endforeach
                       </tbody>
                     </table>
                   </div>

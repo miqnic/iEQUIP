@@ -1,6 +1,6 @@
-@foreach($transaction_forms as $form)
-<div class="modal" id="checkForm{{$form->transaction_id}}">
-    <div class="modal-dialog">
+@foreach ($transaction_forms as $form)
+<div class="modal fade in" id="checkForm{{$form->transaction_id}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md">
         <div class="modal-content">
 
             <!-- Modal Header -->
@@ -11,54 +11,26 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <div class="mt-2 alert @if($form->approval==1) alert-success @elseif($form->approval==-1) alert-warning @else alert-danger @endif" role="alert"> 
+                <div class="mt-2 alert @if($form->approval==1) alert-success @elseif($form->approval==0) alert-warning @else alert-danger @endif" role="alert"> 
                     <div class="row text-center">
                         <div class="col-md-4 offset-md-1">
-                        Transaction Form:<br>
-                        <b>{{$form->transaction_id}}</b>
+                            Transaction Form:<br>
+                            <b>{{$form->transaction_id}}</b>
                         </div>
                         <div class="col-md-4 offset-md-2">
-                        Request Status:<br>
-                        <b> 
-                            @if($form->approval==1)
-                                APPROVED
-                            @elseif($form->approval==-1)
-                                PENDING
-                            @else
-                                DECLINED
-                            @endif
-                        </b>
+                            Request Status:<br>
+                            <b> 
+                                @if($form->approval==1)
+                                    APPROVED
+                                @elseif($form->approval==0)
+                                    PENDING
+                                @else
+                                    DECLINED
+                                @endif
+                            </b>
                         </div>
                     </div>
                 </div>
-
-                {{-- <div class="row pt-2 text-center">
-                    <div class="col-md-5">
-                        <p><strong>Date Submitted:</strong><br>{{\Carbon\Carbon::parse($form->submitted_date)->toFormattedDateString()}}</p>
-                        <p><strong>Date Approved:</strong><br>01/02/2019</p> <!--not yet working-->
-                    </div>
-                    <div class="col-md-7">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p><strong>Start Date:</strong><br>{{\Carbon\Carbon::parse($form->start_date)->toFormattedDateString()}}</p>
-                                <p><strong>End Date:</strong><br>{{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p><strong>Start Time:</strong><br>{{$form->start_time}}</p>
-                                <p><strong>End Time:</strong><br>{{$form->end_time}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="row px-2 text-center">
-                    <div class="col-md-6">
-                    <p><strong>Date Claimed:</strong><br>02/02/2019</p> <!--not yet working-->
-                    </div>
-                    <div class="col-md-6">
-                    <p><strong>Date Returned:</strong><br>02/02/2019</p> <!--not yet working-->
-                    </div>
-                </div>--}}
 
                 <div class="formInfo row pt-3">
                     <div class="col-md-6">

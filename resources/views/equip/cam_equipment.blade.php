@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    <title>{{ config('app.name') }} | Cameras & Accessories</title>
+    <title>{{ config('app.name') }} | Camera and Accessories</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/admin-equiplist.css') }}">
 @endsection
 
@@ -9,13 +9,13 @@
   @if(Auth::user()->access_role == "ADMIN")
     @include('inc.naviAdmin')
   @else
-    @include('inc.naviStudent')
+    @include('inc.naviStudent', [$totalEquip, $lastTransaction, $countCart])
   @endif
 @endsection
 
 @section('content')
     <div class="header">
-        <h2 class="border-bottom pb-2 pl-3">Cameras & Accessories</h2>
+        <h2 class="border-bottom pb-2 pl-3">Camera and Accessories</h2>
     </div>
 
     <div class="container-fluid pt-4">
@@ -27,6 +27,9 @@
                     <button type="button" name="delEquip" class="btn btn-default" data-toggle="modal" data-target="#delEquip"><img id="minus" src="images/minus.png" height=18;> Delete Equipment</button>
                 </div>
             </div>
+
+            @include('inc.addEquipModal')
+            @include('inc.delEquipModal')
         @endif
 
       <!--Item List-->
@@ -41,8 +44,6 @@
                   @foreach ($countCurrAvail as $item)
                     @if (Arr::get($item, 'equip_name') == $equipment->equip_name)
                       {{Arr::get($item, 'record')}}
-                    @else
-                      0
                     @endif
                   @endforeach 
                   /
@@ -58,8 +59,8 @@
           </div>
 
           <!--MODAL SECTION-->
-
           <div class="modal fade" id="itemList-{{$equipment->equipID}}" tabindex="-1">
+              
               <div class="modal-dialog modal-xl">
                 <div class="modal-content">
       
@@ -103,12 +104,20 @@
                               </small>-->
                             </div>
                             <div class="col-md-1 pt-2">
-                              <button type="button" data-target="#editItemModal-{{$equipment->equipID}}" data-dismiss="modal" data-toggle="modal" class="btn btn-outline-secondary">Edit</button>
+                                @php
+                                  $spaces = '/\s*/m';
+                                  $replace = '';
+
+                                  $string= $equipment->equip_name;
+
+                                  $trimmedString = preg_replace($spaces, $replace, $string);
+                                @endphp
+                              <button type="button" data-dismiss="modal" data-toggle="modal" class="btn btn-outline-secondary" data-target="#editItemModal-{{$trimmedString}}" >Edit</button>
                             </div>
                           </div>
                         </div>
                       </div>
-                    
+                      
                     <table class="table table-bordered table-responsive-sm text-center">
                       <thead>
                         <tr>
@@ -140,18 +149,21 @@
                                 <td class="align-middle">{{$equipment_modal->equip_description}}</td>
                                 <td>
                                     @if (Auth::user()->access_role == "ADMIN")
-                                      <button type="button" data-target="#editStockModal-{{$equipment_modal->equipID}}" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                      <button type="button" data-target="#deleteSingleModal-{{$equipment_modal->equipID}}" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-danger">Delete</button>
+                                      <button type="button" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-outline-secondary" data-target="#editStockModal-{{$equipment_modal->equipID}}">Edit</button>
+                                      <button type="button" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-danger" data-target="#deleteSingleModal-{{$equipment_modal->equipID}}">Delete</button>
                                     @else
-                                      <button type="button" data-target="#confirmReserveModal-{{$equipment_modal->equipID}}" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-success">Reserve</button>
+                                      {!! Form::open(['action' => 'EquipmentsController@reserveEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                                      {{Form::submit('Reserve', ['class' => 'btn btn-success'])}}
+                                      {{Form::hidden('currentEquipID', $equipment_modal->equipID)}}
+                                      {{Form::hidden('userID', Auth::user()->user_id)}}
+                                      {!! Form::close() !!}
                                     @endif
                                 </td>
                               @endif
                           </tr>
 
                           <!--Edit and Delete Modals for EACH equipment (by equipID)-->
-                          @include('inc.editStockModal', [$equipment_modal, $equipment])
-                          @include('inc.deleteSingleModal', [$equipment])
+                          
 
                         @endforeach
                       </tbody>
@@ -163,18 +175,22 @@
                   </div>
                 </div>
               </div>
+              
           </div>
 
           <!--Edit Modal for a SPECIFIC equipment (by equip_name)-->
-          @include('inc.editItemModal', [$equipment, $countTotalAvail])
-          @include('inc.confirmEquipChangesModal', $equipment)
+          
+          @include('inc.editItemModal')
+          @include('inc.confirmEquipChangesModal')
+          @include('inc.editStockModal')
+          
         @endforeach
+        
       </div>
     </div>
 @endsection
 
 @section('modal')
+    @include('inc.deleteSingleModal')
     @include('inc.deleteConfirmationModal')
-    @include('inc.addEquipModal')
-    @include('inc.delEquipModal')
 @endsection

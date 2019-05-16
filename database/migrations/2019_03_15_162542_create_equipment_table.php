@@ -15,14 +15,14 @@ class CreateEquipmentTable extends Migration
     {
         Schema::create('equipment', function (Blueprint $table) {
             $table->bigIncrements('id')->unique();
-            $table->string('equipID')->unique();
+            $table->string('equipID')->nullable();
             $table->string('transaction_id')->nullable();
             $table->string('equip_name');
             $table->string('equip_category');
             $table->integer('equip_avail');
             $table->integer('equip_penalty');
             $table->decimal('equip_baseprice', 10, 4);
-            $table->mediumText('equip_description');
+            $table->mediumText('equip_description')->nullable();
             $table->boolean('returned');
             $table->string('equip_img');
             $table->softDeletes();

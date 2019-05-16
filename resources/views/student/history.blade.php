@@ -6,7 +6,7 @@
 @endsection
 
 @section('navi')
-    @include('inc.naviStudent')
+    @include('inc.naviStudent', [$totalEquip, $lastTransaction, $countCart])
 @endsection
 
 @section('content')
@@ -33,10 +33,12 @@
               <td>
                 @if($form->approval==1)
                   APPROVED
-                @elseif($form->approval==-1)
+                @elseif($form->approval==0)
                   PENDING
-                @else
+                @elseif($form->approval==-1)
                   DECLINED
+                @else
+                  CANCELLED
                 @endif
             </td>
           </tr>
