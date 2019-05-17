@@ -63,6 +63,9 @@ Route::group(['middleware' => ['student']], function()
     Route::match(['get', 'post'],'/student/calendar', 'TransactionFormsController@adminCalendar');
     Route::match(['get', 'post'],'/student/contact', 'TransactionFormsController@studentContact');
     Route::post('feedback','FeedbacksController@feedback');
+
+    Route::view('/student/faqs', 'student.faq');
+
     //Route::match(['get', 'post'],'/student/equipment', 'EquipmentsController@showArtEquipment');
     Route::match(['get', 'post'],'/student/cart', 'TransactionFormsController@cart1');
     Route::match(['get', 'post'],'/student/cart2', 'TransactionFormsController@cart2');
