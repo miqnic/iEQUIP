@@ -87,6 +87,22 @@ class TransactionFormsController extends Controller
                                     ->with('equipments',$equipments);
     }
 
+    public function paidPenalty(Request $request){
+        $userInput = $request->get('user');
+        $formInput = $request->get('form');
+        $users = User::get();
+
+        foreach ($users as $user) {
+            if($user->user_id == $userInput){
+                $user->update([
+                    'penalty' => 0
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Penalty of Student '.$userInput.' is paid.');
+    }
+
     public function reqHistory(){
         $transaction_forms = TransactionForm::get();
         $users = User::get();

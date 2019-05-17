@@ -54,6 +54,7 @@ Route::group(['middleware' => ['admin']], function()
     Route::post('/editSingleEquip','EquipmentsController@editSingleEquipment');
     Route::post('/admin/search','EquipmentsController@searchEquipment');
     Route::post('/emailAll','FeedbacksController@emailAll');
+    Route::post('/paid','TransactionFormsController@paidPenalty');
     
 });
 
