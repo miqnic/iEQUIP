@@ -11,6 +11,7 @@ use URL;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
+use Carbon\Carbon;
 
 class EquipmentsController extends Controller
 {
@@ -52,9 +53,240 @@ class EquipmentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+   
+    //SHOW EQUIPMENT START
+
+    public function showCamEquipment(){
+        /*$equipment = Equipment::find($id);
+        //please change show URL with {id}
+        return view('posts.show')->with('equipment', $equipment);*/
+
+        if(auth()->user()->access_role != 'ADMIN'){
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();
+
+            $equipments =  Equipment::where('equip_category', 'CAMACC')
+                                    ->where('equip_avail', '0')
+                                    ->orderBy('equip_name', 'desc')
+                                    ->get();
+
+            $totalEquip = Equipment::all();
+
+            $countCart = Equipment::all()
+                                ->where("transaction_id", "$lastTransaction->transaction_id")
+                                ->groupBy('equip_name')
+                                ->map(function($equipment, $equip_name) {
+                                    return [
+                                        'equip_name' => $equip_name,
+                                        'record' => $equipment->count(),
+                                    ];
+                                })
+                                ->values();
+
+            return view('equip.cam_equipment')->with('lastTransaction',$lastTransaction)
+                                        ->with('countCart', $countCart)
+                                        ->with('equipments',$equipments)
+                                        ->with('totalEquip',$totalEquip)
+                                        ->with('countTotalAvail', $this->countTotalAvail)
+                                        ->with('countCurrAvail', $this->countCurrAvail);
+        } else {
+            $equipments =  Equipment::where('equip_category', 'CAMACC')->orderBy('equip_name', 'desc')->get(); 
+            return view('equip.cam_equipment')->with('equipments',$equipments)
+                                            ->with('countTotalAvail', $this->countTotalAvail)
+                                            ->with('countCurrAvail', $this->countCurrAvail);
+                                    
+        }
+    } 
+
+    public function showArtEquipment(){
+        if(auth()->user()->access_role != 'ADMIN'){
+            $equipments =  Equipment::where('equip_category', 'ART')
+                                    ->where('equip_avail', '0')
+                                    ->orderBy('equip_name', 'desc')
+                                    ->get();
+
+            $totalEquip = Equipment::all();
+                        
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
+
+            $countCart = Equipment::all()
+                                ->where("transaction_id", "$lastTransaction->transaction_id")
+                                ->groupBy('equip_name')
+                                ->map(function($equipment, $equip_name) {
+                                    return [
+                                        'equip_name' => $equip_name,
+                                        'record' => $equipment->count(),
+                                    ];
+                                })
+                                ->values();  
+
+            return view('equip.art_equipment')->with('equipments',$equipments)
+                                ->with('lastTransaction',$lastTransaction)
+                                ->with('countCart', $countCart)
+                                ->with('totalEquip', $totalEquip)
+                                ->with('countTotalAvail', $this->countTotalAvail)
+                                ->with('countCurrAvail', $this->countCurrAvail);  
+        } else {
+            $equipments =  Equipment::where('equip_category', 'ART')->orderBy('equip_name', 'desc')->get(); 
+            return view('equip.art_equipment')->with('equipments',$equipments)
+                                            ->with('countTotalAvail', $this->countTotalAvail)
+                                            ->with('countCurrAvail', $this->countCurrAvail);
+                                    
+        }
+    } 
+
+    public function showSportEquipment(){
+        if(auth()->user()->access_role != 'ADMIN'){
+            $equipments =  Equipment::where('equip_category', 'SPRT')
+                                    ->where('equip_avail', '0')
+                                    ->orderBy('equip_name', 'desc')
+                                    ->get();
+            
+            $totalEquip = Equipment::all();
+
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
+        
+            $countCart = Equipment::all()
+                                ->where("transaction_id", "$lastTransaction->transaction_id")
+                                ->groupBy('equip_name')
+                                ->map(function($equipment, $equip_name) {
+                                    return [
+                                        'equip_name' => $equip_name,
+                                        'record' => $equipment->count(),
+                                    ];
+                                })
+                                ->values();
+
+            return view('equip.sport_equipment')->with('equipments',$equipments)
+                                ->with('lastTransaction',$lastTransaction)
+                                ->with('countCart', $countCart)
+                                ->with('totalEquip', $totalEquip)
+                                ->with('countTotalAvail', $this->countTotalAvail)
+                                ->with('countCurrAvail', $this->countCurrAvail);    
+        } else {
+            $equipments =  Equipment::where('equip_category', 'SPRT')->orderBy('equip_name', 'desc')->get(); 
+            return view('equip.sport_equipment')->with('equipments',$equipments)
+                                            ->with('countTotalAvail', $this->countTotalAvail)
+                                            ->with('countCurrAvail', $this->countCurrAvail);
+                                    
+        }
+    } 
+
+    public function showMiscEquipment(){
+        if(auth()->user()->access_role != 'ADMIN'){
+            $equipments =  Equipment::where('equip_category', 'MISC')
+                                    ->where('equip_avail', '0')
+                                    ->orderBy('equip_name', 'desc')
+                                    ->get();
+
+            $totalEquip = Equipment::all();
+
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
+
+            $countCart = Equipment::all()
+                                    ->where("transaction_id", "$lastTransaction->transaction_id")
+                                    ->groupBy('equip_name')
+                                    ->map(function($equipment, $equip_name) {
+                                        return [
+                                            'equip_name' => $equip_name,
+                                            'record' => $equipment->count(),
+                                        ];
+                                    })
+                                    ->values(); 
+
+            return view('equip.misc_equipment')->with('equipments',$equipments)
+                                    ->with('lastTransaction',$lastTransaction)
+                                    ->with('countCart', $countCart)
+                                    ->with('totalEquip', $totalEquip)
+                                    ->with('countTotalAvail', $this->countTotalAvail)
+                                    ->with('countCurrAvail', $this->countCurrAvail);   
+            } else {
+                $equipments =  Equipment::where('equip_category', 'MISC')->orderBy('equip_name', 'desc')->get(); 
+                return view('equip.misc_equipment')->with('equipments',$equipments)
+                                                ->with('countTotalAvail', $this->countTotalAvail)
+                                                ->with('countCurrAvail', $this->countCurrAvail);
+                                        
+            }
+    } 
+
+    public function showLapEquipment(){
+        if(auth()->user()->access_role != 'ADMIN'){
+            $equipments =  Equipment::where('equip_category', 'LPTP')
+                                    ->where('equip_avail', '0')
+                                    ->orderBy('equip_name', 'desc')
+                                    ->get();
+            $totalEquip = Equipment::all();
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
+            $countCart = Equipment::all()
+                                    ->where("transaction_id", "$lastTransaction->transaction_id")
+                                    ->groupBy('equip_name')
+                                    ->map(function($equipment, $equip_name) {
+                                        return [
+                                            'equip_name' => $equip_name,
+                                            'record' => $equipment->count(),
+                                        ];
+                                    })
+                                    ->values();  
+    
+            return view('equip.laptop_equipment')->with('equipments',$equipments)
+                                    ->with('lastTransaction',$lastTransaction)
+                                    ->with('countCart', $countCart)
+                                    ->with('totalEquip', $totalEquip)
+                                    ->with('countTotalAvail', $this->countTotalAvail)
+                                    ->with('countCurrAvail', $this->countCurrAvail);
+            } else {
+                $equipments =  Equipment::where('equip_category', 'LPTP')->orderBy('equip_name', 'desc')->get(); 
+                return view('equip.laptop_equipment')->with('equipments',$equipments)
+                                                ->with('countTotalAvail', $this->countTotalAvail)
+                                                ->with('countCurrAvail', $this->countCurrAvail);
+                                        
+            }
+    }
+    
+    public function showGameEquipment(){
+        if(auth()->user()->access_role != 'ADMIN'){
+            $equipments =  Equipment::where('equip_category', 'GMNG')
+                                    ->where('equip_avail', '0')
+                                    ->orderBy('equip_name', 'desc')
+                                    ->get();
+            
+            $totalEquip = Equipment::all();
+            
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
+
+            $countCart = Equipment::all()
+                                    ->where("transaction_id", "$lastTransaction->transaction_id")
+                                    ->groupBy('equip_name')
+                                    ->map(function($equipment, $equip_name) {
+                                        return [
+                                            'equip_name' => $equip_name,
+                                            'record' => $equipment->count(),
+                                        ];
+                                    })
+                                    ->values(); 
+                                    
+    
+            return view('equip.gaming_equipment')->with('equipments',$equipments)
+                                    ->with('lastTransaction',$lastTransaction)
+                                    ->with('countCart', $countCart)
+                                    ->with('totalEquip', $totalEquip)
+                                    ->with('countTotalAvail', $this->countTotalAvail)
+                                    ->with('countCurrAvail', $this->countCurrAvail);
+            } else {
+                $equipments =  Equipment::where('equip_category', 'GMNG')->orderBy('equip_name', 'desc')->get(); 
+                return view('equip.gaming_equipment')->with('equipments',$equipments)
+                                                ->with('countTotalAvail', $this->countTotalAvail)
+                                                ->with('countCurrAvail', $this->countCurrAvail);
+                                        
+            }
+    } 
+
+    //SHOW EQUIPMENT END
+
+    //EQUIPMENT FUNCTIONS START
     public function add(){
         return view('inc.addEquipModal');
     }
+
     public function addEquipment(Request $request){
         if(auth()->user()->access_role != 'ADMIN'){
             return abort(403, 'Unauthorized action.');
@@ -77,7 +309,6 @@ class EquipmentsController extends Controller
         }
 
         $request->validate([
-            'itemID' => 'required',
             'itemName' => 'required',
             'category' => 'required',
             'description' => 'nullable',
@@ -86,7 +317,6 @@ class EquipmentsController extends Controller
             'equipIMG' => 'image|nullable|max:1999'
           ]);
           $equipment = new Equipment([
-            'equipID' =>  $request->get('itemID'),
             'equip_name' => $request->get('itemName'),
             'equip_description' => $request->get('description'),
             'equip_penalty' => $request->get('penalty'),
@@ -96,123 +326,57 @@ class EquipmentsController extends Controller
             'equip_avail' => '0',
             'returned' => true,
           ]);
+
+          $equipment->save();
+
+          $equipment->equipID = "$equipment->equip_category"."$equipment->id";
+          //dd($equipment->category);
+
           $equipment->save();
           //return redirect(URL::current());
 
           return redirect()->back()->with('success', 'Equipment Added!');
     }
 
-    //SHOW EQUIPMENT START
-
-    public function showCamEquipment(){
-        /*$equipment = Equipment::find($id);
-        //please change show URL with {id}
-        return view('posts.show')->with('equipment', $equipment);*/
-
-        if(auth()->user()->access_role != 'ADMIN'){
-            $equipments =  Equipment::where('equip_category', 'CAMACC')
-                                    ->where('equip_avail', '0')
-                                    ->orderBy('equip_name', 'desc')
-                                    ->get();
-        } else {
-            $equipments =  Equipment::where('equip_category', 'CAMACC')->orderBy('equip_name', 'desc')->get();            
-        }
-
-        return view('equip.cam_equipment')->with('equipments',$equipments)
-                                            ->with('countTotalAvail', $this->countTotalAvail)
-                                            ->with('countCurrAvail', $this->countCurrAvail);
-    } 
-
-    public function showArtEquipment(){
-        if(auth()->user()->access_role != 'ADMIN'){
-            $equipments =  Equipment::where('equip_category', 'ART')
-                                    ->where('equip_avail', '0')
-                                    ->orderBy('equip_name', 'desc')
-                                    ->get();
-        } else {
-            $equipments =  Equipment::where('equip_category', 'ART')->orderBy('equip_name', 'desc')->get();            
-        }
-
-        return view('equip.art_equipment')->with('equipments',$equipments)
-                                            ->with('countTotalAvail', $this->countTotalAvail)
-                                            ->with('countCurrAvail', $this->countCurrAvail);
-    } 
-
-    public function showSportEquipment(){
-        if(auth()->user()->access_role != 'ADMIN'){
-            $equipments =  Equipment::where('equip_category', 'SPRT')
-                                    ->where('equip_avail', '0')
-                                    ->orderBy('equip_name', 'desc')
-                                    ->get();
-        } else {
-            $equipments =  Equipment::where('equip_category', 'SPRT')->orderBy('equip_name', 'desc')->get();            
-        }
-
-        return view('equip.sport_equipment')->with('equipments',$equipments)
-                                            ->with('countTotalAvail', $this->countTotalAvail)
-                                            ->with('countCurrAvail', $this->countCurrAvail);
-    } 
-
-    public function showMiscEquipment(){
-        if(auth()->user()->access_role != 'ADMIN'){
-            $equipments =  Equipment::where('equip_category', 'MISC')
-                                    ->where('equip_avail', '0')
-                                    ->orderBy('equip_name', 'desc')
-                                    ->get();
-        } else {
-            $equipments =  Equipment::where('equip_category', 'MISC')->orderBy('equip_name', 'desc')->get();            
-        }
-
-        return view('equip.misc_equipment')->with('equipments',$equipments)
-                                            ->with('countTotalAvail', $this->countTotalAvail)
-                                            ->with('countCurrAvail', $this->countCurrAvail);
-    } 
-
-    public function showLapEquipment(){
-        if(auth()->user()->access_role != 'ADMIN'){
-            $equipments =  Equipment::where('equip_category', 'LPTP')
-                                    ->where('equip_avail', '0')
-                                    ->orderBy('equip_name', 'desc')
-                                    ->get();
-        } else {
-            $equipments =  Equipment::where('equip_category', 'LPTP')->orderBy('equip_name', 'desc')->get();            
-        }
-
-        return view('equip.laptop_equipment')->with('equipments',$equipments)
-                                            ->with('countTotalAvail', $this->countTotalAvail)
-                                            ->with('countCurrAvail', $this->countCurrAvail);
-    }
-    
-    public function showGameEquipment(){
-        if(auth()->user()->access_role != 'ADMIN'){
-            $equipments =  Equipment::where('equip_category', 'GMNG')
-                                    ->where('equip_avail', '0')
-                                    ->orderBy('equip_name', 'desc')
-                                    ->get();
-        } else {
-            $equipments =  Equipment::where('equip_category', 'GMNG')->orderBy('equip_name', 'desc')->get();            
-        }
-
-        return view('equip.gaming_equipment')->with('equipments',$equipments)
-                                            ->with('countTotalAvail', $this->countTotalAvail)
-                                            ->with('countCurrAvail', $this->countCurrAvail);
-    } 
-
-    //SHOW EQUIPMENT END
     public function del(){
         return view('inc.deleteEquipModal');
     }
     
     public function delEquipment(Request $request){
         $equipments = Equipment::get()->unique('equip_name');
+        $inputs = $request->input('checkbox');
         
         //Check if admin
         if(auth()->user()->access_role != 'ADMIN'){
             return abort(403, 'Unauthorized action.');
         }
 
+        //dd($inputs);
+
+        foreach($inputs as $input){
+            foreach($equipments as $equipment){
+                if($input == $equipment->equip_name){
+                    //dd($equipment);
+                    $equipment->delete();
+                }
+            }
+        }
+        
+        
+        return redirect()->back()->with('warning', 'Equipment Deleted!');
+    }
+
+    public function delSingleEquipment(Request $request){
+        if(auth()->user()->access_role != 'ADMIN'){
+            return abort(403, 'Unauthorized action.');
+        }
+
+        $equipments = Equipment::get();
+        //dd(Input::get("currentEquip"));
+        
         foreach($equipments as $equipment){
-            if(Input::get("checkbox-$equipment->equip_name") === "$equipment->equip_name"){
+            if(Input::get("currentEquip") == "$equipment->equipID"){
+                //dd(Input::get("currentEquip"));
                 $equipment->delete();
             }
         }
@@ -274,4 +438,88 @@ class EquipmentsController extends Controller
           //return redirect(URL::current());
           return redirect()->back()->with('success', 'Equipment Details Updated!');
     } 
+
+    public function editSingleEquipment(Request $request){
+        $equipments = Equipment::get();
+
+        foreach($equipments as $equipment){
+            if(Input::get('currentEquip') == $equipment->equipID){
+                $equipment->update([
+                    'equip_avail' => Input::get('availability'),
+                    'equip_description' => Input::get('description')
+                ]);
+
+                $equipment->save();
+            }
+        }
+
+        return redirect()->back()->with('success', 'Equipment Details Updated!');
+    }
+
+    //EQUIPMENT FUNCTIONS END
+
+    //RESERVATION FUNCTIONS START
+
+    public function returnEquipment(Request $request){
+        $equipments = Equipment::where('transaction_id', $request->get('currentForm'))
+                                ->get();
+
+        $form = TransactionForm::where('transaction_id', $request->get('currentForm'));
+        
+        //Check if admin
+        if(auth()->user()->access_role != 'ADMIN'){
+            return abort(403, 'Unauthorized action.');
+        }
+
+        foreach($equipments as $equipment){
+            if(Input::get("checkbox-$equipment->equipID") === "$equipment->equipID"){
+                $equipment->update(array('transaction_id' => null));
+            }
+        }
+
+        if($equipments->isEmpty() == 0){
+            $form->update([
+                'returned'=>'1', 
+                'returned_date' => Carbon::now()
+            ]);
+        }
+        
+        return redirect()->back()->with('warning', 'Equipments of Transaction# '.$request->get('currentForm').' have been returned!');
+    }
+
+    public function reserveEquipment(Request $request){
+        $equipments = Equipment::get();
+        $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();
+
+        foreach($equipments as $equipment){
+            if($equipment->equipID == Input::get('currentEquipID')){
+                if($lastTransaction->submitted_date != null){
+                    $transaction_form = new TransactionForm([
+                        'transaction_id' => 'tc',
+                        'user_id' => Input::get('userID'),
+                      ]);
+    
+                    $transaction_form->save();
+    
+                    $transaction_form->transaction_id = "TC"."$transaction_form->id";
+    
+                    $transaction_form->save();
+
+                    $equipment->update([
+                        'transaction_id' => $transaction_form->transaction_id,
+                        'equip_avail' => '1',
+                    ]); 
+                } else {
+                    $equipment->update([
+                        'transaction_id' => $lastTransaction->transaction_id,
+                        'equip_avail' => '1',
+                    ]); 
+                }
+            }
+        }
+
+        return redirect()->back()->with('success', 'Equipment Reserved!');
+    }
+
+    //RESRVATION FUNCTIONS END
 }

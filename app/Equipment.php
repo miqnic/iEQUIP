@@ -24,7 +24,7 @@ class Equipment extends Model
      * @var array
      */
     protected $fillable = [
-        'equipID', 'equip_name', 'equip_description', 'equip_penalty', 'equip_baseprice', 'equip_img', 'equip_avail', 'returned', 'equip_category'
+        'equip_name', 'equip_description', 'equip_penalty', 'equip_baseprice', 'equip_img', 'equip_avail', 'returned', 'equip_category', 'transaction_id'
     ];
 
     //Model Relationships

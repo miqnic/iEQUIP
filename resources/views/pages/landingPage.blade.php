@@ -6,6 +6,7 @@
 @endsection
 
 @section('content')
+@csrf
 <div class="wrapper fadeInDown">
     <div id="formContent">
         <!-- Tabs Titles -->

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    <title>{{ config('app.name') }} | Miscellaneous Equipment</title>
+    <title>{{ config('app.name') }} | Miscellaneous Equipments</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/admin-equiplist.css') }}">
 @endsection
 
@@ -9,13 +9,13 @@
   @if(Auth::user()->access_role == "ADMIN")
     @include('inc.naviAdmin')
   @else
-    @include('inc.naviStudent')
+    @include('inc.naviStudent', [$totalEquip, $lastTransaction, $countCart])
   @endif
 @endsection
 
 @section('content')
     <div class="header">
-        <h2 class="border-bottom pb-2 pl-3">MIscellaneous Equipment</h2>
+        <h2 class="border-bottom pb-2 pl-3">Miscellaneous Equipments</h2>
     </div>
 
     <div class="container-fluid pt-4">
@@ -27,6 +27,9 @@
                     <button type="button" name="delEquip" class="btn btn-default" data-toggle="modal" data-target="#delEquip"><img id="minus" src="images/minus.png" height=18;> Delete Equipment</button>
                 </div>
             </div>
+
+            @include('inc.addEquipModal')
+            @include('inc.delEquipModal')
         @endif
 
       <!--Item List-->
@@ -41,8 +44,6 @@
                   @foreach ($countCurrAvail as $item)
                     @if (Arr::get($item, 'equip_name') == $equipment->equip_name)
                       {{Arr::get($item, 'record')}}
-                    @else
-                      0
                     @endif
                   @endforeach 
                   /
@@ -103,7 +104,7 @@
                               </small>-->
                             </div>
                             <div class="col-md-1 pt-2">
-                              <button type="button" data-target="#editItemModal-{{$equipment->equipID}}" data-dismiss="modal" data-toggle="modal" class="btn btn-outline-secondary">Edit</button>
+                              <button type="button" data-target="#editItemModal-{{$equipment->equip_name}}" data-dismiss="modal" data-toggle="modal" class="btn btn-outline-secondary">Edit</button>
                             </div>
                           </div>
                         </div>
@@ -143,7 +144,15 @@
                                       <button type="button" data-target="#editStockModal-{{$equipment_modal->equipID}}" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-outline-secondary">Edit</button>
                                       <button type="button" data-target="#deleteSingleModal-{{$equipment_modal->equipID}}" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-danger">Delete</button>
                                     @else
-                                      <button type="button" data-target="#confirmReserveModal-{{$equipment_modal->equipID}}" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-success">Reserve</button>
+                                        @php
+                                        $spaces = '/\s*/m';
+                                        $replace = '';
+      
+                                        $string= $equipment->equip_name;
+      
+                                        $trimmedString = preg_replace($spaces, $replace, $string);
+                                      @endphp
+                                    <button type="button" data-dismiss="modal" data-toggle="modal" class="btn btn-outline-secondary" data-target="#editItemModal-{{$trimmedString}}" >Edit</button>
                                     @endif
                                 </td>
                               @endif
@@ -168,7 +177,6 @@
           <!--Edit Modal for a SPECIFIC equipment (by equip_name)-->
           @include('inc.confirmEquipChangesModal', $equipment)
           @include('inc.editItemModal', [$equipment, $countTotalAvail])
-
         @endforeach
       </div>
     </div>
@@ -176,6 +184,4 @@
 
 @section('modal')
     @include('inc.deleteConfirmationModal')
-    @include('inc.addEquipModal')
-    @include('inc.delEquipModal')
 @endsection

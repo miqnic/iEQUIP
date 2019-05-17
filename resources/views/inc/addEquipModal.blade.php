@@ -10,10 +10,8 @@
         @csrf
         <div class="modal-body">
                 <div class="form-group">
-                    {{Form::label('itemID', 'Item ID')}}
-                    {{Form::text('itemID', '',['class' => 'form-control', 'placeholder' => 'Enter Item ID'])}}
                     {{Form::label('itemName', 'Item Name')}}
-                    {{Form::text('itemName', '',['class' => 'form-control', 'placeholder' => 'Enter Item Name'])}}
+                    {{Form::text('itemName', '',['class' => 'form-control', 'placeholder' => 'Enter Item Name', 'required' => ''])}}
                     <div class="row">
                         <div class="col-md-4">
                             {{Form::label('category', 'Category')}}
@@ -23,21 +21,21 @@
                                 'SPRT' => 'Sports Equipment',
                                 'GMNG' => 'Gaming Devices',
                                 'LPTP' => 'Laptops & Accessories',
-                                'MISC' => 'Miscellaneous Equipment'), NULL, array('class' => 'form-control'))}}
+                                'MISC' => 'Miscellaneous Equipment'), NULL, array('class' => 'form-control', 'required' => ''))}}
 
                         </div>
                         <div class="col-md-4">
                             {{Form::label('basePrice', 'Base Price (PHP)', ['class' => 'pt-3'])}}
-                            {{Form::text('basePrice', '',['class' => 'form-control', 'placeholder' => 'Enter Base Price'])}}
+                            {{Form::text('basePrice', '',['class' => 'form-control', 'placeholder' => 'Enter Base Price', 'required' => ''])}}
                         </div>
                         <div class="col-md-4">
                             {{Form::label('penalty', 'Penalty Fee (PHP)', ['class' => 'pt-3'])}}
-                            {{Form::text('penalty', '',['class' => 'form-control', 'placeholder' => 'Enter Penalty Price'])}}
+                            {{Form::text('penalty', '',['class' => 'form-control', 'placeholder' => 'Enter Penalty Price', 'required' => ''])}}
                         </div>
                     </div>
 
                     {{Form::label('description', 'Specifications')}}
-                    {{Form::textarea('description', '',['id' => 'article-ckeditor','class' => 'form-control', 'placeholder' => 'Enter specifications here'])}}      
+                    {{Form::textarea('description', '',['id' => 'article-ckeditor','class' => 'form-control', 'placeholder' => 'Enter specifications here', 'required' => ''])}}      
 
                     <div class="row">
                         <div class="col-md-4">

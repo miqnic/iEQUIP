@@ -6,7 +6,7 @@
 @endsection
 
 @section('navi')
-    @include('inc.naviStudent')
+    @include('inc.naviStudent',[$totalEquip, $lastTransaction, $countCart])
 @endsection
 
 @section('content')
@@ -26,19 +26,18 @@
                 <div class="formsum mt-4 ml-2">
                     <p>
                         <b>Start Date and Time:</b><br>
-                        07/01/2019 07:30AM
+                        {{$currentTransaction->start_date}} 
                     </p>
                     <p>
                         <b>End Date and Time:</b><br>
-                        07/01/2019 11:00AM
-                    </p>
+                        {{$currentTransaction->due_date}}
                     <p>
                         <b>Room Number:</b><br>
-                        1001
+                        {{$currentTransaction->room_number}}
                     </p>
                     <p>
                         <b>Reason:</b><br>
-                        Class Activity
+                        {{$currentTransaction->purpose}}
                     </p>
                 </div>
             </div>
@@ -53,7 +52,29 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                        @foreach ($totalEquip->unique('equip_name') as $equipment)
+                            @if ($equipment->transaction_id == $lastTransaction->transaction_id)
+                              <tr>
+                                <td class="pl-5 align-middle">
+                                    {{$equipment->equip_name}}
+                                    @foreach ($totalEquip as $specificEquip)
+                                        @if ($specificEquip->equip_name == $equipment->equip_name && $specificEquip->transaction_id == $lastTransaction->transaction_id)
+                                            <br>
+                                            <small class="pl-2">{{$specificEquip->equipID}}</small>
+                                        @endif
+                                    @endforeach
+                                </td>
+                                <td class="text-center align-middle">
+                                    @foreach ($countCart as $item)
+                                        @if (Arr::get($item, 'equip_name') == $equipment->equip_name)
+                                            {{Arr::get($item, 'record')}}
+                                        @endif
+                                    @endforeach
+                                </td>
+                              </tr>
+                            @endif
+                        @endforeach
+                    <!--<tr>
                         <td class="pl-4 align-middle">Canon EOS 80D
                             <br>
                             <small class="pl-2">CANCAM0001</small>
@@ -68,7 +89,7 @@
                             <small class="pl-2">SPANBA0001</small>
                         </td>
                         <td class="text-center align-middle">1</td>
-                    </tr>
+                    </tr>-->
                     </tbody>
                 </table>
             </div>
@@ -109,7 +130,9 @@
     
             <!-- Modal footer -->
             <div class="modal-footer">
-                <a href="home"><button type="button" class="btn btn-success">Confirm</button></a>
+                {!! Form::open(['action' => 'TransactionFormsController@submitForm', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                {{Form::submit('Confirm', ['class' => 'btn btn-success'])}}
+                {!! Form::close() !!}
                 <button type="button" class="btn btn" data-dismiss="modal">Close</button>
             </div>
     

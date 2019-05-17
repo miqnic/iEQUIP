@@ -11,7 +11,11 @@ class TransactionForm extends Model
     //Primary Key
     public $primaryKey = 'id';
     //Timestamps
-    public $timestamps = true;
+    public $timestamps = false;
+
+    protected $fillable = [
+        'returned', 'claimed', 'transaction_id', 'user_id', 'start_date', 'due_date', 'end_time', 'start_time', 'purpose', 'room_number' , 'approval', 'submitted_date', 'claimed_date', 'returned_date', 'approval_date', 'cancelled_date' 
+    ];
 
     //Model Relationships
     public function equipment(){

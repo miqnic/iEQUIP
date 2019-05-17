@@ -7,7 +7,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body m-3">
-                Are you sure about these changes?
+                Are you sure about these changes?vbhjnkml,mnnijkmn
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-success" data-target="#itemList-{{$equipment->equipID}}" data-dismiss="modal">Confirm</button>

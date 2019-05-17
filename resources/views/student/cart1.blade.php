@@ -21,7 +21,7 @@
 @endsection
 
 @section('navi')
-    @include('inc.naviStudent')
+    @include('inc.naviStudent', [$totalEquip, $lastTransaction, $countCart])
 @endsection
 
 @section('content')
@@ -43,30 +43,31 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td class="pl-5 align-middle">
-                    Canon EOS 80D DSLR Camera
-                    <br>
-                    <small class="pl-2">CANCAM0001</small>
-                    <br>
-                    <small class="pl-2">CANCAM0002</small>
+            @foreach ($totalEquip->unique('equip_name') as $equipment)
+                @if ($equipment->transaction_id == $lastTransaction->transaction_id)
+                  <tr>
+                    <td class="pl-5 align-middle">
+                        {{$equipment->equip_name}}
+                        @foreach ($totalEquip as $specificEquip)
+                            @if ($specificEquip->equip_name == $equipment->equip_name && $specificEquip->transaction_id == $lastTransaction->transaction_id)
+                                <br>
+                                <small class="pl-2">{{$specificEquip->equipID}}</small>
+                            @endif
+                        @endforeach
                     </td>
-                <td class="text-center align-middle">
-                    <input id="qty1" name="quantity" value="2" style="width:25px;">
-                </td>
-                <td class="text-center align-middle"><button type="button" class="btn btn-danger">Remove</button></td>
-            </tr>
-            <tr>
-                <td class="pl-5 align-middle">
-                    Spalding NBA Official Game Ball Basketball
-                    <br>
-                    <small class="pl-2">SPANBA0005</small>
-                </td>
-                <td class="text-center align-middle">
-                    <input id="qty2" name="quantity" value="1" style="width:25px;">
-                </td>
-                <td class="text-center align-middle"><button type="button" class="btn btn-danger">Remove</button></td>
-            </tr>
+                    <td class="text-center align-middle">
+                            <input id="qty1" name="quantity" 
+                            value="@foreach ($countCart as $item)
+                                        @if (Arr::get($item, 'equip_name') == $equipment->equip_name)
+                                            {{Arr::get($item, 'record')}}
+                                        @endif
+                                    @endforeach" 
+                            style="width:25px;">
+                    </td>
+                    <td class="text-center align-middle"><button type="button" class="btn btn-danger">Remove</button></td>
+                  </tr>
+                @endif
+            @endforeach
         </tbody>
     </table>
 </div>
@@ -74,7 +75,7 @@
 <div class="wrapper text-center">
     <div class="btn-group text-center mt-2" role="group" aria-label="Basic example">
         <button type="button" class="btn btn-outline-secondary btn-lg" disabled>Previous</button>
-        <button type="button" class="btn btn-outline-primary btn-lg"><a href="cart2">Next</a></button>
+        <a href="cart2" class="btn btn-outline-primary btn-lg">Next</a>
     </div>
 </div>
 @endsection
