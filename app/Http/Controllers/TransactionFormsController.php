@@ -75,15 +75,32 @@ class TransactionFormsController extends Controller
     }
 
     public function adminBalances(){
-        $transaction_forms = TransactionForm::where('approval', '0')
-                                            ->where('approval', '1')
+        $transaction_forms = TransactionForm::where('approval', '1')
                                             ->get();
+                                          
         $users = User::where('penalty','>',0)
                      ->get();
+        
         $equipments = Equipment::get();
         return view('admin.balances')->with('transaction_forms',$transaction_forms)
                                     ->with('users',$users)
                                     ->with('equipments',$equipments);
+    }
+
+    public function paidPenalty(Request $request){
+        $userInput = $request->get('user');
+        $formInput = $request->get('form');
+        $users = User::get();
+
+        foreach ($users as $user) {
+            if($user->user_id == $userInput){
+                $user->update([
+                    'penalty' => 0
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Penalty of Student '.$userInput.' is paid.');
     }
 
     public function reqHistory(){
@@ -217,6 +234,7 @@ class TransactionFormsController extends Controller
     public function submitForm(){
         $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', '!=', null)->get()->last();
         $totalEquip = Equipment::get();
+        $transaction_forms = TransactionForm::get();
         $countCart = Equipment::all()
                             ->where("transaction_id", "$lastTransaction->transaction_id")
                             ->groupBy('equip_name')
@@ -245,7 +263,10 @@ class TransactionFormsController extends Controller
 
         $currentTransaction->save();
 
+        
+
         return view('student.home')->with('success', 'Form Submitted')
+                                ->with('transaction_forms', $transaction_forms)
                                 ->with('countCart', $countCart)
                                 ->with('pendingForms', $pendingForms)
                                 ->with('lastTransaction',$lastTransaction)

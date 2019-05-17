@@ -17,29 +17,7 @@
     </div>
     
     <div class="container-fluid">
-      <div class="modal fade" id="confirm" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-
-            <div class="modal-header">
-              <h4 class="modal-title">Change Confirmation</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <div class="modal-body">
-              Are you sure about these changes?
-            </div>
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-success" data-dismiss="modal">Confirm</button>
-              <button type="button" class="btn btn" data-dismiss="modal">Cancel</button>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-
+      
         <div class="modal fade" id="email" tabindex="-1">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -55,7 +33,10 @@
   
               <!-- Modal footer -->
               <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Confirm</button>
+                  {!! Form::open(['action' => 'FeedbacksController@emailAll', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                  {{Form::hidden('users', $users)}}
+                  {{Form::submit('Confirm', ['class' => 'btn btn-success'])}}
+                  {!! Form::close() !!}
                 <button type="button" class="btn btn" data-dismiss="modal">Cancel</button>
               </div>
             </div>
@@ -109,6 +90,31 @@
                     {{-- @endif --}}
                   @endif
                 @endforeach
+                <div class="modal fade" id="confirm" tabindex="-1">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+            
+                        <div class="modal-header">
+                          <h4 class="modal-title">Change Confirmation</h4>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+            
+                        <div class="modal-body">
+                          Are you sure about these changes?
+                        </div>
+            
+                        <div class="modal-footer">
+                            {!! Form::open(['action' => 'TransactionFormsController@paidPenalty', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                            {{Form::hidden('user', $user->user_id)}}
+                            {{Form::hidden('form', $form->transacton_id)}}
+                            {{Form::submit('Confirm', ['class' => 'btn btn-success'])}}
+                            {!! Form::close() !!}
+                          <button type="button" class="btn btn" data-dismiss="modal">Cancel</button>
+                        </div>
+            
+                      </div>
+                    </div>
+                  </div>
             @endforeach
           </tbody>
         </table>

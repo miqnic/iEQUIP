@@ -49,7 +49,11 @@
                   /
                   @foreach ($countTotalAvail as $item)
                     @if (Arr::get($item, 'equip_name') == $equipment->equip_name)
-                      {{Arr::get($item, 'record')}}
+                      @if (Arr::get($item, 'record') == '')
+                          0
+                      @else
+                        {{Arr::get($item, 'record')}}
+                      @endif
                     @endif
                   @endforeach
                 </p>

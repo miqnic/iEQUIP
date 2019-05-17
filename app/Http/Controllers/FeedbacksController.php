@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\StudentFeedback;
+use App\Mail\EmailAll;
 use App\Feedback;
 use App\User;
 use DB;
@@ -43,7 +44,21 @@ class FeedbacksController extends Controller
         $feedback->save();
 
 
-        return redirect('/student/contact')->with('status', 'Feedback is sent!');
+        return redirect('/student/contact')->with('success', 'Feedback is sent!');
+    }
+
+    public function emailAll(Request $request){
+        $users = User::where('penalty', '>', '0')
+                        ->get();
+        //dd($users);
+        
+
+        foreach ($users as $user) {
+            $request->request->add(['penalty' => $user->penalty, 'id' => $user->user_id, 'first' => $user->first_name, 'last' => $user->last_name]);
+            Mail::to('ac01f813b2-8ea59b@inbox.mailtrap.io')->send(new EmailAll($request));
+        }
+
+        return redirect('/admin/balances')->with('success', 'Emails are sent!');
     }
 
     public function adminFeedbacks(){
