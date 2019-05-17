@@ -21,7 +21,7 @@ class CreateEquipmentTable extends Migration
             $table->string('equip_category');
             $table->integer('equip_avail');
             $table->integer('equip_penalty');
-            $table->decimal('equip_baseprice', 10, 4);
+            $table->decimal('equip_baseprice', 10, 2);
             $table->mediumText('equip_description')->nullable();
             $table->boolean('returned');
             $table->string('equip_img');

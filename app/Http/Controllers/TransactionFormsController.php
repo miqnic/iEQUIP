@@ -206,6 +206,7 @@ class TransactionFormsController extends Controller
     public function submitForm(){
         $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', '!=', null)->get()->last();
         $totalEquip = Equipment::get();
+        $transaction_forms = TransactionForm::get();
         $countCart = Equipment::all()
                             ->where("transaction_id", "$lastTransaction->transaction_id")
                             ->groupBy('equip_name')
@@ -234,7 +235,10 @@ class TransactionFormsController extends Controller
 
         $currentTransaction->save();
 
+        
+
         return view('student.home')->with('success', 'Form Submitted')
+                                ->with('transaction_forms', $transaction_forms)
                                 ->with('countCart', $countCart)
                                 ->with('pendingForms', $pendingForms)
                                 ->with('lastTransaction',$lastTransaction)

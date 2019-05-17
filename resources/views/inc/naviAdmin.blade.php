@@ -72,9 +72,12 @@
             </div>
     
             <form class="form-inline">
-              <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-              <button type="submit" class="btn btn-outline-light">Search</button>
-              <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit" >Search</button>-->
+                {!! Form::open(['action' => 'EquipmentsController@searchEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                {{Form::text('search', '',['class' => 'form-control mr-sm-2', 'placeholder' => 'Search', 'aria-label' => 'Search'])}}
+                {{Form::submit('Search', ['class' => 'btn btn-outline-light'])}}
+                <!--<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button type="submit" class="btn btn-outline-light">Search</button>-->
+                {!! Form::close() !!}
             </form>
     
             <div class="btn dropdown">

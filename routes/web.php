@@ -52,6 +52,7 @@ Route::group(['middleware' => ['admin']], function()
     Route::post('/returnEquip','EquipmentsController@returnEquipment');
 
     Route::post('/editSingleEquip','EquipmentsController@editSingleEquipment');
+    Route::post('/admin/search','EquipmentsController@searchEquipment');
     
 });
 
@@ -62,9 +63,8 @@ Route::group(['middleware' => ['student']], function()
     Route::match(['get', 'post'],'/student/history', 'TransactionFormsController@studentHistory');
     Route::match(['get', 'post'],'/student/calendar', 'TransactionFormsController@adminCalendar');
     Route::match(['get', 'post'],'/student/contact', 'TransactionFormsController@studentContact');
+    Route::match(['get', 'post'],'/student/faqs', 'EquipmentsController@faqs');
     Route::post('feedback','FeedbacksController@feedback');
-
-    Route::view('/student/faqs', 'student.faq');
 
     //Route::match(['get', 'post'],'/student/equipment', 'EquipmentsController@showArtEquipment');
     Route::match(['get', 'post'],'/student/cart', 'TransactionFormsController@cart1');
@@ -81,6 +81,7 @@ Route::group(['middleware' => ['student']], function()
     Route::post('/reserveEquip','EquipmentsController@reserveEquipment');
     Route::post('/submitForm','TransactionFormsController@submitForm');
     Route::post('/cancel','TransactionFormsController@cancelForm');
+    Route::post('/student/search','EquipmentsController@searchEquipment');
     
 });
 

@@ -30,6 +30,6 @@ class Equipment extends Model
     //Model Relationships
     public function TransactionForm(){
         //an equipment belongs to a single user
-        return $this->hasOne('App\TransactionForm', 'due_date', 'user_id');
+        return $this->hasOne('App\TransactionForm', 'due_date', 'user_id', 'transaction_id');
     }
 }

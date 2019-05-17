@@ -29,6 +29,7 @@ class EquipmentsController extends Controller
                                 ];
                             })
                             ->values();
+        
 
         $this->countCurrAvail = Equipment::all()
                             ->where('equip_avail', '0')
@@ -60,7 +61,7 @@ class EquipmentsController extends Controller
         /*$equipment = Equipment::find($id);
         //please change show URL with {id}
         return view('posts.show')->with('equipment', $equipment);*/
-
+        
         if(auth()->user()->access_role != 'ADMIN'){
             $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();
 
@@ -278,7 +279,65 @@ class EquipmentsController extends Controller
                                                 ->with('countCurrAvail', $this->countCurrAvail);
                                         
             }
-    } 
+    }
+    
+    public function faqs(){
+            $totalEquip = Equipment::all();
+            
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
+
+            $countCart = Equipment::all()
+                                    ->where("transaction_id", "$lastTransaction->transaction_id")
+                                    ->groupBy('equip_name')
+                                    ->map(function($equipment, $equip_name) {
+                                        return [
+                                            'equip_name' => $equip_name,
+                                            'record' => $equipment->count(),
+                                        ];
+                                    })
+                                    ->values(); 
+                                    
+    
+            return view('student.faq')->with('lastTransaction',$lastTransaction)
+                                    ->with('countCart', $countCart)
+                                    ->with('totalEquip', $totalEquip)
+                                    ->with('countTotalAvail', $this->countTotalAvail)
+                                    ->with('countCurrAvail', $this->countCurrAvail);
+    }
+
+    public function searchEquipment(Request $request){
+        $search = Input::get('search');
+        $possibleEquips = Equipment::where('equip_name', 'like', '%' . $search . '%')
+                                    ->orWhere('equipID', 'like', '%' . $search . '%')
+                                    ->get();
+
+        $totalEquip = Equipment::all();
+        $equipments = Equipment::all();
+
+        $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
+
+        $countCart = Equipment::all()
+                                ->where("transaction_id", "$lastTransaction->transaction_id")
+                                ->groupBy('equip_name')
+                                ->map(function($equipment, $equip_name) {
+                                    return [
+                                        'equip_name' => $equip_name,
+                                        'record' => $equipment->count(),
+                                    ];
+                                })
+                                ->values(); 
+                                
+
+        return view('pages.search')->with('lastTransaction',$lastTransaction)
+                                    ->with('possibleEquips', $possibleEquips)
+                                    ->with('search', $search)
+                                    ->with('countCart', $countCart)
+                                    ->with('equipments', $equipments)
+                                    ->with('totalEquip', $totalEquip)
+                                    ->with('countTotalAvail', $this->countTotalAvail)
+                                    ->with('countCurrAvail', $this->countCurrAvail);
+                            
+    }
 
     //SHOW EQUIPMENT END
 
