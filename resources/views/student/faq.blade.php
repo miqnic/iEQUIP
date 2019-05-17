@@ -78,7 +78,7 @@
 @endsection
 
 @section('navi')
-    @include('inc.naviStudent')
+    @include('inc.naviStudent', [$equipments, $lastTransaction, $countCart]) 
 @endsection
 
 @section('content')

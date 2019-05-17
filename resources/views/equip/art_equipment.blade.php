@@ -23,8 +23,8 @@
         @if(Auth::user()->access_role == "ADMIN")
             <div class="row">
                 <div class="col-md-12 pb-2 text-right">
-                    <button type="button" name="addEquip" class="btn btn-default" data-toggle="modal" data-target="#addEquip"><img id="plus" src="images/plus.png" height=18;> Add Equipment</button>
-                    <button type="button" name="delEquip" class="btn btn-default" data-toggle="modal" data-target="#delEquip"><img id="minus" src="images/minus.png" height=18;> Delete Equipment</button>
+                    <button type="button" name="addEquip" class="btn btn-light btn-default" data-toggle="modal" data-target="#addEquip"><img id="plus" src="{{ asset('img/plus.png') }}" height=18;> Add Equipment</button>
+                    <button type="button" name="delEquip" class="btn btn-light btn-default" data-toggle="modal" data-target="#delEquip"><img id="minus" src="{{ asset('img/minus.png') }}" height=18;> Delete Equipment</button>
                 </div>
             </div>
 
@@ -37,7 +37,7 @@
         @foreach ($equipments->unique('equip_name') as $equipment)
           <div class="col-md-3">
             <div class="card text-center pt-2">
-              <img src="images/camera.png" class="card-img-top align-self-center" alt="Item photo">
+              <img src="{{ asset('img/'.$equipment->equip_img) }}" class="card-img-top align-self-center" alt="Item photo">
               <div class="card-body">
                 <h5 class="card-title text-truncate">{{$equipment->equip_name}}</h5>
                 <p class="card-text">Availability: 
@@ -71,7 +71,7 @@
       
                   <div class="modal-body">
                     <div class="media">
-                      <img class="align-self-center mr-5" src="images/camera.png" style="width: 100px;" alt="Sample photo">
+                      <img class="align-self-center mr-5" src="{{ asset('img/'.$equipment->equip_img) }}" style="width: 100px;" alt="Sample photo">
                         <div class="media-body">
                           <h5>{{$equipment->equip_name}}</h5>
                           <div class="row">
