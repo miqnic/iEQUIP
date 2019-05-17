@@ -23,8 +23,8 @@
         @if(Auth::user()->access_role == "ADMIN")
             <div class="row">
                 <div class="col-md-12 pb-2 text-right">
-                    <button type="button" name="addEquip" class="btn btn-default" data-toggle="modal" data-target="#addEquip"><img id="plus" src="images/plus.png" height=18;> Add Equipment</button>
-                    <button type="button" name="delEquip" class="btn btn-default" data-toggle="modal" data-target="#delEquip"><img id="minus" src="images/minus.png" height=18;> Delete Equipment</button>
+                    <button type="button" name="addEquip" class="btn btn-light btn-default" data-toggle="modal" data-target="#addEquip"><img id="plus" src="{{ asset('img/plus.png') }}" height=18;> Add Equipment</button>
+                    <button type="button" name="delEquip" class="btn btn-light btn-default" data-toggle="modal" data-target="#delEquip"><img id="minus" src="{{ asset('img/minus.png') }}" height=18;> Delete Equipment</button>
                 </div>
             </div>
 

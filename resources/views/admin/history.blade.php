@@ -13,7 +13,7 @@
     <div class="header">
         <h2 class="border-bottom pb-2 pl-3">Request History</h2>
         <p class="lead pl-3">Reservation and student details can be seen by clicking on the corresponding IDs. Use the search bar and sort buttons to filter data.</p>
-        <button type="button" name="deleteHistory" class="btn btn-outline-secondary float-right mr-3 mb-2" data-toggle="modal" data-target="#delete"><img id="minus" src="img/minus.png" height=18;>Delete All</button>
+        <button type="button" name="deleteHistory" class="btn btn-light float-right mr-3 mb-2" data-toggle="modal" data-target="#delete"><img id="minus" src="{{ asset('img/minus.png') }}" height=18;>Delete All</button>
     </div>
   
     <div class="container-fluid">

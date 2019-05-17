@@ -13,7 +13,7 @@
     <div class="header">
         <h2 class="border-bottom pb-2 pl-3">Balances</h2>
         <p class="lead pl-3">Reservation and student details can be seen by clicking on the corresponding name and transaction ID.</p>
-        <button type="button" name="addequip" class="btn btn-outline-secondary float-right mr-3" data-toggle="modal" data-target="#email"><img id="plus" src="img\envelope.png" height=30;>Email All</button>
+        <button type="button" name="addequip" class="btn btn-light float-right mr-3" data-toggle="modal" data-target="#email"><img id="plus" src="{{ asset('img/envelope.png') }}" height=30;>Email All</button>
     </div>
     
     <div class="container-fluid">

@@ -22,7 +22,7 @@ Route::group(['middleware' => ['admin']], function()
     Route::match(['get', 'post'], '/admin/home', 'TransactionFormsController@adminHome');
     Route::match(['get', 'post'],'/admin/request-history', 'TransactionFormsController@reqHistory');
     Route::match(['get', 'post'],'/admin/balances', 'TransactionFormsController@adminBalances');
-    Route::match(['get', 'post'],'/admin/calendar', 'TransactionFormsController@adminCalendar');
+    Route::match(['get', 'post'],'/admin/calendar', 'TransactionFormsController@calendar');
     Route::match(['get', 'post'],'/admin/feedbacks', 'FeedbacksController@adminFeedbacks');
 
     Route::match(['get', 'post'],'/admin/art-tools', 'EquipmentsController@showArtEquipment');
@@ -60,11 +60,10 @@ Route::group(['middleware' => ['student']], function()
 {
     Route::match(['get', 'post'],'/student/home', 'TransactionFormsController@studentHome');
     Route::match(['get', 'post'],'/student/history', 'TransactionFormsController@studentHistory');
-    Route::match(['get', 'post'],'/student/calendar', 'TransactionFormsController@adminCalendar');
+    Route::match(['get', 'post'],'/student/calendar', 'TransactionFormsController@calendar');
     Route::match(['get', 'post'],'/student/contact', 'TransactionFormsController@studentContact');
+    Route::match(['get', 'post'],'/student/faqs', 'TransactionFormsController@studentFAQ');
     Route::post('feedback','FeedbacksController@feedback');
-
-    Route::view('/student/faqs', 'student.faq');
 
     //Route::match(['get', 'post'],'/student/equipment', 'EquipmentsController@showArtEquipment');
     Route::match(['get', 'post'],'/student/cart', 'TransactionFormsController@cart1');

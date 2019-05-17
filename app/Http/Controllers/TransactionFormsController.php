@@ -78,7 +78,6 @@ class TransactionFormsController extends Controller
         $transaction_forms = TransactionForm::where('approval', '0')
                                             ->where('approval', '1')
                                             ->get();
-        dd($transaction_forms);
         $users = User::where('penalty','>',0)
                      ->get();
         $equipments = Equipment::get();
@@ -96,17 +95,29 @@ class TransactionFormsController extends Controller
                                     ->with('equipments',$equipments);
     }
 
-    public function adminCalendar(){
+    public function calendar(){
         $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();
         $transaction_forms = TransactionForm::where('returned', 0)->get();
         $users = User::get();
         $equipments = Equipment::get();
         $totalEquip = Equipment::all();
+        $countCart = Equipment::all()
+                                ->where("transaction_id", "$lastTransaction->transaction_id")
+                                ->groupBy('equip_name')
+                                ->map(function($equipment, $equip_name) {
+                                    return [
+                                        'equip_name' => $equip_name,
+                                        'record' => $equipment->count(),
+                                    ];
+                                })
+                                ->values(); 
+
         return view('admin.calendar')->with('transaction_forms',$transaction_forms)
                                      ->with('lastTransaction',$lastTransaction)
                                      ->with('users',$users) 
                                      ->with('totalEquip', $totalEquip)
-                                     ->with('equipments',$equipments);
+                                     ->with('equipments',$equipments)
+                                     ->with('countCart', $countCart);
     }
 
     public function cart1(){
@@ -338,5 +349,29 @@ class TransactionFormsController extends Controller
             
             return redirect()->back()->with('success', 'Transaction# '.$request->get('currentForm').' has been successfully claimed!');
         }
+    }
+
+    public function studentFAQ(){
+        $equipments =  Equipment::get();
+
+        $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
+
+        $countCart = Equipment::all()
+                                ->where("transaction_id", "$lastTransaction->transaction_id")
+                                ->groupBy('equip_name')
+                                ->map(function($equipment, $equip_name) {
+                                    return [
+                                        'equip_name' => $equip_name,
+                                        'record' => $equipment->count(),
+                                    ];
+                                })
+                                ->values(); 
+
+        $totalEquip = Equipment::all();
+
+        return view('student.faq')->with('equipments',$equipments)
+                                  ->with('lastTransaction',$lastTransaction)
+                                  ->with('countCart', $countCart)
+                                  ->with('totalEquip', $totalEquip);
     }
 }
