@@ -68,9 +68,14 @@
                                         <small>
                                         <strong>Availability:</strong>
                                             @foreach ($countCurrAvail as $item)
-                                            @if (Arr::get($item, 'equip_name') == $equipment->equip_name)
-                                                {{Arr::get($item, 'record')}}
-                                            @endif
+                                                
+                                                    @if (Arr::has()$equipment->equip_name == data_get($item, 'equip_name')))
+                                                        {{Arr::get($item, 'record')}}
+                                                    @else
+                                                        0
+                                                    @endif
+                                                
+                                                
                                             @endforeach 
                                             /
                                             @foreach ($countTotalAvail as $item)

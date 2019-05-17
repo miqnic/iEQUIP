@@ -75,12 +75,12 @@ class TransactionFormsController extends Controller
     }
 
     public function adminBalances(){
-        $transaction_forms = TransactionForm::where('approval', '0')
-                                            ->where('approval', '1')
+        $transaction_forms = TransactionForm::where('approval', '1')
                                             ->get();
-        dd($transaction_forms);
+                                          
         $users = User::where('penalty','>',0)
                      ->get();
+        
         $equipments = Equipment::get();
         return view('admin.balances')->with('transaction_forms',$transaction_forms)
                                     ->with('users',$users)

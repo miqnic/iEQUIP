@@ -55,7 +55,10 @@
   
               <!-- Modal footer -->
               <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Confirm</button>
+                  {!! Form::open(['action' => 'FeedbacksController@emailAll', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                  {{Form::hidden('users', $users)}}
+                  {{Form::submit('Confirm', ['class' => 'btn btn-success'])}}
+                  {!! Form::close() !!}
                 <button type="button" class="btn btn" data-dismiss="modal">Cancel</button>
               </div>
             </div>
