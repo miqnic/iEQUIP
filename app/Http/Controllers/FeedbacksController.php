@@ -30,7 +30,7 @@ class FeedbacksController extends Controller
         ]);
 
         //make dummy email to  admin-ca3ec7@inbox.mailtrap.io
-        Mail::to('ac01f813b2-8ea59b@inbox.mailtrap.io')->send(new StudentFeedback($request));
+       // Mail::to('ac01f813b2-8ea59b@inbox.mailtrap.io')->send(new StudentFeedback($request));
         
         //return view('/student/contact);
 
