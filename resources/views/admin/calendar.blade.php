@@ -201,7 +201,7 @@
         resourceGroupField: 'itemName',
         resources: [
           @foreach($equipments as $equipment)
-            @if($equipment->equip_category=="GAMING")
+            @if($equipment->equip_category=="GMNG")
             { id: '{{$equipment->equipID}}', itemName: '{{$equipment->equip_name}}', title: '{{$equipment->equipID}}' },
             @endif
           @endforeach
@@ -210,7 +210,7 @@
         events : [
           @foreach($users as $user)
             @foreach($equipments as $equipment)
-              @if($equipment->equip_category=="GAMING")
+              @if($equipment->equip_category=="GMNG")
                 @foreach($transaction_forms as $form)
                   {
                       @if($form->transaction_id == $equipment->transaction_id)
@@ -268,7 +268,7 @@
         resourceGroupField: 'itemName',
         resources: [
           @foreach($equipments as $equipment)
-            @if($equipment->equip_category=="LAPTOP")
+            @if($equipment->equip_category=="LPTP")
             { id: '{{$equipment->equipID}}', itemName: '{{$equipment->equip_name}}', title: '{{$equipment->equipID}}' },
             @endif
           @endforeach
@@ -277,7 +277,7 @@
         events : [
           @foreach($users as $user)
             @foreach($equipments as $equipment)
-              @if($equipment->equip_category=="LAPTOP")
+              @if($equipment->equip_category=="LPTP")
                 @foreach($transaction_forms as $form)
                   {
                       @if($form->transaction_id == $equipment->transaction_id)
@@ -335,7 +335,7 @@
         resourceGroupField: 'itemName',
         resources: [
           @foreach($equipments as $equipment)
-            @if($equipment->equip_category=="SPORTS")
+            @if($equipment->equip_category=="SPRT")
             { id: '{{$equipment->equipID}}', itemName: '{{$equipment->equip_name}}', title: '{{$equipment->equipID}}' },
             @endif
           @endforeach
@@ -344,7 +344,7 @@
         events : [
           @foreach($users as $user)
             @foreach($equipments as $equipment)
-              @if($equipment->equip_category=="SPORTS")
+              @if($equipment->equip_category=="SPRT")
                 @foreach($transaction_forms as $form)
                   {
                       @if($form->transaction_id == $equipment->transaction_id)
@@ -436,7 +436,7 @@
 @endsection
 
 @section('navi')
-    @if (Auth::user()->role_access == 'ADMIN')
+    @if (Auth::user()->access_role == 'ADMIN')
       @include('inc.naviAdmin')        
     @else
       @include('inc.naviStudent', [$equipments, $lastTransaction, $countCart]) 
