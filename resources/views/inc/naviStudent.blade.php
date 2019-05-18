@@ -88,7 +88,11 @@
               <img src = "{{ url('img/user-account-box.png') }}" height= 23;>
             </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="account">
-                <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">Log out</a>
+                {{-- <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">Log out</a> --}}
+                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                  @csrf
+                </form>
               </div>
             </div>
   
@@ -97,7 +101,7 @@
             </a>
 
             <!--MODALS-->
-
+{{-- 
             <div class="modal" id="logoutModal">
               <div class="modal-dialog">
                 <div class="modal-content">
@@ -131,7 +135,7 @@
     
                 </div>
               </div>
-            </div>
+            </div> --}}
     
             <!-- The Modal -->
             <div class="modal" id="cartModal">
