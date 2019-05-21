@@ -1,0 +1,57 @@
+.list-group {
+  border-radius: 0 !important;
+}
+
+.inside {
+  min-height: 100vh;
+  padding-top: 10px;
+  font-size: 12px;
+  margin-bottom: 100px;
+}
+
+.card img {
+  width: 100px;
+  height: 100px;
+}
+
+.card {
+  transition: transform .2s;
+  width: 270px;
+  height: 220px;
+}
+
+.description {
+  height: 130px;
+  overflow: scroll;
+}
+.card:hover {
+  transform: scale(1.1);
+  border: 0;
+}
+
+.itemPhoto {
+  -webkit-box-shadow: 0px 0px 8px -2px rgba(204,204,204,1);
+  -moz-box-shadow: 0px 0px 8px -2px rgba(204,204,204,1);
+  box-shadow: 0px 0px 8px -2px rgba(204,204,204,1);
+}
+
+footer {
+  width: 100%;
+  min-height: 50px;
+  position: relative;
+  bottom: 0;
+  left: 0;
+}
+
+body {
+  background-color: white;
+}
+
+.card-link:hover {
+  color: royalblue !important;
+}
+
+#itemStock {
+  table-layout: fixed;
+  width: 100% !important;
+}

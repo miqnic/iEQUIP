@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    <title>{{ config('app.name') }} | Miscellaneous</title>
+    <title>{{ config('app.name') }} | Equipment List</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/equiplist.css') }}">
 @endsection
 
@@ -17,14 +17,14 @@
   <div class="row pb-3">
     <div class="col-md-3 pt-2 padding-right-0">
       <div class="list-group" id="list-tab" role="tablist">
-          <a class="list-group-item text-uppercase font-weight-bold">Browse Categories</a>
-          <a class="list-group-item list-group-item-action" href="equipmentlist" role="tab">All</a>
-          <a class="list-group-item list-group-item-action" href="art-tools" role="tab">Art Tools</a>
-          <a class="list-group-item list-group-item-action" href="camera-equipment" role="tab">Cameras and Accessories</a>
-          <a class="list-group-item list-group-item-action" href="gaming-equipment" role="tab">Gaming Devices</a>
-          <a class="list-group-item list-group-item-action" href="laptops-accessories" role="tab">Laptops and Accessories</a>            
-          <a class="list-group-item list-group-item-action" href="sports-equipment" role="tab">Sports Equipment</a>            
-          <a class="list-group-item list-group-item-action active" href="misc-equipment" role="tab">Miscellaneous</a>
+        <a class="list-group-item text-uppercase font-weight-bold">Browse Categories</a>
+        <a class="list-group-item list-group-item-action active" href="equipmentlist" role="tab">All</a>
+        <a class="list-group-item list-group-item-action" href="art-tools" role="tab">Art Tools</a>
+        <a class="list-group-item list-group-item-action" href="camera-equipment" role="tab">Cameras and Accessories</a>
+        <a class="list-group-item list-group-item-action" href="gaming-equipment" role="tab">Gaming Devices</a>
+        <a class="list-group-item list-group-item-action" href="laptops-accessories" role="tab">Laptops and Accessories</a>            
+        <a class="list-group-item list-group-item-action" href="sports-equipment" role="tab">Sports Equipment</a>            
+        <a class="list-group-item list-group-item-action" href="misc-equipment" role="tab">Miscellaneous</a>
       </div>
     </div>
     
@@ -54,11 +54,11 @@
             <span class="badge badge-success ml-3 w-25">In stock</span>
             <img src="{{ asset('img/'.$equipment->equip_img) }}" class="card-img-top align-self-center" alt="Item photo">
             <div class="card-body">
-              @if(Auth::user()->access_role == "ADMIN")
-              <a class="card-link" href="{{ url('admin/'.$equipment->equipID) }}"><h6 class="card-title text-truncate">{{$equipment->equip_name}}</h6></a>
-              @else
-                  <a class="card-link" href="{{ url('student/'.$equipment->equipID) }}"><h6 class="card-title text-truncate">{{$equipment->equip_name}}</h6></a>
-              @endif
+            @if(Auth::user()->access_role == "ADMIN")
+                <a class="card-link" href="{{ url('admin/'.$equipment->equipID) }}"><h6 class="card-title text-truncate">{{$equipment->equip_name}}</h6></a>
+            @else
+                <a class="card-link" href="{{ url('student/'.$equipment->equipID) }}"><h6 class="card-title text-truncate">{{$equipment->equip_name}}</h6></a>
+            @endif
               <p class="card-text mb-4">
                 Availability: 
                 @foreach ($countCurrAvail as $item)
@@ -82,12 +82,13 @@
           @endforeach
       </div>
       <div class="pagination d-block position-absolute mt-3" style="right:20px">
-        {{ $equipments->links() }}
+      {{ $equipments->links() }}
       </div>
     </div>
   </div>
 @endsection
-
+{{-- 
 @section('modal')
-    {{-- @include('inc.deleteConfirmationModal') --}}
-@endsection
+    @include('inc.deleteSingleModal')
+    @include('inc.deleteConfirmationModal')
+@endsection --}}

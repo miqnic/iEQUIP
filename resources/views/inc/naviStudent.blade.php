@@ -34,7 +34,7 @@
 <body>
     <div class = "navi">
         <!-- Fixed navbar -->
-          <nav class="navbar sticky-top navbar-expand-md navbar-dark" style="background-color: #171717;">
+          <nav class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
             <a class="navbar-brand">
               <img src = "{{ url('img/iacademylogo.png') }}" height="28">
               <img src = "{{ url('img/logo.png') }}" height="30">
@@ -56,22 +56,14 @@
                 <li class="nav-item">
                   <a class="nav-link" href="calendar">Calendar</a>
                 </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Equipments</a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="camera-equipment">Cameras & Accessories</a>
-                    <a class="dropdown-item" href="art-tools">Art Tools</a>
-                    <a class="dropdown-item" href="sports-equipment">Sports Equipment</a>
-                    <a class="dropdown-item" href="gaming-equipment">Gaming Devices</a>
-                    <a class="dropdown-item" href="laptops-accessories">Laptops & Accessories</a>
-                    <a class="dropdown-item" href="misc-equipment">Miscellaneous</a>
-                  </div>
-                </li>        
                 <li class="nav-item">
-                  <a class="nav-item nav-link" href="faqs">FAQs</a>
+                  <a class="nav-link" href="equipmentlist">Equipment</a>
+                </li>      
+                <li class="nav-item">
+                  <a class="nav-link" href="faqs">FAQs</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-item nav-link" href="contact">Contact Us</a>
+                  <a class="nav-link" href="contact">Contact Us</a>
                 </li>
               </div>
             </div>

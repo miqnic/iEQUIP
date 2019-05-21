@@ -12,7 +12,7 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/b-1.5.6/b-html5-1.5.6/b-print-1.5.6/r-2.2.2/sl-1.3.0/datatables.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/datatables.min.js') }}"></script>
 
     <script>
     $(document).ready( function () {
@@ -63,24 +63,29 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.18/b-1.5.6/b-html5-1.5.6/b-print-1.5.6/r-2.2.2/sl-1.3.0/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/datatables.min.css"/>
  
- 
-
     <!--Additional view css-->
     @yield('head')
 </head>
-<body>
-    @yield('navi')
-    <main class="container-fluid py-4">
+<body class="d-flex flex-column h-100">
+    <main class="flex-shrink-0" role="main">
+        @yield('navi')
+        <div class="container inside pt-2">
         @include('inc.messages')
         @yield('content')
+        </div>
     </main>
     @yield('modal')
-
-    <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
-    <script>
-        CKEDITOR.replace('article-ckeditor');
-    </script>
+    <footer class="footer bg-dark">
+        <div class="container text-light pt-3">
+            <span>&copy; 2019 iACADEMY | All rights reserved.</span>
+            <span class="float-right">
+                <i class="fas fa-envelope"></i> facilities@iacademy.edu.ph
+                &nbsp;
+                <i class="fas fa-phone"></i> 889 5555 ext. 2234 - 2235
+            </span>
+        </div>
+    </footer>
 </body>
 </html>

@@ -272,3 +272,7 @@ input[type=text]:placeholder {
 	padding-top: 25px;
 	padding-bottom: 5px;
 }
+
+footer {
+  display: none !important;
+}

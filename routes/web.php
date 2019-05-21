@@ -25,12 +25,15 @@ Route::group(['middleware' => ['admin']], function()
     Route::match(['get', 'post'],'/admin/calendar', 'TransactionFormsController@calendar');
     Route::match(['get', 'post'],'/admin/feedbacks', 'FeedbacksController@adminFeedbacks');
 
+    Route::match(['get', 'post'],'/admin/equipmentlist', 'EquipmentsController@showAllEquipment');
     Route::match(['get', 'post'],'/admin/art-tools', 'EquipmentsController@showArtEquipment');
     Route::match(['get', 'post'],'/admin/camera-equipment', 'EquipmentsController@showCamEquipment');
     Route::match(['get', 'post'],'/admin/misc-equipment', 'EquipmentsController@showMiscEquipment');
     Route::match(['get', 'post'],'/admin/gaming-equipment', 'EquipmentsController@showGameEquipment');
     Route::match(['get', 'post'],'/admin/sports-equipment', 'EquipmentsController@showSportEquipment');
     Route::match(['get', 'post'],'/admin/laptops-accessories', 'EquipmentsController@showLapEquipment');
+
+    Route::get('/admin/{id}', 'EquipmentsController@show');
 
     Route::get('/add','EquipmentsController@add');
     Route::post('/addEquipment','EquipmentsController@addEquipment'); 
@@ -73,12 +76,15 @@ Route::group(['middleware' => ['student']], function()
     Route::match(['get', 'post'],'/student/cart2', 'TransactionFormsController@cart2');
     Route::match(['get', 'post'],'/student/cart3', 'TransactionFormsController@cart3');
 
+    Route::match(['get', 'post'],'/student/equipmentlist', 'EquipmentsController@showAllEquipment');
     Route::match(['get', 'post'],'/student/art-tools', 'EquipmentsController@showArtEquipment');
     Route::match(['get', 'post'],'/student/camera-equipment', 'EquipmentsController@showCamEquipment');
     Route::match(['get', 'post'],'/student/misc-equipment', 'EquipmentsController@showMiscEquipment');
     Route::match(['get', 'post'],'/student/gaming-equipment', 'EquipmentsController@showGameEquipment');
     Route::match(['get', 'post'],'/student/sports-equipment', 'EquipmentsController@showSportEquipment');
     Route::match(['get', 'post'],'/student/laptops-accessories', 'EquipmentsController@showLapEquipment');
+
+    Route::get('/student/{id}', 'EquipmentsController@show');
 
     Route::post('/reserveEquip','EquipmentsController@reserveEquipment');
     Route::post('/submitForm','TransactionFormsController@submitForm');

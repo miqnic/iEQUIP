@@ -57,6 +57,72 @@ class EquipmentsController extends Controller
    
     //SHOW EQUIPMENT START
 
+    public function show($id){
+        if(auth()->user()->access_role != 'ADMIN'){
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();
+
+            $item = Equipment::where('equipID',$id)->first();
+            
+            $totalEquip = Equipment::all();
+
+            $countCart = Equipment::all()
+                                ->where("transaction_id", "$lastTransaction->transaction_id")
+                                ->groupBy('equip_name')
+                                ->map(function($equipment, $equip_name) {
+                                    return [
+                                        'equip_name' => $equip_name,
+                                        'record' => $equipment->count(),
+                                    ];
+                                })
+                                ->values();
+
+            return view('student.item')->with('lastTransaction',$lastTransaction)
+                                     ->with('countCart', $countCart)
+                                     ->with('item',$item)
+                                     ->with('totalEquip',$totalEquip);
+        } else {
+            $item = Equipment::where('equipID',$id)->first();
+            return view('admin.item')->with('item',$item);
+                                    
+        }
+    }
+
+    public function showAllEquipment(){
+        if(auth()->user()->access_role != 'ADMIN'){
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();
+
+            $equipments =  Equipment::where('equip_avail', '0')
+                                    ->orderBy('equip_name', 'asc')
+                                    ->paginate(27);
+
+            $totalEquip = Equipment::all();
+
+            $countCart = Equipment::all()
+                                ->where("transaction_id", "$lastTransaction->transaction_id")
+                                ->groupBy('equip_name')
+                                ->map(function($equipment, $equip_name) {
+                                    return [
+                                        'equip_name' => $equip_name,
+                                        'record' => $equipment->count(),
+                                    ];
+                                })
+                                ->values();
+
+            return view('equip.all_equipment')->with('lastTransaction',$lastTransaction)
+                                              ->with('countCart', $countCart)
+                                              ->with('equipments',$equipments)
+                                              ->with('totalEquip',$totalEquip)
+                                              ->with('countTotalAvail', $this->countTotalAvail)
+                                              ->with('countCurrAvail', $this->countCurrAvail);
+        } else {
+            $equipments =  Equipment::orderBy('equip_name', 'asc')->paginate(27); 
+            return view('equip.all_equipment')->with('equipments',$equipments)
+                                              ->with('countTotalAvail', $this->countTotalAvail)
+                                              ->with('countCurrAvail', $this->countCurrAvail);
+                                    
+        }
+    }
+
     public function showCamEquipment(){
         /*$equipment = Equipment::find($id);
         //please change show URL with {id}
@@ -67,8 +133,8 @@ class EquipmentsController extends Controller
 
             $equipments =  Equipment::where('equip_category', 'CAMACC')
                                     ->where('equip_avail', '0')
-                                    ->orderBy('equip_name', 'desc')
-                                    ->get();
+                                    ->orderBy('equip_name', 'asc')
+                                    ->paginate(27);
 
             $totalEquip = Equipment::all();
 
@@ -90,7 +156,7 @@ class EquipmentsController extends Controller
                                         ->with('countTotalAvail', $this->countTotalAvail)
                                         ->with('countCurrAvail', $this->countCurrAvail);
         } else {
-            $equipments =  Equipment::where('equip_category', 'CAMACC')->orderBy('equip_name', 'desc')->get(); 
+            $equipments =  Equipment::where('equip_category', 'CAMACC')->orderBy('equip_name', 'asc')->paginate(27);
             return view('equip.cam_equipment')->with('equipments',$equipments)
                                             ->with('countTotalAvail', $this->countTotalAvail)
                                             ->with('countCurrAvail', $this->countCurrAvail);
@@ -102,8 +168,8 @@ class EquipmentsController extends Controller
         if(auth()->user()->access_role != 'ADMIN'){
             $equipments =  Equipment::where('equip_category', 'ART')
                                     ->where('equip_avail', '0')
-                                    ->orderBy('equip_name', 'desc')
-                                    ->get();
+                                    ->orderBy('equip_name', 'asc')
+                                    ->paginate(27);
 
             $totalEquip = Equipment::all();
                         
@@ -127,7 +193,7 @@ class EquipmentsController extends Controller
                                 ->with('countTotalAvail', $this->countTotalAvail)
                                 ->with('countCurrAvail', $this->countCurrAvail);  
         } else {
-            $equipments =  Equipment::where('equip_category', 'ART')->orderBy('equip_name', 'desc')->get(); 
+            $equipments =  Equipment::where('equip_category', 'ART')->orderBy('equip_name', 'asc')->paginate(27); 
             return view('equip.art_equipment')->with('equipments',$equipments)
                                             ->with('countTotalAvail', $this->countTotalAvail)
                                             ->with('countCurrAvail', $this->countCurrAvail);
@@ -139,8 +205,8 @@ class EquipmentsController extends Controller
         if(auth()->user()->access_role != 'ADMIN'){
             $equipments =  Equipment::where('equip_category', 'SPRT')
                                     ->where('equip_avail', '0')
-                                    ->orderBy('equip_name', 'desc')
-                                    ->get();
+                                    ->orderBy('equip_name', 'asc')
+                                    ->paginate(27);
             
             $totalEquip = Equipment::all();
 
@@ -164,7 +230,7 @@ class EquipmentsController extends Controller
                                 ->with('countTotalAvail', $this->countTotalAvail)
                                 ->with('countCurrAvail', $this->countCurrAvail);    
         } else {
-            $equipments =  Equipment::where('equip_category', 'SPRT')->orderBy('equip_name', 'desc')->get(); 
+            $equipments =  Equipment::where('equip_category', 'SPRT')->orderBy('equip_name', 'asc')->paginate(27); 
             return view('equip.sport_equipment')->with('equipments',$equipments)
                                             ->with('countTotalAvail', $this->countTotalAvail)
                                             ->with('countCurrAvail', $this->countCurrAvail);
@@ -176,8 +242,8 @@ class EquipmentsController extends Controller
         if(auth()->user()->access_role != 'ADMIN'){
             $equipments =  Equipment::where('equip_category', 'MISC')
                                     ->where('equip_avail', '0')
-                                    ->orderBy('equip_name', 'desc')
-                                    ->get();
+                                    ->orderBy('equip_name', 'asc')
+                                    ->paginate(27);
 
             $totalEquip = Equipment::all();
 
@@ -201,7 +267,7 @@ class EquipmentsController extends Controller
                                     ->with('countTotalAvail', $this->countTotalAvail)
                                     ->with('countCurrAvail', $this->countCurrAvail);   
             } else {
-                $equipments =  Equipment::where('equip_category', 'MISC')->orderBy('equip_name', 'desc')->get(); 
+                $equipments =  Equipment::where('equip_category', 'MISC')->orderBy('equip_name', 'asc')->paginate(27); 
                 return view('equip.misc_equipment')->with('equipments',$equipments)
                                                 ->with('countTotalAvail', $this->countTotalAvail)
                                                 ->with('countCurrAvail', $this->countCurrAvail);
@@ -213,8 +279,8 @@ class EquipmentsController extends Controller
         if(auth()->user()->access_role != 'ADMIN'){
             $equipments =  Equipment::where('equip_category', 'LPTP')
                                     ->where('equip_avail', '0')
-                                    ->orderBy('equip_name', 'desc')
-                                    ->get();
+                                    ->orderBy('equip_name', 'asc')
+                                    ->paginate(27);
             $totalEquip = Equipment::all();
             $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
             $countCart = Equipment::all()
@@ -235,7 +301,7 @@ class EquipmentsController extends Controller
                                     ->with('countTotalAvail', $this->countTotalAvail)
                                     ->with('countCurrAvail', $this->countCurrAvail);
             } else {
-                $equipments =  Equipment::where('equip_category', 'LPTP')->orderBy('equip_name', 'desc')->get(); 
+                $equipments =  Equipment::where('equip_category', 'LPTP')->orderBy('equip_name', 'asc')->paginate(27); 
                 return view('equip.laptop_equipment')->with('equipments',$equipments)
                                                 ->with('countTotalAvail', $this->countTotalAvail)
                                                 ->with('countCurrAvail', $this->countCurrAvail);
@@ -247,8 +313,8 @@ class EquipmentsController extends Controller
         if(auth()->user()->access_role != 'ADMIN'){
             $equipments =  Equipment::where('equip_category', 'GMNG')
                                     ->where('equip_avail', '0')
-                                    ->orderBy('equip_name', 'desc')
-                                    ->get();
+                                    ->orderBy('equip_name', 'asc')
+                                    ->paginate(27);
             
             $totalEquip = Equipment::all();
             
@@ -273,7 +339,7 @@ class EquipmentsController extends Controller
                                     ->with('countTotalAvail', $this->countTotalAvail)
                                     ->with('countCurrAvail', $this->countCurrAvail);
             } else {
-                $equipments =  Equipment::where('equip_category', 'GMNG')->orderBy('equip_name', 'desc')->get(); 
+                $equipments =  Equipment::where('equip_category', 'GMNG')->orderBy('equip_name', 'asc')->paginate(27); 
                 return view('equip.gaming_equipment')->with('equipments',$equipments)
                                                 ->with('countTotalAvail', $this->countTotalAvail)
                                                 ->with('countCurrAvail', $this->countCurrAvail);
