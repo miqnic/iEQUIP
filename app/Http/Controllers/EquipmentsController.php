@@ -362,11 +362,13 @@ class EquipmentsController extends Controller
                                         ];
                                     })
                                     ->values(); 
-                                    
+
+            $equipments = Equipment::all();
     
             return view('student.faq')->with('lastTransaction',$lastTransaction)
                                     ->with('countCart', $countCart)
                                     ->with('totalEquip', $totalEquip)
+                                    ->with('equipments', $equipments)
                                     ->with('countTotalAvail', $this->countTotalAvail)
                                     ->with('countCurrAvail', $this->countCurrAvail);
     }

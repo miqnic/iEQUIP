@@ -38,6 +38,19 @@ class TransactionFormsController extends Controller
                                         ->orderBy('transaction_id', 'desc')
                                         ->take(5)
                                         ->get();
+        $unclaimedForms = TransactionForm::where([
+                                        'user_id' => auth()->user()->user_id, 
+                                        'approval' => 1,
+                                        'claimed'=> 0])
+                                        ->orderBy('transaction_id', 'desc')
+                                        ->get();
+        $unreturnedForms = TransactionForm::where([
+                                            'user_id' => auth()->user()->user_id, 
+                                            'approval' => 1,
+                                            'claimed'=> 1,
+                                            'returned' => 0])
+                                            ->orderBy('transaction_id', 'desc')
+                                            ->get();                         
         $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();
         $countCart = Equipment::all()
                             ->where("transaction_id", "$lastTransaction->transaction_id")
@@ -56,6 +69,8 @@ class TransactionFormsController extends Controller
         return view('student.home')->with('transaction_forms', $transaction_forms)
                                    ->with('pendingForms', $pendingForms)
                                    ->with('recentForms', $recentForms)
+                                   ->with('unclaimedForms', $unclaimedForms)
+                                   ->with('unreturnedForms', $unreturnedForms)
                                    ->with('lastTransaction', $lastTransaction)
                                    ->with('countCart', $countCart)
                                    ->with('equipments',$equipments)
@@ -370,29 +385,5 @@ class TransactionFormsController extends Controller
             
             return redirect()->back()->with('success', 'Transaction# '.$request->get('currentForm').' has been successfully claimed!');
         }
-    }
-
-    public function studentFAQ(){
-        $equipments =  Equipment::get();
-
-        $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
-
-        $countCart = Equipment::all()
-                                ->where("transaction_id", "$lastTransaction->transaction_id")
-                                ->groupBy('equip_name')
-                                ->map(function($equipment, $equip_name) {
-                                    return [
-                                        'equip_name' => $equip_name,
-                                        'record' => $equipment->count(),
-                                    ];
-                                })
-                                ->values(); 
-
-        $totalEquip = Equipment::all();
-
-        return view('student.faq')->with('equipments',$equipments)
-                                  ->with('lastTransaction',$lastTransaction)
-                                  ->with('countCart', $countCart)
-                                  ->with('totalEquip', $totalEquip);
     }
 }

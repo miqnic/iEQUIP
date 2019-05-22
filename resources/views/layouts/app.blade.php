@@ -68,24 +68,24 @@
     <!--Additional view css-->
     @yield('head')
 </head>
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column">
     <main class="flex-shrink-0" role="main">
         @yield('navi')
         <div class="container inside pt-2">
         @include('inc.messages')
         @yield('content')
         </div>
+        <footer class="footer bg-dark">
+            <div class="container text-light pt-3">
+                <span>&copy; 2019 iACADEMY | All rights reserved.</span>
+                <span class="float-right">
+                    <i class="fas fa-envelope"></i> facilities@iacademy.edu.ph
+                    &nbsp;
+                    <i class="fas fa-phone"></i> 889 5555 ext. 2234 - 2235
+                </span>
+            </div>
+        </footer>
     </main>
     @yield('modal')
-    <footer class="footer bg-dark">
-        <div class="container text-light pt-3">
-            <span>&copy; 2019 iACADEMY | All rights reserved.</span>
-            <span class="float-right">
-                <i class="fas fa-envelope"></i> facilities@iacademy.edu.ph
-                &nbsp;
-                <i class="fas fa-phone"></i> 889 5555 ext. 2234 - 2235
-            </span>
-        </div>
-    </footer>
 </body>
 </html>
