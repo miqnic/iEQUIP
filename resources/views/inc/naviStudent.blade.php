@@ -60,7 +60,7 @@
                   <a class="nav-link" href="equipmentlist">Equipment</a>
                 </li>      
                 <li class="nav-item">
-                  <a class="nav-link" href="faqs">FAQs</a>
+                  <a class="nav-link" href="faqs">FAQ</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="contact">Contact Us</a>
@@ -79,9 +79,14 @@
             <a href="#" id="account" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip" data-placement="bottom" title="Sign Out">
               <img src = "{{ url('img/user-account-box.png') }}" height= 23;>
             </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="account">
+              <div class="dropdown-menu dropdown-menu-right bg-white" aria-labelledby="account" style="width: 300px;">
+                <div class="profileInfo h-50 text-center mx-auto bg-white">
+                    <img src = "{{ url('img/user-account-box.jpg') }}" class="pt-2" height="80">
+                    <h5 class="pt-2 text-uppercase">Rhej Christian Laurel</h5>
+                    <p>201701039 | BSCS-SE</p>
+                </div>
                 {{-- <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">Log out</a> --}}
-                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                <a class="dropdown-item text-right bg-light font-weight-bold" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('LOGOUT') }}</a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                   @csrf
                 </form>

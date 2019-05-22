@@ -14,7 +14,7 @@
 @endsection
 
 @section('content')
-  <div class="row pb-3">
+  <div class="row">
     <div class="col-md-3 pt-2 padding-right-0">
       <div class="list-group" id="list-tab" role="tablist">
           <a class="list-group-item text-uppercase font-weight-bold">Browse Categories</a>
@@ -30,23 +30,17 @@
     
     <div class="col-md-9 mt-2">
       @if(Auth::user()->access_role == "ADMIN")
-      <div class="addEdit float-left">
+      <div class="addEdit float-left mb-2">
         <button type="button" name="addEquip" class="btn btn-sm btn-light" data-toggle="modal" data-target="#addEquip"><img id="plus" src="{{ asset('img/plus.png') }}" height=18;> Add Equipment</button>
         <button type="button" name="delEquip" class="btn btn-sm btn-light" data-toggle="modal" data-target="#delEquip"><img id="minus" src="{{ asset('img/minus.png') }}" height=18;> Delete Equipment</button>
         @include('inc.addEquipModal')
         @include('inc.delEquipModal')
       </div>
-      @endif
-      <div class="dropdown float-right mb-1">
-        <button class="btn btn-sm btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Show 12
-        </button>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
+      @else
+      <div class="pt-1">
+        <h5>Cameras and Accessories</h5>
       </div>
+      @endif
       <hr style="clear:both;">
       <div class="d-inline-flex flex-row flex-wrap align-items-center justify-content-start">
           @foreach ($equipments->unique('equip_name') as $equipment)

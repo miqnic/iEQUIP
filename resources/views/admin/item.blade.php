@@ -1,29 +1,26 @@
 @extends('layouts.app')
 
 @section('head')
-    <title>{{ config('app.name') }} | Camera and Accessories</title>
+    <title>{{ config('app.name') }} | {{$item->equip_name}}</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/equiplist.css') }}">
     <script>
         $(document).ready(function() {
             var editor = new $.fn.dataTable.Editor( {
             ajax:  '/api/staff',
-            table: '#myTable',
+            table: '#itemStockEdit',
             fields: [
                 { label: 'First name', name: 'first_name' },
-                { label: 'Last name',  name: 'last_name'  },
+                { label: 'Last name',  name: 'last_name'  }
                 // etc
             ]
         });
         $('#itemStockEdit').DataTable({
             ajax: '/api/staff',
-            // dom: "<<'col-md-4'B><'col-md-5 offset-md-3'f>rtip",
-            "dom": "<'row'<'col-md-2 mt-3'B><'col-md-3 offset-md-7 text-right'f>>" +
-                        "<'row'<'col-md-12'tr>>" +
-                        "<'row'<'col-md-3'i><'col-md-2 offset-md-7'p>>",
+            dom: 'Bfrtip',
             columns: [
                 { data: 'equipID' },
                 { data: 'equip_status' },
-                { data: 'remarks' },
+                { data: 'remarks' }
             ],
             select: true,
             buttons: [
@@ -32,9 +29,9 @@
                 { extend: 'remove', editor: editor, className: 'btn btn-sm' }
             ]
         });
-        });
+    });
 
-        $(document).ready(function () {  
+    $(document).ready(function () {  
         $('#saveEditEquip').hide();
         $('#editEquip').click(function () {  
             $('.displayCategory').hide();
@@ -51,7 +48,7 @@
         $('#saveEditEquip').click(function () { 
             $('#editEquipDetails').submit();
         });
-        });  
+    });  
     </script>
 @endsection
 
@@ -124,7 +121,7 @@
         </div>
         
         <div class="items mt-4 mx-auto">
-            <table class="table table-hover table-striped table-bordered" id="itemStockEdit" style="width:100%">
+            <table class="table table-hover table-striped table-bordered" id="itemStockEdit">
                 <thead class="text-center">
                     <tr>
                         <th class="align-middle">Equipment</th>

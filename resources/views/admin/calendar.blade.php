@@ -2,7 +2,7 @@
 
 @section('head')
     <title>{{ config('app.name') }} | Calendar</title>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/admin.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/equiplist.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/core-main.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-main.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/daygrid-main.min.css') }}">
@@ -445,37 +445,31 @@
 @endsection
 
 @section('content')
-<div class="header">
-    <h2 class="border-bottom pb-2 pl-3">Reservation Calendar</h2>
-    <div class="row mr-3">
-      <div class="col-md-10">
-        <p class="lead pl-3">The availability of the items will reflect here.</p>
-      </div>
-      <div class="col-md-2 pt-3">
-        Choose Category: 
-        <select class="form-control" id="selectCategory">
-            <option value="1">Art Tools</option>
-            <option value="2">Cameras & Accessories</option>
-            <option value="3">Gaming Devices</option>
-            <option value="4">Laptops & Accessories</option>
-            <option value="5">Sports Equipment</option>
-            <option value="6">Miscellaneous</option>
-        </select>
-      </div>
-    </div>
+<div class="row">
+  <div class="col-md-10 pt-4">
+    <h3>Availability Calendar</h3>
+  </div>
+  <div class="col-md-2 pt-2 pb-3">
+    Choose Category: 
+    <select class="form-control custom-select" id="selectCategory">
+        <option value="1">Art Tools</option>
+        <option value="2">Cameras & Accessories</option>
+        <option value="3">Gaming Devices</option>
+        <option value="4">Laptops & Accessories</option>
+        <option value="5">Sports Equipment</option>
+        <option value="6">Miscellaneous</option>
+    </select>
+  </div>
 </div>
 
-<div class="container-fluid">            
+<div class="row">   
+  <div class="col-md-12">         
     <div class="calendar" id="category1"></div>
     <div class="calendar" id="category2"></div>
     <div class="calendar" id="category3"></div>
     <div class="calendar" id="category4"></div>
     <div class="calendar" id="category5"></div>
     <div class="calendar" id="category6"></div>
+  </div>
 </div>
-@endsection
-
-@section('modal')
-{{--     @include('inc.checkFormModal')
-    @include('inc.viewStudentModal') --}}
 @endsection

@@ -12,7 +12,7 @@
 @section('content')
 @if(Auth::user()->penalty>0)
 <div class="alert alert-danger mt-3" role="alert">
-    You still have an outstanding balance amounting to <b>PHP{{Auth::user()->penalty}}.00</b>. Please proceed to the <b>Accounting Office</b> at the Mezzanine to as soon as possible to settle this.
+    You still have an outstanding balance amounting to <b>PHP{{Auth::user()->penalty}}.00</b>! Please proceed to the <b>Accounting Office</b> as soon as possible to settle this.
 </div>
 @endif
 <span class="float-right"><b>Legend:</b> <i class="fas fa-exclamation-triangle text-danger"></i> - due/overdue</span>
@@ -134,7 +134,7 @@
                     @foreach($pendingForms as $form)
                         <tr>
                             <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{$form->transaction_id}}</td>
-                            <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{\Carbon\Carbon::parse($form->submitted_date)->toFormattedDateString()}}</td>
+                            <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{\Carbon\Carbon::parse($form->submitted_date)->format('F d, Y h:i A')}}</td>
                             <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{\Carbon\Carbon::parse($form->start_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->start_time)->format('h:i A')}}</td>
                             <td class="align-middle"><button type="button"  class="btn btn-sm btn-danger" data-toggle="modal" data-target ="#confirmCancellation{{$form->transaction_id}}">Cancel</button></td>
                         </tr>
@@ -169,12 +169,19 @@
                 @foreach($recentForms as $form)
                 <tr>
                     <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{$form->transaction_id}}</td>
-                    <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{$form->submitted_date}}</td>
+                    <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{\Carbon\Carbon::parse($form->submitted_date)->format('F d, Y h:i A')}}</td>
                     <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{\Carbon\Carbon::parse($form->start_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->start_time)->format('h:i A')}}</td>
                     <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->end_time)->format('h:i A')}}</td>
                     <td class="align-middle">
                         @if($form->approval==1)
-                        <span class="badge badge-success">Approved</span>
+                            <span class="badge badge-success">Approved</span>
+                            @if($form->claimed==1 and $form->returned==0)
+                            <span class="badge badge-primary">Claimed</span>
+                            @elseif($form->claimed==1 and $form->returned==1)
+                            <span class="badge badge-success">Returned</span>
+                            @else
+                            <span class="badge badge-warning">Unclaimed</span>
+                            @endif
                         @elseif($form->approval==0)
                         <span class="badge badge-warning">Pending</span>
                         @elseif($form->approval==-1)

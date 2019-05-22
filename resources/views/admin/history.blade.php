@@ -3,6 +3,41 @@
 @section('head')
     <title>{{ config('app.name') }} | Request History</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/history.css') }}">
+
+    <script>
+        $(document).ready( function () {
+            $('#dataTables').DataTable( {
+            dom: 'Bfrtip',
+            lengthMenu: [
+                [ 10, 25, 50, -1 ],
+                [ '10 rows', '25 rows', '50 rows', 'Show all' ]
+            ],
+            buttons: [
+                'pageLength',
+                {
+                extend: 'pdfHtml5',
+                text: 'Export All as PDF',
+                exportOptions: {
+                    modifier: {
+                        selected: null
+                    },
+                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+                },
+                download: 'open'
+                },
+                {
+                extend: 'pdfHtml5',
+                text: 'Export Selected Row/s as PDF',
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+                },
+                download: 'open'
+                }
+            ],
+            select: true
+            });
+        });
+    </script>
 @endsection
 
 @section('navi')

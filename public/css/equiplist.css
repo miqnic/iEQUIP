@@ -1,3 +1,5 @@
+/*GENERAL AND EQUIPLIST CSS*/
+
 .list-group {
   border-radius: 0 !important;
 }
@@ -65,6 +67,8 @@ html, body {
   width: 100% !important;
 }
 
+/*FAQ CSS*/
+
 .rotate{
   -moz-transition: all 2s linear;
   -webkit-transition: all 2s linear;
@@ -101,4 +105,62 @@ html, body {
   right: 20px; 
   display:none;
   z-index: 5;
+}
+
+/*CART CSS*/
+
+#progress {
+  margin-top: 70px !important;
+  margin-bottom: 70px !important;
+  margin-left: 15% !important;
+  text-align: center !important;
+}
+
+.progressbar {
+  counter-reset: step !important;
+}
+.progressbar li {
+  list-style-type: none !important;
+  width: 25% !important;
+  float: left !important;
+  font-size: 12px;
+  position: relative !important;
+  text-align: center !important;
+  text-transform: uppercase;
+  color: #7d7d7d !important;
+}
+.progressbar li:before {
+  width: 30px !important;
+  height: 30px !important;
+  content: counter(step) !important;
+  counter-increment: step !important;
+  line-height: 30px !important;
+  border: 2px solid #7d7d7d !important;
+  display: block !important;
+  text-align: center !important;
+  margin: 0 auto 10px auto !important;
+  border-radius: 50% !important;
+  background-color: white !important;
+}
+.progressbar li:after {
+  width: 100% !important;
+  height: 2px !important;
+  content: '' !important;
+  position: absolute !important;
+  background-color: #7d7d7d !important;
+  top: 15px !important;
+  left: -50% !important;
+  z-index: -1 !important;
+}
+.progressbar li:first-child:after {
+  content: none !important;
+}
+.progressbar li.active {
+  color: green !important;
+}
+.progressbar li.active:before {
+  border-color: #55b776 !important;
+}
+.progressbar li.active + li:after {
+  background-color: #55b776 !important;
 }

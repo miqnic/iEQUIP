@@ -1,15 +1,12 @@
 @extends('layouts.app')
 
 @section('head')
-    <title>{{ config('app.name') }} | Camera and Accessories</title>
+    <title>{{ config('app.name') }} | {{$item->equip_name}}</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/equiplist.css') }}">
     <script>
         $(document).ready(function() {
             $('#itemStock').DataTable({
-                "ordering": false,
-                "dom": "<'row'<'col-md-2'l><'col-md-3 offset-md-7'f>>" +
-                        "<'row'<'col-md-12'tr>>" +
-                        "<'row'<'col-md-3'i><'col-xs-3 offset-md-2'p>>"
+                "ordering": false
             });
         });
 
@@ -125,7 +122,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <button type="button" class="btn btn-sm btn-primary selectSubmit float-right" style="margin-top: -50px"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+            <button type="button" class="btn btn-sm btn-primary selectSubmit float-right" style="margin-top: -35px; margin-right: 200px;"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
         </div>
     </div>
 </div>
