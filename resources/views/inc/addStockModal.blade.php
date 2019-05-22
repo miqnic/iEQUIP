@@ -1,5 +1,13 @@
 @foreach($equipments->unique('equip_name') as $equipment)
-<div class="modal fade" id="addStockModal-{{$equipment->equipID}}" tabindex="-1">
+@php
+    $spaces = '/\s*/m';
+    $replace = '';
+
+    $string= $equipment->equip_name;
+
+    $trimmedString = preg_replace($spaces, $replace, $string);
+@endphp
+<div class="modal fade" id="addStockModal-{{$trimmedString}}" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
 
@@ -7,11 +15,12 @@
             <h4 class="modal-title">Add New Stock</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        {!! Form::open(['action' => 'EquipmentsController@addEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+        {!! Form::open(['action' => 'EquipmentsController@addStock', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         @csrf
         <div class="modal-body">
                 <div class="form-group">
                     {{Form::label('quantity', 'Quantity')}}
+                    {{Form::hidden('itemName', $equipment->equip_name)}}
                     {{Form::text('quantity', '',['class' => 'form-control', 'placeholder' => 'Enter quantity', 'required' => ''])}}
                 </div>
 

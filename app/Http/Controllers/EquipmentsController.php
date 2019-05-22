@@ -398,31 +398,44 @@ class EquipmentsController extends Controller
     }
 
     public function addStock(Request $request){
-        $currentEquip = $request->get('itemName')->first();
+        $equipments = Equipment::get();
+        $currentEquipName = $request->get('itemName');
+        $quantity = $request->get('quantity');
 
-        $request->validate([
-            'quantity' => 'required',
-            'remarks' => 'required'
-          ]);
+        //dd($currentEquipName);
 
-          $equipment = new Equipment([
-            'equip_name' => $currentEquip->equip_name,
-            'equip_description' => $currentEquip->equip_description,
-            'equip_penalty' => $currentEquip->equip_penalty,
-            'equip_baseprice' => $currentEquip->equip_baseprice,
-            'equip_category' => $currentEquip->equip_category,
-            'equip_img' => $currentEquip->equip_img,
-            'equip_avail' => '0',
-            'returned' => false,
-          ]);
+        foreach ($equipments as $equip) {
+            if ($equip->equip_name == $currentEquipName) {
+                $currentEquip = $equip;
+                break;
+            }
+        }
 
-          $equipment->save();
+        for ($i=0; $i < $quantity; $i++) { 
+            $request->validate([
+                'quantity' => 'required',
+                'description' => 'required'
+            ]);
 
-          $equipment->equipID = "$equipment->equip_category"."$equipment->id";
-          //dd($equipment->category);
+            $equipment = new Equipment([
+                'equip_name' => $currentEquip->equip_name,
+                'equip_description' => $currentEquip->equip_description,
+                'equip_penalty' => $currentEquip->equip_penalty,
+                'equip_baseprice' => $currentEquip->equip_baseprice,
+                'equip_category' => $currentEquip->equip_category,
+                'equip_img' => $currentEquip->equip_img,
+                'equip_avail' => '0',
+                'returned' => false,
+            ]);
 
-          $equipment->save();
-          //return redirect(URL::current());
+            $equipment->save();
+
+            $equipment->equipID = "$equipment->equip_category"."$equipment->id";
+            //dd($equipment->category);
+
+            $equipment->save();
+            //return redirect(URL::current());
+        }
 
           return redirect()->back()->with('success', $equipment->equip_name.'is Added!');
 

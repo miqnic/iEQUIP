@@ -116,7 +116,7 @@
 
                                   $trimmedString = preg_replace($spaces, $replace, $string);
                                 @endphp
-                              <button type="button" data-dismiss="modal" data-toggle="modal" class="btn btn-outline-secondary" data-target="#addStockModal-{{$equipment->equipID}}" >Add</button>
+                              <button type="button" data-dismiss="modal" data-toggle="modal" class="btn btn-outline-secondary" data-target="#addStockModal-{{$trimmedString}}" >Add</button>
                               <button type="button" data-dismiss="modal" data-toggle="modal" class="btn btn-outline-secondary" data-target="#editItemModal-{{$trimmedString}}" >Edit</button>
                             </div>
                           </div>
