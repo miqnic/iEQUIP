@@ -383,7 +383,7 @@ class EquipmentsController extends Controller
             'equip_category' => $request->get('category'),
             'equip_img' => $fileNameToStore,
             'equip_avail' => '0',
-            'returned' => true,
+            'returned' => false,
           ]);
 
           $equipment->save();
@@ -395,6 +395,37 @@ class EquipmentsController extends Controller
           //return redirect(URL::current());
 
           return redirect()->back()->with('success', 'Equipment Added!');
+    }
+
+    public function addStock(Request $request){
+        $currentEquip = $request->get('itemName')->first();
+
+        $request->validate([
+            'quantity' => 'required',
+            'remarks' => 'required'
+          ]);
+
+          $equipment = new Equipment([
+            'equip_name' => $currentEquip->equip_name,
+            'equip_description' => $currentEquip->equip_description,
+            'equip_penalty' => $currentEquip->equip_penalty,
+            'equip_baseprice' => $currentEquip->equip_baseprice,
+            'equip_category' => $currentEquip->equip_category,
+            'equip_img' => $currentEquip->equip_img,
+            'equip_avail' => '0',
+            'returned' => false,
+          ]);
+
+          $equipment->save();
+
+          $equipment->equipID = "$equipment->equip_category"."$equipment->id";
+          //dd($equipment->category);
+
+          $equipment->save();
+          //return redirect(URL::current());
+
+          return redirect()->back()->with('success', $equipment->equip_name.'is Added!');
+
     }
 
     public function del(){
