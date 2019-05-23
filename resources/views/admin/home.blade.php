@@ -67,7 +67,12 @@
                                     @endif
                                     @endforeach
                                 </td>
-                                <td class="align-middle">{{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}</td>
+                                <td class="align-middle">
+                                    {{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}
+                                    @if($form->returned==0 && \Carbon\Carbon::parse($form->due_date)->isPast())
+                                        <i class="fas fa-lg fa-exclamation-triangle text-danger"></i>
+                                    @endif
+                                </td>
                                 <td class="align-middle">
                                     <h5>
                                     @if($form->approval==1)
@@ -111,6 +116,7 @@
                 @endif
             </tbody>
         </table>
+        <span><b>Legend:</b> <i class="fas fa-exclamation-triangle text-danger"></i> - due date has passed</span>
     </div>
 </div>
 @endsection
