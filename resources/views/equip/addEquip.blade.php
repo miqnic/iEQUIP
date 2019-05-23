@@ -60,11 +60,12 @@
                         <div class="col-md-4">
                             <label class="pt-3" for="category">Category</label>
                             <select id="category" name="category[]" class="form-control">
+                                <option selected disabled>Select category</option>
                                 <option value="CAMACC">Cameras & Accessories</option>
                                 <option value="ART">Art Tools</option>
                                 <option value="SPRT">Sports Equipment</option>
                                 <option value="GMNG">Gaming Devices</option>
-                                <option value="LPTP" selected>Laptops & Accessories</option>
+                                <option value="LPTP">Laptops & Accessories</option>
                                 <option value="MISC">Miscellaneous</option>
                             </select>
                         </div>
