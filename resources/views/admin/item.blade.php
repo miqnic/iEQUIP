@@ -3,7 +3,21 @@
 @section('head')
     <title>{{ config('app.name') }} | {{$item->equip_name}}</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/equiplist.css') }}">
+
+     <style>
+        .popover {
+            max-width: 200px;
+        }
+    </style>
     <script>
+        $(function () {
+            $('#addStockBtn').popover({
+                title: 'Add Stock',
+                html: true,
+                content:  $('#addStockForm').html()
+            })
+        });
+
         $(document).ready(function() {
             var editor = new $.fn.dataTable.Editor( {
             ajax:  '/api/staff',
@@ -97,41 +111,57 @@
                 <h4 class="displayEquipName text-primary">{{$item->equip_name}}</h4>
                 <h6 class="displayEquipFee">Base Price: P<span class="displayBasePrice">{{$item->equip_baseprice}}</span> | Penalty: P<span class="displayPenalty">{{$item->equip_penalty}}</span>.00</h6>
                 <p class="displayDesc text-muted pt-2 description text-justify">{{$item->equip_description}}</p>
-                    <button type="button" class="btn btn-sm btn-success float-right mb-3" id="saveEditEquip">Save</button>
-                    <form id="editEquipDetails" style="display:none; margin-top: 20px;">
-                        <div class="form-group">
-                        <label for="equipCategory">Category</label>
-                        <select class="custom-select custom-select-md" name="category" id="equipCategory">
-                            <option value="ART">Art Tools</option>
-                            <option value="CAMACC">Cameras and Accessories</option>
-                            <option value="GMNG">Gaming Devices</option>
-                            <option value="LPTP">Laptops and Accessories</option>
-                            <option value="SPRT">Sports Equipment</option>
-                            <option value="MISC">Miscellaneous</option>
-                        </select>
-                        </div>
+                <button type="button" class="btn btn-sm btn-success float-right mb-3" id="saveEditEquip">Save</button>
+                <form id="editEquipDetails" style="display:none; margin-top: 20px;">
+                    <div class="form-group">
+                    <label for="equipCategory">Category</label>
+                    <select class="custom-select custom-select-md" name="category" id="equipCategory">
+                        <option value="ART">Art Tools</option>
+                        <option value="CAMACC">Cameras and Accessories</option>
+                        <option value="GMNG">Gaming Devices</option>
+                        <option value="LPTP">Laptops and Accessories</option>
+                        <option value="SPRT">Sports Equipment</option>
+                        <option value="MISC">Miscellaneous</option>
+                    </select>
+                    </div>
 
-                        <div class="form-group">
-                            <label for="equipName">Name</label>
-                            <input type="text" class="form-control form-control-sm" name="itemName" id="equipName">
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="remarks">Base Price (PHP)</label>
-                                    <input type="text" name="basePrice" class="form-control" id="basePrice" placeholder="Enter amount">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="remarks">Penalty Fee (PHP)</label>
-                                    <input type="text" name="penalty" class="form-control" id="penalty" placeholder="Enter amount">
-                                </div>
+                    <div class="form-group">
+                        <label for="equipName">Name</label>
+                        <input type="text" class="form-control form-control-sm" name="itemName" id="equipName">
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="remarks">Base Price (PHP)</label>
+                                <input type="text" name="basePrice" class="form-control" id="basePrice" placeholder="Enter amount">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="remarks">Penalty Fee (PHP)</label>
+                                <input type="text" name="penalty" class="form-control" id="penalty" placeholder="Enter amount">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="equipDesc">Description</label>
-                            <textarea class="form-control form-control-sm" id="equipDesc" name="description" rows="3"></textarea>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="form-group">
+                        <label for="equipDesc">Description</label>
+                        <textarea class="form-control form-control-sm" id="equipDesc" name="description" rows="3"></textarea>
+                    </div>
+                </form>
+
+                <button type="button" id="addStockBtn" class="btn btn-light float-right" data-container="body" data-toggle="popover" data-placement="bottom"><i class="fas fa-lg fa-plus-circle text-success"></i>
+                  Add Stock
+                </button>
+                <div id="addStockForm" style="display: none">
+                <form action="{{ action('EquipmentsController@addEquipment') }}" class="form-inline" id="addStock" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="itemName" value="{{$item->equipName}}">
+                    <input type="hidden" name="category" value="{{$item->equip_category}}">
+                    <input type="hidden" name="basePrice" value="{{$item->equip_baseprice}}">
+                    <input type="hidden" name="penalty" value="{{$item->equip_penalty}}">
+                    <input type="hidden" name="description" value="{{$item->equip_description}}">
+                    <input type="hidden" name="equipIMG" value="{{$item->equip_img}}">
+                    <input type="text" name="totalAmount" class="form-control rounded-0 border-right-0 form-control-sm w-75" id="itemName" placeholder="Enter quantity">
+                    <button type="submit" class="btn btn-sm btn-success rounded-0 float-right">Add</button>
+                </form>
+                </div>
             </div>
         </div>
         

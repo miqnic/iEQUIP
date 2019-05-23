@@ -81,7 +81,7 @@
                         <textarea class="form-control" name="description[]" rows="5" placeholder="Enter specifications here"></textarea>
                         <div class="row">
                         <div class="col-md-4">
-                        <label class="pt-3" for="remarks">Item Quantity</label>
+                        <label class="pt-3" for="totalAmount">Item Quantity</label>
                         <input type="text" name="totalAmount[]" class="form-control" id="itemName" placeholder="Enter quantity">
                         </div>
                         <div class="col-md-6">
