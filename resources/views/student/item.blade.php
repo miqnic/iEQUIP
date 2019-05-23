@@ -74,7 +74,8 @@
                         Miscellaneous
                     @endif
                 </span>
-                <h4 class="displayEquipName">{{$item->equip_name}}</h4>
+                <h4 class="displayEquipName text-primary">{{$item->equip_name}}</h4>
+                <h6>Base Price: P{{$item->equip_baseprice}} | Penalty: P{{$item->equip_penalty}}.00</h6>
                 <p class="displayDesc text-muted pt-2 description text-justify">{{$item->equip_description}}</p>
             </div>
         </div>
@@ -110,7 +111,7 @@
                         {{Form::hidden('currentEquipID', $equipment_modal->equipID)}}
                         {{Form::hidden('userID', Auth::user()->user_id)}}
                         {!! Form::close() !!} --}}
-                        <form action="EquipmentsController@reserveEquipment" method="POST" enctype="multipart/form-data">
+                        <form action="{{action('EquipmentsController@reserveEquipment')}}" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="currentEquipID" value="{{$equipment->equipID}}">
                             <input type="hidden" name="userID" value="{{Auth::user()->user_id}}">
                             <button type="submit" class="btn btn-sm btn-primary indiv"><i class="fas fa-shopping-cart"></i> Add to Cart</button>

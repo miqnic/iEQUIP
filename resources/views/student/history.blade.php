@@ -37,7 +37,7 @@
 @section('content')
   <div class="row">
     <div class="col-md-12 pt-3">
-    <h4 class="pb-4">Transaction History</h4>
+    <h3 class="pb-4">Transaction History</h3>
     <table class="table table-striped table-bordered table-hover text-center" id="dataTables">
       <thead>
         <tr>

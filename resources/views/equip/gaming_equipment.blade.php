@@ -31,8 +31,8 @@
     <div class="col-md-9 mt-2">
       @if(Auth::user()->access_role == "ADMIN")
       <div class="addEdit float-left mb-2">
-        <button type="button" name="addEquip" class="btn btn-sm btn-light" data-toggle="modal" data-target="#addEquip"><img id="plus" src="{{ asset('img/plus.png') }}" height=18;> Add Equipment</button>
-        <button type="button" name="delEquip" class="btn btn-sm btn-light" data-toggle="modal" data-target="#delEquip"><img id="minus" src="{{ asset('img/minus.png') }}" height=18;> Delete Equipment</button>
+        <button type="button" name="addEquip" class="btn btn-sm btn-light" data-toggle="modal" data-target="#addEquip"><i class="fas fa-lg fa-plus-circle text-success"></i> Add Equipment</button>
+        <button type="button" name="delEquip" class="btn btn-sm btn-light" data-toggle="modal" data-target="#delEquip"><i class="fas fa-lg fa-minus-circle text-danger"></i> Delete Equipment</button>
         @include('inc.addEquipModal')
         @include('inc.delEquipModal')
       </div>
@@ -44,14 +44,20 @@
       <hr style="clear:both;">
       <div class="d-inline-flex flex-row flex-wrap align-items-center justify-content-start">
           @foreach ($equipments->unique('equip_name') as $equipment)
-          <div class="card text-center mt-1 pt-3 mr-1">
+          <div class="card itemCard text-center mt-1 pt-3 mr-1">
             <span class="badge badge-success ml-3 w-25">In stock</span>
             <img src="{{ asset('img/'.$equipment->equip_img) }}" class="card-img-top align-self-center" alt="Item photo">
             <div class="card-body">
+              @php
+                $spaces = '/\s+/';
+                $replace = '-';
+                $string= $equipment->equip_name;
+                $trimmedString = preg_replace($spaces, $replace, $string);
+              @endphp
               @if(Auth::user()->access_role == "ADMIN")
-              <a class="card-link" href="{{ url('admin/'.$equipment->equipID) }}"><h6 class="card-title text-truncate">{{$equipment->equip_name}}</h6></a>
+              <a class="card-link" href="{{ url('admin/'.$trimmedString) }}"><h6 class="card-title text-truncate">{{$equipment->equip_name}}</h6></a>
               @else
-                  <a class="card-link" href="{{ url('student/'.$equipment->equipID) }}"><h6 class="card-title text-truncate">{{$equipment->equip_name}}</h6></a>
+                  <a class="card-link" href="{{ url('student/'.$trimmedString) }}"><h6 class="card-title text-truncate">{{$equipment->equip_name}}</h6></a>
               @endif
               <p class="card-text mb-4">
                 Availability: 

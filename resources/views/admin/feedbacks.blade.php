@@ -1,7 +1,14 @@
 @extends('layouts.app')
 
 @section('head')
-    <title>{{ config('app.name') }} | Feedbacks</title>
+    <title>{{ config('app.name') }} | Feedback</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/equiplist.css') }}">
+
+    <style>
+      .inside {
+        background-color: transparent;
+      }
+    </style>
 
     <script>
     $(function () {
@@ -33,23 +40,11 @@
 @endsection
 
 @section('content')
-    <h2 class="border-bottom pb-2 pl-3">Feedbacks</h2>
-    <p class="lead pl-3">Unread messages sent by the faculty and students can be seen by clicking on each tab below.</p> 
-    {{--<div class="w-25 ml-4 mt-4">
-         <div class="btn-group dropright">
-        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Sort by
-        </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Newest</a>
-          <a class="dropdown-item" href="#">Oldest</a>
-          <a class="dropdown-item" href="#">Type of Feedback</a>
-        </div>
+    <div class="row px-4">
+      <div class="col-md-8 pt-4">
+        <h3>Feedback</h3>
       </div>
-    </div> --}}
-
-    <div class="row">
-      <div class="col-md-1 pt-2 ml-4">
+      <div class="col-md-2 pt-2 float-right">
         Sort by:
           <select class="custom-select custom-select-sm" id="sortBy">
               <option value="1">Newest</option>
@@ -57,7 +52,7 @@
               <option value="3">Type of Feedback</option>
           </select>
       </div>
-      <div class="col-md-1 pt-2">
+      <div class="col-md-2 pt-2 float-right">
         Filter:
           <select class="custom-select custom-select-sm" id="filterBy">
               <option value="1">All</option>

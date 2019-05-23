@@ -136,7 +136,8 @@
                             <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{$form->transaction_id}}</td>
                             <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{\Carbon\Carbon::parse($form->submitted_date)->format('F d, Y h:i A')}}</td>
                             <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{\Carbon\Carbon::parse($form->start_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->start_time)->format('h:i A')}}</td>
-                            <td class="align-middle"><button type="button"  class="btn btn-sm btn-danger" data-toggle="modal" data-target ="#confirmCancellation{{$form->transaction_id}}">Cancel</button></td>
+                            <td class="align-middle"><button type="button"  class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmCancellation{{$form->transaction_id}}">Cancel</button></td>
+                            @include('inc.confirmCancellation')
                         </tr>
                     @endforeach
                 @endif
@@ -194,7 +195,8 @@
                         @if(\Carbon\Carbon::parse($form->due_date)->isPast() or $form->approval<0)
                         <button type="button" class="btn btn-sm btn-danger" disabled>Cancel</button>
                         @else 
-                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target ="#confirmCancellation">Cancel</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target ="#confirmCancellation{{$form->transaction_id}}">Cancel</button>
+                        @include('inc.confirmCancellation')
                         @endif
                     </td>
                 </tr>
@@ -207,6 +209,5 @@
 @endsection
 
 @section('modal')
-    @include('inc.confirmCancellation')
     @include('inc.checkFormModal')
 @endsection

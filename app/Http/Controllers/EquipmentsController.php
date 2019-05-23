@@ -61,7 +61,8 @@ class EquipmentsController extends Controller
         if(auth()->user()->access_role != 'ADMIN'){
             $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();
 
-            $item = Equipment::where('equipID',$id)->first();
+            $itemName = str_replace('-', ' ', $id);
+            $item = Equipment::where('equip_name',$itemName)->first();
             
             $totalEquip = Equipment::all();
 
@@ -81,7 +82,8 @@ class EquipmentsController extends Controller
                                      ->with('item',$item)
                                      ->with('totalEquip',$totalEquip);
         } else {
-            $item = Equipment::where('equipID',$id)->first();
+            $itemName = str_replace('-', ' ', $id);
+            $item = Equipment::where('equip_name',$itemName)->first();
             return view('admin.item')->with('item',$item);
                                     
         }
@@ -411,7 +413,7 @@ class EquipmentsController extends Controller
 
     //EQUIPMENT FUNCTIONS START
     public function add(){
-        return view('inc.addEquipModal');
+        return view('equip.addEquip');
     }
 
     public function addEquipment(Request $request){

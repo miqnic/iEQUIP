@@ -36,6 +36,7 @@
         $('#editEquip').click(function () {  
             $('.displayCategory').hide();
             $('.displayEquipName').hide();
+            $('.displayEquipFee').hide();
             $('.displayDesc').hide();
             $('#editEquip').hide();
             $('#editEquipDetails').toggle();
@@ -43,6 +44,8 @@
             $('#equipCategory').val('{{$item->equip_category}}');
             $('#equipName').val($('.displayEquipName').text());
             $('#equipDesc').val($('.displayDesc').text());
+            $('#basePrice').val($('.displayBasePrice').text());
+            $('#penalty').val($('.displayPenalty').text());
             $('#saveEditEquip').show();
         });  
         $('#saveEditEquip').click(function () { 
@@ -91,7 +94,8 @@
                         Miscellaneous
                     @endif
                 </span>
-                <h4 class="displayEquipName">{{$item->equip_name}}</h4>
+                <h4 class="displayEquipName text-primary">{{$item->equip_name}}</h4>
+                <h6 class="displayEquipFee">Base Price: P<span class="displayBasePrice">{{$item->equip_baseprice}}</span> | Penalty: P<span class="displayPenalty">{{$item->equip_penalty}}</span>.00</h6>
                 <p class="displayDesc text-muted pt-2 description text-justify">{{$item->equip_description}}</p>
                     <button type="button" class="btn btn-sm btn-success float-right mb-3" id="saveEditEquip">Save</button>
                     <form id="editEquipDetails" style="display:none; margin-top: 20px;">
@@ -111,7 +115,18 @@
                             <label for="equipName">Name</label>
                             <input type="text" class="form-control form-control-sm" name="itemName" id="equipName">
                         </div>
-
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="remarks">Base Price (PHP)</label>
+                                    <input type="text" name="basePrice" class="form-control" id="basePrice" placeholder="Enter amount">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="remarks">Penalty Fee (PHP)</label>
+                                    <input type="text" name="penalty" class="form-control" id="penalty" placeholder="Enter amount">
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="equipDesc">Description</label>
                             <textarea class="form-control form-control-sm" id="equipDesc" name="description" rows="3"></textarea>
