@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('head')
-    <title>{{ config('app.name') }} | Camera and Accessories</title>
+    <title>{{ config('app.name') }} | {{$item->equip_name}}</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/equiplist.css') }}">
     <script>
         $(document).ready(function () { 
@@ -119,7 +119,7 @@
         </div>
         
         <div class="items mt-4 mx-auto">
-            <table class="table table-hover table-striped table-bordered" id="itemStockEdit" style="width:100%">
+            <table class="table table-hover table-striped table-bordered" id="itemStockEdit">
                 <thead class="text-center">
                     <tr>
                         <th class="align-middle">Equipment</th>

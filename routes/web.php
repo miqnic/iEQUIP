@@ -70,7 +70,7 @@ Route::group(['middleware' => ['student']], function()
     Route::match(['get', 'post'],'/student/history', 'TransactionFormsController@studentHistory');
     Route::match(['get', 'post'],'/student/calendar', 'TransactionFormsController@calendar');
     Route::match(['get', 'post'],'/student/contact', 'TransactionFormsController@studentContact');
-    Route::match(['get', 'post'],'/student/faqs', 'TransactionFormsController@studentFAQ');
+    Route::match(['get', 'post'],'/student/faqs', 'EquipmentsController@faqs');
     Route::post('feedback','FeedbacksController@feedback');
 
     //Route::match(['get', 'post'],'/student/equipment', 'EquipmentsController@showArtEquipment');
