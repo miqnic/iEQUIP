@@ -50,8 +50,13 @@
       </thead>
       <tbody class="text-center">
           @foreach ($transaction_forms as $form)
-          <tr @if($form->returned==0 && $form->approval==1)class="text-danger" @endif  data-toggle="modal" data-target="#checkForm{{$form->transaction_id}}" id="transaction">
-              <td>{{$form->transaction_id}}</td>
+          <tr data-toggle="modal" data-target="#checkForm{{$form->transaction_id}}" id="transaction">
+              <td>
+                {{$form->transaction_id}} 
+                @if($form->returned==0 && \Carbon\Carbon::parse($form->due_date)->isPast())
+                  <i class="fas fa-lg fa-exclamation-triangle text-danger"></i>
+                @endif
+              </td>
               <td>{{\Carbon\Carbon::parse($form->created_at)->format('F d, Y h:i A')}}</td>
               <td>{{\Carbon\Carbon::parse($form->start_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->start_time)->format('h:i A')}}</td>
               <td>{{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->end_time)->format('h:i A')}}</td>
@@ -78,7 +83,7 @@
           @endforeach
         </tbody>
     </table>
-    <span><b>Legend:</b> <i class="fas fa-square-full text-danger"></i> - overdue/not yet returned</span>
+    <span><b>Legend:</b> <i class="fas fa-exclamation-triangle text-danger"></i> - due date has passed</span>
   </div>
 </div>
 @endsection
