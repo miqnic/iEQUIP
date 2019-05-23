@@ -96,18 +96,18 @@
                                             @endif
                                             
                                     @else 
-                                        {!! Form::open(['action' => 'TransactionFormsController@transactionApproval', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-                                            {{Form::hidden('currentForm', $form->transaction_id)}}
-                                            {{-- {{ Form::submit('Decline', array('class' => 'btn btn-outline-danger','name'=>'decision', 'value'=>'decline')) }} --}}
-                                            <button type="button" id="declineBtn" class="btn btn-outline-danger" data-container="body" data-toggle="popover" data-placement="bottom">Decline</button>
-                                              <div id="declineReasonForm" style="display: none">
-                                              <form method="POST">
-                                                  <textarea type="text" name="declineReason" class="form-control" id="declineReason" placeholder="Enter reason" rows="2"></textarea>
-                                                  <button type="submit" class="btn btn-sm btn-success float-right my-2">Confirm</button>
-                                              </form>
-                                              </div>
-                                            {{ Form::submit('Approve', array('class' => 'btn btn-outline-success','name'=>'decision', 'value'=>'approve')) }}
-                                        {!! Form::close() !!}
+                                        <form action="{{ action('TransactionFormsController@transactionApproval') }}" method="POST" enctype="multipart/form-data">
+                                        <input type="hidden" name="currentForm" value="{{$form->transaction_id}}">
+                                        <button type="submit" id="approveBtn" class="btn btn-outline-success" name="decision" value="approve">Approve</button>
+                                        <button type="button" id="declineBtn" class="btn btn-outline-danger" data-container="body" data-toggle="popover" data-placement="bottom">Decline</button>
+                                        </form>
+                                        <div id="declineReasonForm" style="display: none">
+                                        <form action="{{ action('TransactionFormsController@transactionApproval') }}" method="POST" enctype="multipart/form-data">
+                                            <input type="hidden" name="decision" value="decline">
+                                            <textarea type="text" name="declineReason" class="form-control" id="declineReason" placeholder="Enter reason" rows="2"></textarea>
+                                            <button type="submit" class="btn btn-sm btn-danger float-right my-2">Decline</button>
+                                        </form>
+                                        </div>
                                     @endif
                                 </td>
                             </tr>
