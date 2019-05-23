@@ -379,8 +379,8 @@ class EquipmentsController extends Controller
         $search = Input::get('search');
         $possibleEquips = Equipment::where('equip_name', 'like', '%' . $search . '%')
                                     ->orWhere('equipID', 'like', '%' . $search . '%')
-                                    ->get();
-
+                                    ->paginate(27);
+                                    
         $totalEquip = Equipment::all();
         $equipments = Equipment::all();
 
