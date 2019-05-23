@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Equipment;
 use App\TransactionForm;
 use DB;
+use Yajra\Datatables\Datatables;
 use Session;
 use URL;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,13 @@ class EquipmentsController extends Controller
 {
     public $countTotalAvail;
     public $countCurrAvail;
+
+    public function index(Request $request)
+    {
+        return Datatables::of(Equipment::query()->where('equip_name', $request->equip_name))
+        ->rawColumns(['equip_description'])
+        ->make(true);
+    }
 
     public function __construct()
     {

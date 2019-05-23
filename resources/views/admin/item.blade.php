@@ -4,53 +4,47 @@
     <title>{{ config('app.name') }} | Camera and Accessories</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/equiplist.css') }}">
     <script>
-        $(document).ready(function() {
-            var editor = new $.fn.dataTable.Editor( {
-            ajax:  '/api/staff',
-            table: '#myTable',
-            fields: [
-                { label: 'First name', name: 'first_name' },
-                { label: 'Last name',  name: 'last_name'  },
-                // etc
-            ]
-        });
-        $('#itemStockEdit').DataTable({
-            ajax: '/api/staff',
-            // dom: "<<'col-md-4'B><'col-md-5 offset-md-3'f>rtip",
-            "dom": "<'row'<'col-md-2 mt-3'B><'col-md-3 offset-md-7 text-right'f>>" +
-                        "<'row'<'col-md-12'tr>>" +
-                        "<'row'<'col-md-3'i><'col-md-2 offset-md-7'p>>",
-            columns: [
-                { data: 'equipID' },
-                { data: 'equip_status' },
-                { data: 'remarks' },
-            ],
-            select: true,
-            buttons: [
-                { extend: 'create', editor: editor, className: 'btn btn-sm' },
-                { extend: 'edit',   editor: editor, className: 'btn btn-sm' },
-                { extend: 'remove', editor: editor, className: 'btn btn-sm' }
-            ]
-        });
-        });
-
-        $(document).ready(function () {  
-        $('#saveEditEquip').hide();
-        $('#editEquip').click(function () {  
-            $('.displayCategory').hide();
-            $('.displayEquipName').hide();
-            $('.displayDesc').hide();
-            $('#editEquip').hide();
-            $('#editEquipDetails').toggle();
-            $('#faqtitle1').text('');
-            $('#equipCategory').val('{{$item->equip_category}}');
-            $('#equipName').val($('.displayEquipName').text());
-            $('#equipDesc').val($('.displayDesc').text());
-            $('#saveEditEquip').show();
-        });  
-        $('#saveEditEquip').click(function () { 
-            $('#editEquipDetails').submit();
-        });
+        $(document).ready(function () { 
+            $('#itemStockEdit').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": "{!! route('equip.index', ['equip_name' => $item->equip_name]) !!}",
+                "columns":[
+                    { "data": "equipID" },
+                    { data: null, render: function ( data, type, row ) {
+                        if (row.equip_avail == 0) {
+                            return 'AVAILABLE';
+                        }
+                        else if (row.equip_avail == -1){
+                            return 'NOT AVAILABLE';
+                        }
+                        else{
+                            return 'BORROWED';
+                        }
+                        }
+                    },  
+                    { data: null, render: function ( data, type, row) {
+                        return '<span>'+data.equip_description+'</span>';
+                    }
+                    }, 
+                ]
+            });
+            $('#saveEditEquip').hide();
+            $('#editEquip').click(function () {  
+                $('.displayCategory').hide();
+                $('.displayEquipName').hide();
+                $('.displayDesc').hide();
+                $('#editEquip').hide();
+                $('#editEquipDetails').toggle();
+                $('#faqtitle1').text('');
+                $('#equipCategory').val('{{$item->equip_category}}');
+                $('#equipName').val($('.displayEquipName').text());
+                $('#equipDesc').val($('.displayDesc').text());
+                $('#saveEditEquip').show();
+            });  
+            $('#saveEditEquip').click(function () { 
+                $('#editEquipDetails').submit();
+            });
         });  
     </script>
 @endsection
@@ -95,6 +89,7 @@
                     @endif
                 </span>
                 <h4 class="displayEquipName">{{$item->equip_name}}</h4>
+
                 <p class="displayDesc text-muted pt-2 description text-justify">{{$item->equip_description}}</p>
                     <button type="button" class="btn btn-sm btn-success float-right mb-3" id="saveEditEquip">Save</button>
                     <form id="editEquipDetails" style="display:none; margin-top: 20px;">
@@ -132,38 +127,6 @@
                         <th class="align-middle">Remarks</th>
                     </tr>
                 </thead>
-                <tbody class="text-center">
-                    <tr>
-                        <td class="align-middle">CANCAM0001</td>
-                        <td class="align-middle">Available</td>
-                        <td class="align-middle">Enter specifications here</td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle">CANCAM0002</td>
-                        <td class="align-middle">Borrowed</td>
-                        <td class="align-middle">Enter specifications here</td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle">CANCAM0003</td>
-                        <td class="align-middle">Under Maintenance</td>
-                        <td class="align-middle">Enter specifications here</td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle">CANCAM00044</td>
-                        <td class="align-middle">Under Maintenance</td>
-                        <td class="align-middle">Enter specifications here</td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle">CANCAM0005</td>
-                        <td class="align-middle">Under Maintenance</td>
-                        <td class="align-middle">Enter specifications here</td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle">CANCAM0006</td>
-                        <td class="align-middle">Under Maintenance</td>
-                        <td class="align-middle">Enter specifications here</td>
-                    </tr>
-                </tbody>
             </table>
         </div>
     </div>

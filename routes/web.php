@@ -33,7 +33,7 @@ Route::group(['middleware' => ['admin']], function()
     Route::match(['get', 'post'],'/admin/sports-equipment', 'EquipmentsController@showSportEquipment');
     Route::match(['get', 'post'],'/admin/laptops-accessories', 'EquipmentsController@showLapEquipment');
 
-    Route::get('/admin/{id}', 'EquipmentsController@show');
+    Route::get('/admin/{name}', 'EquipmentsController@show');
 
     Route::get('/add','EquipmentsController@add');
     Route::post('/addEquipment','EquipmentsController@addEquipment'); 
@@ -58,6 +58,8 @@ Route::group(['middleware' => ['admin']], function()
     Route::post('/admin/search','EquipmentsController@searchEquipment');
     Route::post('/emailAll','FeedbacksController@emailAll');
     Route::post('/paid','TransactionFormsController@paidPenalty');
+
+    Route::get('get-data-my-datatables', ['as'=>'equip.index','uses'=>'EquipmentsController@index']);
     
 });
 
