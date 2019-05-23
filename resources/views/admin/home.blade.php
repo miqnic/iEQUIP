@@ -112,6 +112,21 @@
                                         @else
                                             {!! Form::open(['action' => 'TransactionFormsController@afterApproval', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                                                 {{Form::hidden('currentForm', $form->transaction_id)}}
+                                                {{Form::hidden('sub_date', $form->submitted_date)}}
+                                                {{Form::hidden('start_date', $form->start_date)}}
+                                                {{Form::hidden('start_time', $form->start_time)}}
+                                                {{Form::hidden('end_date', $form->due_date)}}
+                                                {{Form::hidden('end_time', $form->end_time)}}
+                                                {{Form::hidden('room', $form->room_number)}}
+                                                {{Form::hidden('reason', $form->purpose)}}
+                                                {{Form::hidden('user_id', $form->user_id)}}
+                                                @foreach ($users as $user)
+                                                    @if ($user->user_id == $form->user_id)
+                                                        {{Form::hidden('first', $user->first_name)}}
+                                                        {{Form::hidden('last', $user->last_name)}}
+                                                        {{Form::hidden('course', $user->course)}}
+                                                    @endif
+                                                @endforeach
                                                 {{ Form::submit('Claimed', array('class' => 'btn btn-outline-primary','name'=>'claimed')) }}
                                             {!! Form::close() !!}
                                             <button data-toggle="modal" data-target="#returnEquip-{{$form->transaction_id}}" class="btn btn-outline-primary" disabled>Returned</button>
@@ -120,6 +135,21 @@
                                 @else 
                                     {!! Form::open(['action' => 'TransactionFormsController@transactionApproval', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                                         {{Form::hidden('currentForm', $form->transaction_id)}}
+                                        {{Form::hidden('sub_date', $form->submitted_date)}}
+                                        {{Form::hidden('start_date', $form->start_date)}}
+                                        {{Form::hidden('start_time', $form->start_time)}}
+                                        {{Form::hidden('end_date', $form->due_date)}}
+                                        {{Form::hidden('end_time', $form->end_time)}}
+                                        {{Form::hidden('room', $form->room_number)}}
+                                        {{Form::hidden('reason', $form->purpose)}}
+                                        {{Form::hidden('user_id', $form->user_id)}}
+                                        @foreach ($users as $user)
+                                            @if ($user->user_id == $form->user_id)
+                                                {{Form::hidden('first', $user->first_name)}}
+                                                {{Form::hidden('last', $user->last_name)}}
+                                                {{Form::hidden('course', $user->course)}}
+                                            @endif
+                                        @endforeach
                                         {{ Form::submit('Decline', array('class' => 'btn btn-outline-danger','name'=>'decision', 'value'=>'decline')) }}
                                         {{ Form::submit('Approve', array('class' => 'btn btn-outline-success','name'=>'decision', 'value'=>'approve')) }}
                                     {!! Form::close() !!}

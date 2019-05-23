@@ -92,7 +92,7 @@
                 </thead>
                 <tbody class="text-center">
                     @foreach($totalEquip as $equipment)
-                    @if($equipment->equip_name==$item->equip_name)
+                    @if($equipment->equip_name==$item->equip_name )
                     <tr>
                         <td class="align-middle"><input type="checkbox" id="qtyCheck" class="hide"></td>
                         <td class="align-middle">{{$equipment->equipID}}</td>
@@ -105,16 +105,21 @@
                         </td>
                         <td class="align-middle">Enter specifications here</td>
                         <td class="align-middle">
-                        {{--{!! Form::open(['action' => 'EquipmentsController@reserveEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-                        {{Form::submit('Reserve', ['class' => 'btn btn-success'])}}
-                        {{Form::hidden('currentEquipID', $equipment_modal->equipID)}}
-                        {{Form::hidden('userID', Auth::user()->user_id)}}
-                        {!! Form::close() !!} --}}
-                        <form action="EquipmentsController@reserveEquipment" method="POST" enctype="multipart/form-data">
+                        <!--<form action="EquipmentsController@reserveEquipment" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="currentEquipID" value="{{$equipment->equipID}}">
-                            <input type="hidden" name="userID" value="{{Auth::user()->user_id}}">
-                            <button type="submit" class="btn btn-sm btn-primary indiv"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
-                        </form>
+                            <input type="hidden" name="userID" value="{{Auth::user()->user_id}}">-->
+                            @if ($equipment->transaction_id == null)
+                                {!! Form::open(['action' => 'EquipmentsController@reserveEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                                {{Form::submit('Add to Cart', ['class' => 'btn btn-sm btn-primary indiv'])}}
+                                {{Form::hidden('currentEquipID', $equipment->equipID)}}
+                                {{Form::hidden('userID', Auth::user()->user_id)}}
+                                {!! Form::close() !!} 
+                            @else
+                                <button type="submit" class="btn btn-sm btn-primary indiv" disabled><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                            @endif
+                            
+                            <!--<button type="submit" class="btn btn-sm btn-primary indiv"><i class="fas fa-shopping-cart"></i> Add to Cart</button>-->
+                        <!--</form>-->
                             
                         </td>
                     </tr>
@@ -122,7 +127,12 @@
                     @endforeach
                 </tbody>
             </table>
-            <button type="button" class="btn btn-sm btn-primary selectSubmit float-right" style="margin-top: -35px; margin-right: 200px;"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+            {!! Form::open(['action' => 'EquipmentsController@reserveEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                            {{Form::submit('Add to Cart', ['class' => 'btn btn-sm btn-primary selectSubmit float-right', 'style' => 'margin-top: -35px; margin-right: 200px;'])}}
+                            {{Form::hidden('currentEquipID', $equipment->equipID)}}
+                            {{Form::hidden('userID', Auth::user()->user_id)}}
+                            {!! Form::close() !!} 
+            <!--<button type="button" class="btn btn-sm btn-primary selectSubmit float-right" style="margin-top: -35px; margin-right: 200px;"><i class="fas fa-shopping-cart"></i> Add to Cart</button>-->
         </div>
     </div>
 </div>

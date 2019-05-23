@@ -72,6 +72,7 @@
         <div class="media">
             <img class="itemPhoto align-self-center border mr-3 mt-2 py-3 px-4" src="{{ asset('img/'.$item->equip_img) }}" style="width: 230px;" alt="Sample photo">
             <div class="media-body mt-4">
+                    
                     <button type="button" class="btn btn-sm btn-primary mt-2 float-right" id="editEquip">Edit</button>
                 <span class="text-muted displayCategory">
                     @if($item->equip_category=='ART')
@@ -91,7 +92,7 @@
                 <h4 class="displayEquipName">{{$item->equip_name}}</h4>
 
                 <p class="displayDesc text-muted pt-2 description text-justify">{{$item->equip_description}}</p>
-                    <button type="button" class="btn btn-sm btn-success float-right mb-3" id="saveEditEquip">Save</button>
+                    <!--<button type="button" class="btn btn-sm btn-success float-right mb-3" id="saveEditEquip">Save</button>
                     <form id="editEquipDetails" style="display:none; margin-top: 20px;">
                         <div class="form-group">
                         <label for="equipCategory">Category</label>
@@ -114,7 +115,27 @@
                             <label for="equipDesc">Description</label>
                             <textarea class="form-control form-control-sm" id="equipDesc" name="description" rows="3"></textarea>
                         </div>
-                    </form>
+                    </form>-->
+
+                    {!! Form::open(['action' => 'EquipmentsController@editEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'id' => 'editEquipDetails', 'style' => 'display:none; margin-top:20px;']) !!}
+                        {{Form::submit('Save', ['class' => 'btn btn-sm btn-success float-right mb-3', 'id' => 'saveEditEquip'])}}
+                        {{Form::label('category', 'Category')}}
+                        {{Form::select('category', array(
+                                    'CAMACC' => 'Cameras & Accessories',
+                                    'ART' => 'Art Tools',
+                                    'SPRT' => 'Sports Equipment',
+                                    'GMNG' => 'Gaming Devices',
+                                    'LPTP' => 'Laptops & Accessories',
+                                    'MISC' => 'Miscellaneous Equipment'), NULL, array('class' => 'custom-select custom-select-md', 'placeholder' => 'Category'))}}
+
+                        {{Form::label('equipName', 'Name', ['class' => 'pt-3'])}}
+                        {{Form::text('equipName', '',['class' => 'form-control form-control-sm', 'placeholder' => $item->equip_name])}}
+
+                        {{Form::label('description', 'Description')}}
+                        {{Form::textarea('description', '',['id' => 'equipDesc','class' => 'form-control form-control-sm', 'placeholder' => 'Enter specifications here', 'rows' => '3'])}}     
+
+                        {{Form::hidden('currentEquipName', $item->equip_name)}}
+                    {!! Form::close() !!}
             </div>
         </div>
         

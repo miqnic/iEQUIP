@@ -24,6 +24,7 @@ Route::group(['middleware' => ['admin']], function()
     Route::match(['get', 'post'],'/admin/balances', 'TransactionFormsController@adminBalances');
     Route::match(['get', 'post'],'/admin/calendar', 'TransactionFormsController@calendar');
     Route::match(['get', 'post'],'/admin/feedbacks', 'FeedbacksController@adminFeedbacks');
+    Route::match(['get', 'post'],'/admin/search', 'EquipmentsController@searchEquipment');
 
     Route::match(['get', 'post'],'/admin/equipmentlist', 'EquipmentsController@showAllEquipment');
     Route::match(['get', 'post'],'/admin/art-tools', 'EquipmentsController@showArtEquipment');
@@ -55,7 +56,8 @@ Route::group(['middleware' => ['admin']], function()
     Route::post('/returnEquip','EquipmentsController@returnEquipment');
 
     Route::post('/editSingleEquip','EquipmentsController@editSingleEquipment');
-    Route::post('/admin/search','EquipmentsController@searchEquipment');
+    
+    //Route::post('/admin/search','EquipmentsController@searchEquipment');
     Route::post('/emailAll','FeedbacksController@emailAll');
     Route::post('/paid','TransactionFormsController@paidPenalty');
 
@@ -71,6 +73,7 @@ Route::group(['middleware' => ['student']], function()
     Route::match(['get', 'post'],'/student/calendar', 'TransactionFormsController@calendar');
     Route::match(['get', 'post'],'/student/contact', 'TransactionFormsController@studentContact');
     Route::match(['get', 'post'],'/student/faqs', 'EquipmentsController@faqs');
+    Route::match(['get', 'post'],'/student/search', 'EquipmentsController@searchEquipment');
     Route::post('feedback','FeedbacksController@feedback');
 
     //Route::match(['get', 'post'],'/student/equipment', 'EquipmentsController@showArtEquipment');
@@ -91,7 +94,9 @@ Route::group(['middleware' => ['student']], function()
     Route::post('/reserveEquip','EquipmentsController@reserveEquipment');
     Route::post('/submitForm','TransactionFormsController@submitForm');
     Route::post('/cancel','TransactionFormsController@cancelForm');
-    Route::post('/student/search','EquipmentsController@searchEquipment');
+
+    
+    //Route::post('/student/search','EquipmentsController@searchEquipment');
     
 });
 

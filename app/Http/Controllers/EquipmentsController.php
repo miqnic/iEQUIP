@@ -386,32 +386,39 @@ class EquipmentsController extends Controller
         $possibleEquips = Equipment::where('equip_name', 'like', '%' . $search . '%')
                                     ->orWhere('equipID', 'like', '%' . $search . '%')
                                     ->get();
-
-        $totalEquip = Equipment::all();
         $equipments = Equipment::all();
+        if(auth()->user()->access_role != 'ADMIN'){
+            $totalEquip = Equipment::all();
 
-        $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
 
-        $countCart = Equipment::all()
-                                ->where("transaction_id", "$lastTransaction->transaction_id")
-                                ->groupBy('equip_name')
-                                ->map(function($equipment, $equip_name) {
-                                    return [
-                                        'equip_name' => $equip_name,
-                                        'record' => $equipment->count(),
-                                    ];
-                                })
-                                ->values(); 
-                                
+            $countCart = Equipment::all()
+                                    ->where("transaction_id", "$lastTransaction->transaction_id")
+                                    ->groupBy('equip_name')
+                                    ->map(function($equipment, $equip_name) {
+                                        return [
+                                            'equip_name' => $equip_name,
+                                            'record' => $equipment->count(),
+                                        ];
+                                    })
+                                    ->values(); 
+                                    
 
-        return view('pages.search')->with('lastTransaction',$lastTransaction)
-                                    ->with('possibleEquips', $possibleEquips)
-                                    ->with('search', $search)
-                                    ->with('countCart', $countCart)
-                                    ->with('equipments', $equipments)
-                                    ->with('totalEquip', $totalEquip)
-                                    ->with('countTotalAvail', $this->countTotalAvail)
-                                    ->with('countCurrAvail', $this->countCurrAvail);
+            return view('pages.search')->with('lastTransaction',$lastTransaction)
+                                        ->with('possibleEquips', $possibleEquips)
+                                        ->with('search', $search)
+                                        ->with('countCart', $countCart)
+                                        ->with('equipments', $equipments)
+                                        ->with('totalEquip', $totalEquip)
+                                        ->with('countTotalAvail', $this->countTotalAvail)
+                                        ->with('countCurrAvail', $this->countCurrAvail);
+        } else {
+            return view('pages.search')->with('equipments',$equipments)
+                                                ->with('possibleEquips', $possibleEquips)
+                                                ->with('search', $search)
+                                                ->with('countTotalAvail', $this->countTotalAvail)
+                                                ->with('countCurrAvail', $this->countCurrAvail);
+        } 
                             
     }
 
@@ -527,31 +534,6 @@ class EquipmentsController extends Controller
         if(auth()->user()->access_role != 'ADMIN'){
             return abort(403, 'Unauthorized action.');
         }
-
-        if($request->hasFile('equipIMG')){
-            //Get a filename with the extension
-            $fileNameWithExt = $request->file('equipIMG')->getClientOriginalName();
-            //Get just filename
-            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-            //Get just extension
-            $extension = $request->file('equipIMG')->getClientOriginalExtension();
-            //Filename to store (has to be unique)
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            //Upload Image
-            $path = $request->file('equipIMG')->storeAs('public/equipIMG', $fileNameToStore);
-        } else {
-            $fileNameToStore = 'noImage.jpg';
-        }
-
-        $request->validate([
-            'currentEquipName' => 'required',
-            'itemName' => 'required',
-            'category' => 'required',
-            'penalty' => 'required',
-            'basePrice' => 'required',
-            'description' => 'required',
-            'equipIMG' => 'image|nullable|max:1999'
-          ]);
         
           $currentEquipName = $request->get('currentEquipName');
           $equipments = Equipment::get();
@@ -559,13 +541,11 @@ class EquipmentsController extends Controller
           foreach($equipments as $equipment){
               if($equipment->equip_name == $currentEquipName){
                 $equipment->update([
-                        'equip_name' => $request->get('itemName'),
+                        'equip_name' => $request->get('equipName'),
                         'equip_description' => $request->get('description'),
-                        'equip_penalty' => $request->get('penalty'),
-                        'equip_baseprice' => $request->get('basePrice'),
-                        'equip_category' => $request->get('category'),
-                        'equip_img' => $fileNameToStore,
+                        'equip_category' => $request->get('category')
                     ]); 
+                $equipment->save();
               }
             
           }
@@ -628,7 +608,7 @@ class EquipmentsController extends Controller
 
         foreach($equipments as $equipment){
             if($equipment->equipID == Input::get('currentEquipID')){
-                if($lastTransaction->submitted_date != null){
+                if($lastTransaction->submitted_date != null || $lastTransaction == null){
                     $transaction_form = new TransactionForm([
                         'transaction_id' => 'tc',
                         'user_id' => Input::get('userID'),

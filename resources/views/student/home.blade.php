@@ -34,30 +34,30 @@
                </tr>
             @else 
                @foreach($unreturnedForms as $form)
-                <tr>
-                   <td colspan="2">
-                       <b>Transaction ID:</b> {{$form->transaction_id}}
-                   </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                       <b>Due Date and Time:</b> {{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->end_time)->format('h:i A')}}
-                       @if(\Carbon\Carbon::parse($form->due_date)->isPast() or \Carbon\Carbon::parse($form->due_date)->isToday())
-                       <i class="fas fa-lg fa-exclamation-triangle text-danger"></i>
-                       @endif
-                    </td>
-                </tr>
-               <tr style="line-height: 2.5">
-                   <td class="text-center" colspan="2" style="font-size:14px"><b>Items Reserved</b></td>
-               </tr>
-                    @foreach($equipments as $equipment)
-                    @if($form->transaction_id==$equipment->transaction_id)
                     <tr>
-                            <td class="text-right">{{$equipment->equipID}}</td>
-                            <td class="text-center">{{$equipment->equip_name}}</td>
+                    <td colspan="2">
+                        <b>Transaction ID:</b> {{$form->transaction_id}}
+                    </td>
                     </tr>
-                    @endif
-                    @endforeach
+                    <tr>
+                        <td colspan="2">
+                        <b>Due Date and Time:</b> {{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->end_time)->format('h:i A')}}
+                        @if(\Carbon\Carbon::parse($form->due_date)->isPast() or \Carbon\Carbon::parse($form->due_date)->isToday())
+                        <i class="fas fa-lg fa-exclamation-triangle text-danger"></i>
+                        @endif
+                        </td>
+                    </tr>
+                    <tr style="line-height: 2.5">
+                        <td class="text-center" colspan="2" style="font-size:14px"><b>Items Reserved</b></td>
+                    </tr>
+                        @foreach($equipments as $equipment)
+                        @if($form->transaction_id==$equipment->transaction_id && $equipment->equip_avail == 1)
+                        <tr>
+                                <td class="text-right">{{$equipment->equipID}}</td>
+                                <td class="text-center">{{$equipment->equip_name}}</td>
+                        </tr>
+                        @endif
+                        @endforeach
                @endforeach
             @endif
            </tbody>
@@ -101,7 +101,7 @@
                     @if($form->transaction_id==$equipment->transaction_id)
                     <tr>
                             <td class="text-right">{{$equipment->equipID}}</td>
-                            <td class="text-center">>{{$equipment->equip_name}}</td>
+                            <td class="text-center">{{$equipment->equip_name}}</td>
                     </tr>
                     @endif
                     @endforeach
@@ -149,7 +149,7 @@
        <table class="table table-borderless table-md table-hover border">
            <thead class="text-center" style="font-size:14px">
                <tr class="bg-dark text-light">
-                   <th colspan="6">Recent Requests</th>
+                   <th colspan="6">Approved Requests</th>
                </tr>
                <tr>
                    <th class="align-middle">Transaction ID</th>
@@ -163,7 +163,7 @@
            <tbody class="text-center">
                 @if($recentForms->isEmpty())
                 <tr>
-                    <td colspan="6">No recent requests</td>
+                    <td colspan="6">No approved requests</td>
                 </tr>
                 @else
                 @foreach($recentForms as $form)
@@ -191,7 +191,7 @@
                         @endif
                     </td>
                     <td class="align-middle">
-                        @if(\Carbon\Carbon::parse($form->due_date)->isPast() or $form->approval<0)
+                        @if(\Carbon\Carbon::parse($form->due_date)->isPast() or $form->approval<0 or $form->claimed == 1)
                         <button type="button" class="btn btn-sm btn-danger" disabled>Cancel</button>
                         @else 
                         <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target ="#confirmCancellation">Cancel</button>

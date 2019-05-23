@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Equipment;
 use App\User;
 use App\TransactionForm;
-use Carbon\Carbon;
 
-use DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use Illuminate\Mail\Mailable;
+use Illuminate\Support\Facades\Mail;
+
+use Carbon\Carbon;
+use DB;
+
+use App\Mail\Approved;
+use App\Mail\Declined;
+use App\Mail\Received;
 
 class TransactionFormsController extends Controller
 {
@@ -51,8 +58,10 @@ class TransactionFormsController extends Controller
                                             'returned' => 0])
                                             ->orderBy('transaction_id', 'desc')
                                             ->get();                         
-        $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();
-        $countCart = Equipment::all()
+        $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
+
+        if($lastTransaction != null){
+            $countCart = Equipment::all()
                             ->where("transaction_id", "$lastTransaction->transaction_id")
                             ->groupBy('equip_name')
                             ->map(function($equipment, $equip_name) {
@@ -62,6 +71,10 @@ class TransactionFormsController extends Controller
                                 ];
                             })
                             ->values();
+        } else {
+            $countCart = null;
+        }
+        
 
         $equipments = Equipment::get();
         $totalEquip = Equipment::all();
@@ -225,7 +238,7 @@ class TransactionFormsController extends Controller
                                             ->get()->last();
         //dd($currentTransaction);
         $transaction_forms = TransactionForm::get();
-
+        $users = User::get();
    
         $currentTransaction->update([
             'start_time' => Carbon::parse($request->get('starttime')),
@@ -243,23 +256,15 @@ class TransactionFormsController extends Controller
                                     ->with('countCart', $countCart)
                                     ->with('lastTransaction',$lastTransaction)
                                     ->with('equipments', $equipments)
-                                    ->with('totalEquip', $totalEquip);
+                                    ->with('totalEquip', $totalEquip)
+                                    ->with('users', $users);
     }
 
-    public function submitForm(){
-        $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', '!=', null)->get()->last();
+    public function submitForm(Request $request){
         $totalEquip = Equipment::get();
+        $equipments = Equipment::get();
         $transaction_forms = TransactionForm::get();
-        $countCart = Equipment::all()
-                            ->where("transaction_id", "$lastTransaction->transaction_id")
-                            ->groupBy('equip_name')
-                            ->map(function($equipment, $equip_name) {
-                                return [
-                                    'equip_name' => $equip_name,
-                                    'record' => $equipment->count(),
-                                ];
-                            })
-                            ->values();
+        
 
         $currentTransaction = TransactionForm::where('user_id', auth()->user()->user_id)
                                             ->where('submitted_date', null)
@@ -271,20 +276,57 @@ class TransactionFormsController extends Controller
             'returned' => 0
         ]);
 
+        $currentTransaction->save();
+
+        $request->merge([
+            'sub_date' => $currentTransaction->submitted_date, 
+            'start_date' => $currentTransaction->start_date,
+            'start_time' => $currentTransaction->start_time,
+            'end_date' => $currentTransaction->due_date, 
+            'end_time' => $currentTransaction->end_time
+            ]);
+        //dd($request);
+
+        $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
+
+        $countCart = null;
+
         $pendingForms =  TransactionForm::where(['user_id' => auth()->user()->user_id, 'approval' => 0])
                                         ->orderBy('transaction_id', 'desc')
                                         ->take(5)
                                         ->get();
-
-        $currentTransaction->save();
-
+                                        $recentForms =  TransactionForm::where(['user_id' => auth()->user()->user_id, 'approval' => 1])
+                                        ->orderBy('transaction_id', 'desc')
+                                        ->take(5)
+                                        ->get();
+        $unclaimedForms = TransactionForm::where([
+                                        'user_id' => auth()->user()->user_id, 
+                                        'approval' => 1,
+                                        'claimed'=> 0])
+                                        ->orderBy('transaction_id', 'desc')
+                                        ->get();
+        $unreturnedForms = TransactionForm::where([
+                                            'user_id' => auth()->user()->user_id, 
+                                            'approval' => 1,
+                                            'claimed'=> 1,
+                                            'returned' => 0])
+                                            ->orderBy('transaction_id', 'desc')
+                                            ->get(); 
+        $recentForms =  TransactionForm::where(['user_id' => auth()->user()->user_id, 'approval' => 1])
+                                        ->orderBy('transaction_id', 'desc')
+                                        ->take(5)
+                                        ->get();
         
-
-        return view('student.home')->with('success', 'Form Submitted')
+        Mail::to('ac01f813b2-8ea59b@inbox.mailtrap.io')->send(new Received($request)); 
+        return redirect('student/home')->with('success', 'Form Submitted')
                                 ->with('transaction_forms', $transaction_forms)
                                 ->with('countCart', $countCart)
                                 ->with('pendingForms', $pendingForms)
+                                ->with('recentForms', $recentForms)
+                                ->with('unclaimedForms', $unclaimedForms)
+                                ->with('unreturnedForms', $unreturnedForms)
                                 ->with('lastTransaction',$lastTransaction)
+                                ->with('equipments',$equipments)
                                 ->with('totalEquip', $totalEquip);
     }
 
@@ -343,7 +385,8 @@ class TransactionFormsController extends Controller
                                 'approval' => '1',
                                 'approval_date' => Carbon::now()
                             ]);
-
+            //dd($request);
+            Mail::to('ac01f813b2-8ea59b@inbox.mailtrap.io')->send(new Approved($request));               
             return redirect()->back()->with('success', 'Transaction Form has been successfully Approved!');
         } else {
             TransactionForm::where('transaction_id', $request->get('currentForm'))
@@ -351,9 +394,11 @@ class TransactionFormsController extends Controller
                                 'approval' => '-1',
                                 'approval_date' => Carbon::now()
                             ]);
-
+            Mail::to('ac01f813b2-8ea59b@inbox.mailtrap.io')->send(new Declined($request)); 
             return redirect()->back()->with('success', 'Transaction Form has been successfully Declined!');
         }
+
+        
     }
 
     public function cancelForm(Request $request){
