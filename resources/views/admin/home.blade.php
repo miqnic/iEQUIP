@@ -11,6 +11,14 @@
                 "ordering": false
             });
         });
+
+        $(function () {
+            $('#declineBtn').popover({
+                title: 'Reason for Declining',
+                html: true,
+                content:  $('#declineReasonForm').html()
+            })
+        });
     </script>
 @endsection
 
@@ -85,7 +93,14 @@
                                     @else 
                                         {!! Form::open(['action' => 'TransactionFormsController@transactionApproval', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                                             {{Form::hidden('currentForm', $form->transaction_id)}}
-                                            {{ Form::submit('Decline', array('class' => 'btn btn-outline-danger','name'=>'decision', 'value'=>'decline')) }}
+                                            {{-- {{ Form::submit('Decline', array('class' => 'btn btn-outline-danger','name'=>'decision', 'value'=>'decline')) }} --}}
+                                            <button type="button" id="declineBtn" class="btn btn-outline-danger" data-container="body" data-toggle="popover" data-placement="bottom">Decline</button>
+                                              <div id="declineReasonForm" style="display: none">
+                                              <form method="POST">
+                                                  <textarea type="text" name="declineReason" class="form-control" id="declineReason" placeholder="Enter reason" rows="2"></textarea>
+                                                  <button type="submit" class="btn btn-sm btn-success float-right my-2">Confirm</button>
+                                              </form>
+                                              </div>
                                             {{ Form::submit('Approve', array('class' => 'btn btn-outline-success','name'=>'decision', 'value'=>'approve')) }}
                                         {!! Form::close() !!}
                                     @endif

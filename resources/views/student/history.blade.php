@@ -57,12 +57,13 @@
               <td>{{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->end_time)->format('h:i A')}}</td>
               <td>
                 @if($form->approval==1)
-                  <span class="badge badge-success">Approved</span>
                   @if($form->claimed==1 and $form->returned==0)
+                    <span class="badge badge-success">Approved</span>
                     <span class="badge badge-primary">Claimed</span>
                   @elseif($form->claimed==1 and $form->returned==1)
                     <span class="badge badge-success">Returned</span>
                   @else
+                    <span class="badge badge-success">Approved</span>
                     <span class="badge badge-warning">Unclaimed</span>
                   @endif
                 @elseif($form->approval==0)
