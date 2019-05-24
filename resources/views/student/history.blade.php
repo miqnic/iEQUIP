@@ -37,7 +37,7 @@
 @section('content')
   <div class="row">
     <div class="col-md-12 pt-3">
-    <h4 class="pb-4">Transaction History</h4>
+    <h3 class="pb-4">Transaction History</h3>
     <table class="table table-striped table-bordered table-hover text-center" id="dataTables">
       <thead>
         <tr>
@@ -57,12 +57,13 @@
               <td>{{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->end_time)->format('h:i A')}}</td>
               <td>
                 @if($form->approval==1)
-                  <span class="badge badge-success">Approved</span>
                   @if($form->claimed==1 and $form->returned==0)
+                    <span class="badge badge-success">Approved</span>
                     <span class="badge badge-primary">Claimed</span>
                   @elseif($form->claimed==1 and $form->returned==1)
                     <span class="badge badge-success">Returned</span>
                   @else
+                    <span class="badge badge-success">Approved</span>
                     <span class="badge badge-warning">Unclaimed</span>
                   @endif
                 @elseif($form->approval==0)

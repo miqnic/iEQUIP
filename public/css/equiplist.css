@@ -15,22 +15,22 @@ main {
   background-color: white;
 }
 
-.card img {
+.itemCard img {
   width: 100px;
   height: 100px;
 }
 
-.card {
+.itemCard {
   transition: transform .2s;
   width: 270px;
   height: 220px;
 }
 
 .description {
-  height: 130px;
+  height: 100px;
   overflow: scroll;
 }
-.card:hover {
+.itemCard:hover {
   transform: scale(1.1);
   border: 0;
 }

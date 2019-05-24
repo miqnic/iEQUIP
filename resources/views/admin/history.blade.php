@@ -2,7 +2,7 @@
 
 @section('head')
     <title>{{ config('app.name') }} | Request History</title>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/history.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/equiplist.css') }}">
 
     <script>
         $(document).ready( function () {
@@ -16,25 +16,15 @@
                 'pageLength',
                 {
                 extend: 'pdfHtml5',
-                text: 'Export All as PDF',
+                text: 'Export as PDF',
                 exportOptions: {
                     modifier: {
                         selected: null
-                    },
-                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
-                },
-                download: 'open'
-                },
-                {
-                extend: 'pdfHtml5',
-                text: 'Export Selected Row/s as PDF',
-                exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+                    }
                 },
                 download: 'open'
                 }
-            ],
-            select: true
+            ]
             });
         });
     </script>
@@ -45,23 +35,23 @@
 @endsection
 
 @section('content')
-    <div class="header">
-        <h2 class="border-bottom pb-2 pl-3">Request History</h2>
-        <p class="lead pl-3">Reservation and student details can be seen by clicking on the corresponding IDs. Use the search bar and sort buttons to filter data.</p>
-        <button type="button" name="deleteHistory" class="btn btn-light float-right mr-3 mb-2" data-toggle="modal" data-target="#delete"><img id="minus" src="{{ asset('img/minus.png') }}" height=18;>Delete All</button>
+<div class="row">
+    <div class="col-md-12 pt-3">
+        <h3>Request History</h3>
+        <button type="button" name="deleteHistory" class="btn btn-light float-right" data-toggle="modal" data-target="#delete"><i class="fas fa-lg fa-minus-circle text-danger"></i> Delete All</button>
     </div>
-  
-    <div class="container-fluid">
-        <p class="pl-3 pt-4 text-danger">* Equipment/s not returned</p>
+</div>
+<div class="row">
+    <div class="col-md-12">
         <table class="table table-striped table-bordered table-hover text-center" id="dataTables">
           <thead>
             <tr>
               <th>Transaction ID</th>
               <th>Student ID</th>
               <th>Student Name</th>
-              <th>Submitted Date</th>
-              <th>Start Date</th>
-              <th>End Date</th>
+              <th>Date Submitted</th>
+              <th>Date Responded</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody class="text-center">
@@ -74,35 +64,55 @@
                         <td data-toggle="modal" data-target="#viewStudent{{$user->user_id}}" id="student">{{$user->first_name}} {{$user->last_name}}</td>
                     @endif
                 @endforeach
-                <td>{{\Carbon\Carbon::parse($form->created_at)->toFormattedDateString()}}</td>
-                <td>{{\Carbon\Carbon::parse($form->start_date)->toFormattedDateString()}}</td>
-                <td>{{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}</td>
+                <td>{{\Carbon\Carbon::parse($form->submitted_date)->toFormattedDateString()}}</td>
+                <td>{{\Carbon\Carbon::parse($form->updated_at)->toFormattedDateString()}}</td>
+                <td>
+                @if($form->approval==1)
+                    @if($form->claimed==1 and $form->returned==0)
+                        <span class="badge badge-success">Approved</span>
+                        <span class="badge badge-primary">Claimed</span>
+                    @elseif($form->claimed==1 and $form->returned==1)
+                        <span class="badge badge-success">Returned</span>
+                    @else
+                        <span class="badge badge-success">Approved</span>
+                        <span class="badge badge-warning">Unclaimed</span>
+                    @endif
+                @elseif($form->approval==0)
+                    <span class="badge badge-warning">Pending</span>
+                @elseif($form->approval==-1)
+                    <span class="badge badge-danger">Declined</span>
+                @else 
+                    <span class="badge badge-danger">Cancelled</span>
+                @endif
+                </td>
             </tr>
             @endforeach
           </tbody>
         </table>
+        <span><b>Legend:</b> <i class="fas fa-square-full text-danger"></i> - overdue/not yet returned</span>
+    </div>
+</div>
 
-        <div class="modal fade" id="delete" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
+<div class="modal fade" id="delete" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
-                    <div class="modal-header">
-                    <h4 class="modal-title">Deletion Confirmation</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
+            <div class="modal-header">
+            <h4 class="modal-title">Deletion Confirmation</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
 
-                    <div class="modal-body m-3">
-                    Are you sure you want to delete the history? This will not delete records from the database.
-                    </div>
+            <div class="modal-body m-3">
+            Are you sure you want to delete the history? This will not delete records from the database.
+            </div>
 
-                    <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger" data-dismiss="modal">Delete</button>
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
+            <div class="modal-footer">
+            <button type="submit" class="btn btn-danger" data-dismiss="modal">Delete</button>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('modal')

@@ -37,6 +37,7 @@ Route::group(['middleware' => ['admin']], function()
     Route::get('/admin/{name}', 'EquipmentsController@show');
 
     Route::get('/add','EquipmentsController@add');
+    Route::get('/admin/add','EquipmentsController@add');
     Route::post('/addEquipment','EquipmentsController@addEquipment'); 
 
     Route::get('/edit','EquipmentsController@edit');
@@ -62,6 +63,7 @@ Route::group(['middleware' => ['admin']], function()
     Route::post('/paid','TransactionFormsController@paidPenalty');
 
     Route::get('get-data-my-datatables', ['as'=>'equip.index','uses'=>'EquipmentsController@index']);
+    Route::get('/admin/{id}', 'EquipmentsController@show');
     
 });
 
@@ -89,8 +91,6 @@ Route::group(['middleware' => ['student']], function()
     Route::match(['get', 'post'],'/student/sports-equipment', 'EquipmentsController@showSportEquipment');
     Route::match(['get', 'post'],'/student/laptops-accessories', 'EquipmentsController@showLapEquipment');
 
-    Route::get('/student/{id}', 'EquipmentsController@show');
-
     Route::post('/reserveEquip','EquipmentsController@reserveEquipment');
     Route::post('/submitForm','TransactionFormsController@submitForm');
     Route::post('/cancel','TransactionFormsController@cancelForm');
@@ -98,6 +98,7 @@ Route::group(['middleware' => ['student']], function()
     
     //Route::post('/student/search','EquipmentsController@searchEquipment');
     
+    Route::get('/student/{id}', 'EquipmentsController@show');
 });
 
 

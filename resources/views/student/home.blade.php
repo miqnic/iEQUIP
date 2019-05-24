@@ -46,6 +46,15 @@
                         <i class="fas fa-lg fa-exclamation-triangle text-danger"></i>
                         @endif
                         </td>
+                </tr>
+               <tr style="line-height: 2.5">
+                   <td class="text-center" colspan="2" style="font-size:14px"><b>Items Reserved</b></td>
+               </tr>
+                    @foreach($equipments as $equipment)
+                    @if($form->transaction_id==$equipment->transaction_id)
+                    <tr class="border-top border-bottom">
+                            <td class="text-right">{{$equipment->equipID}}</td>
+                            <td class="text-center">{{$equipment->equip_name}}</td>
                     </tr>
                     <tr style="line-height: 2.5">
                         <td class="text-center" colspan="2" style="font-size:14px"><b>Items Reserved</b></td>
@@ -136,7 +145,8 @@
                             <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{$form->transaction_id}}</td>
                             <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{\Carbon\Carbon::parse($form->submitted_date)->format('F d, Y h:i A')}}</td>
                             <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{\Carbon\Carbon::parse($form->start_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->start_time)->format('h:i A')}}</td>
-                            <td class="align-middle"><button type="button"  class="btn btn-sm btn-danger" data-toggle="modal" data-target ="#confirmCancellation{{$form->transaction_id}}">Cancel</button></td>
+                            <td class="align-middle"><button type="button"  class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirmCancellation{{$form->transaction_id}}">Cancel</button></td>
+                            @include('inc.confirmCancellation')
                         </tr>
                     @endforeach
                 @endif
@@ -174,12 +184,13 @@
                     <td class="align-middle" data-toggle="modal" data-target ="#checkForm{{$form->transaction_id}}">{{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->end_time)->format('h:i A')}}</td>
                     <td class="align-middle">
                         @if($form->approval==1)
-                            <span class="badge badge-success">Approved</span>
                             @if($form->claimed==1 and $form->returned==0)
+                            <span class="badge badge-success">Approved</span>
                             <span class="badge badge-primary">Claimed</span>
                             @elseif($form->claimed==1 and $form->returned==1)
                             <span class="badge badge-success">Returned</span>
                             @else
+                            <span class="badge badge-success">Approved</span>
                             <span class="badge badge-warning">Unclaimed</span>
                             @endif
                         @elseif($form->approval==0)
@@ -194,7 +205,8 @@
                         @if(\Carbon\Carbon::parse($form->due_date)->isPast() or $form->approval<0 or $form->claimed == 1)
                         <button type="button" class="btn btn-sm btn-danger" disabled>Cancel</button>
                         @else 
-                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target ="#confirmCancellation">Cancel</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target ="#confirmCancellation{{$form->transaction_id}}">Cancel</button>
+                        @include('inc.confirmCancellation')
                         @endif
                     </td>
                 </tr>
@@ -207,6 +219,5 @@
 @endsection
 
 @section('modal')
-    @include('inc.confirmCancellation')
     @include('inc.checkFormModal')
 @endsection

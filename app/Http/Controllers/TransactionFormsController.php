@@ -132,7 +132,7 @@ class TransactionFormsController extends Controller
     }
 
     public function reqHistory(){
-        $transaction_forms = TransactionForm::get();
+        $transaction_forms = TransactionForm::orderBy('transaction_id','desc')->get();
         $users = User::get();
         $equipments = Equipment::get();
         return view('admin.history')->with('transaction_forms',$transaction_forms)
@@ -144,7 +144,7 @@ class TransactionFormsController extends Controller
         $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();
         $transaction_forms = TransactionForm::where('returned', 0)->get();
         $users = User::get();
-        $equipments = Equipment::get();
+        $equipments = Equipment::orderBy('equip_name','asc')->get();
         $totalEquip = Equipment::all();
         $countCart = Equipment::all()
                                 ->where("transaction_id", "$lastTransaction->transaction_id")

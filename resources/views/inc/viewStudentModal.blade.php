@@ -13,7 +13,7 @@
                 <div class="modal-body">
                     <div class="row">
                     <div class="col-md-3 pt-3">
-                        <img src = "images\user-account-box.jpg" height= 100;>
+                        <img src = "{{ url('img/user-account-box.jpg') }}" height= 100;>
                     </div>
                     <div class="col-md-9">
                         @foreach($users as $user)

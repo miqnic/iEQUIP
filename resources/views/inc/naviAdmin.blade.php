@@ -75,9 +75,13 @@
             <a href="#" id="account" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip" data-placement="bottom" title="Sign Out">
               <img src = "{{ url('img/user-account-box.png') }}" height= 23;>
             </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="account">
-                {{-- <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">Log out</a> --}}
-                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+              <div class="dropdown-menu dropdown-menu-right bg-white" aria-labelledby="account" style="width: 300px">
+                <div class="profileInfo h-50 text-center mx-auto bg-white">
+                    <img src = "{{ url('img/defaultuser.png') }}" class="my-2 rounded-circle" height="70">
+                    <h5 class="pt-2 text-uppercase">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</h5>
+                    <p>{{Auth::user()->user_id}} | {{Auth::user()->course}}</p>
+                </div>
+                <a class="dropdown-item text-right bg-light font-weight-bold" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                   @csrf
                 </form>

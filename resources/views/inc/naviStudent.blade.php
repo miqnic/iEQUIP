@@ -81,12 +81,12 @@
             </a>
               <div class="dropdown-menu dropdown-menu-right bg-white" aria-labelledby="account" style="width: 300px;">
                 <div class="profileInfo h-50 text-center mx-auto bg-white">
-                    <img src = "{{ url('img/user-account-box.jpg') }}" class="pt-2" height="80">
+                    <img src = "{{ url('img/user-account-box.jpg') }}" class="my-2 rounded-circle" height="80">
                     <h5 class="pt-2 text-uppercase">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</h5>
                     <p>{{Auth::user()->user_id}} | {{Auth::user()->course}}</p>
                 </div>
                 {{-- <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">Log out</a> --}}
-                <a class="dropdown-item text-right bg-light font-weight-bold" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('LOGOUT') }}</a>
+                <a class="dropdown-item text-right bg-light font-weight-bold" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                   @csrf
                 </form>

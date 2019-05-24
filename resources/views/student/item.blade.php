@@ -74,7 +74,8 @@
                         Miscellaneous
                     @endif
                 </span>
-                <h4 class="displayEquipName">{{$item->equip_name}}</h4>
+                <h4 class="displayEquipName text-primary">{{$item->equip_name}}</h4>
+                <h6>Base Price: P{{$item->equip_baseprice}} | Penalty: P{{$item->equip_penalty}}.00</h6>
                 <p class="displayDesc text-muted pt-2 description text-justify">{{$item->equip_description}}</p>
             </div>
         </div>
@@ -106,6 +107,12 @@
                         <td class="align-middle">Enter specifications here</td>
                         <td class="align-middle">
                         <!--<form action="EquipmentsController@reserveEquipment" method="POST" enctype="multipart/form-data">
+                        {{--{!! Form::open(['action' => 'EquipmentsController@reserveEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                        {{Form::submit('Reserve', ['class' => 'btn btn-success'])}}
+                        {{Form::hidden('currentEquipID', $equipment_modal->equipID)}}
+                        {{Form::hidden('userID', Auth::user()->user_id)}}
+                        {!! Form::close() !!} --}}
+                        <form action="{{action('EquipmentsController@reserveEquipment')}}" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="currentEquipID" value="{{$equipment->equipID}}">
                             <input type="hidden" name="userID" value="{{Auth::user()->user_id}}">-->
                             @if ($equipment->transaction_id == null)
