@@ -153,7 +153,6 @@
                     </div>
                 </form>
 
-<<<<<<< HEAD
                         <div class="form-group">
                             <label for="equipDesc">Description</label>
                             <textarea class="form-control form-control-sm" id="equipDesc" name="description" rows="3"></textarea>
@@ -179,23 +178,6 @@
 
                         {{Form::hidden('currentEquipName', $item->equip_name)}}
                     {!! Form::close() !!}
-=======
-                <button type="button" id="addStockBtn" class="btn btn-light float-right" data-container="body" data-toggle="popover" data-placement="bottom"><i class="fas fa-lg fa-plus-circle text-success"></i>
-                  Add Stock
-                </button>
-                <div id="addStockForm" style="display: none">
-                <form action="{{ action('EquipmentsController@addEquipment') }}" class="form-inline" id="addStock" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="itemName" value="{{$item->equipName}}">
-                    <input type="hidden" name="category" value="{{$item->equip_category}}">
-                    <input type="hidden" name="basePrice" value="{{$item->equip_baseprice}}">
-                    <input type="hidden" name="penalty" value="{{$item->equip_penalty}}">
-                    <input type="hidden" name="description" value="{{$item->equip_description}}">
-                    <input type="hidden" name="equipIMG" value="{{$item->equip_img}}">
-                    <input type="text" name="totalAmount" class="form-control rounded-0 border-right-0 form-control-sm w-75" id="itemName" placeholder="Enter quantity">
-                    <button type="submit" class="btn btn-sm btn-success rounded-0 float-right">Add</button>
-                </form>
-                </div>
->>>>>>> b0cd0a861335555bad78167267a9181b6433a3e9
             </div>
         </div>
         
