@@ -99,15 +99,14 @@ class EquipmentsController extends Controller
 
     public function showAllEquipment(){
         if(auth()->user()->access_role != 'ADMIN'){
-            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
 
             $equipments =  Equipment::where('equip_avail', '0')
                                     ->orderBy('equip_name', 'asc')
                                     ->paginate(27);
 
-            $totalEquip = Equipment::all();
-
-            $countCart = Equipment::all()
+            if($lastTransaction != null){
+                $countCart = Equipment::all()
                                 ->where("transaction_id", "$lastTransaction->transaction_id")
                                 ->groupBy('equip_name')
                                 ->map(function($equipment, $equip_name) {
@@ -117,6 +116,11 @@ class EquipmentsController extends Controller
                                     ];
                                 })
                                 ->values();
+                $totalEquip = Equipment::where('transaction_id', $lastTransaction->transaction_id)->get();
+            } else {
+                $countCart = null;
+                $totalEquip = null;
+            }
 
             return view('equip.all_equipment')->with('lastTransaction',$lastTransaction)
                                               ->with('countCart', $countCart)
@@ -139,16 +143,15 @@ class EquipmentsController extends Controller
         return view('posts.show')->with('equipment', $equipment);*/
         
         if(auth()->user()->access_role != 'ADMIN'){
-            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
 
             $equipments =  Equipment::where('equip_category', 'CAMACC')
                                     ->where('equip_avail', '0')
                                     ->orderBy('equip_name', 'asc')
                                     ->paginate(27);
 
-            $totalEquip = Equipment::all();
-
-            $countCart = Equipment::all()
+            if($lastTransaction != null){
+                $countCart = Equipment::all()
                                 ->where("transaction_id", "$lastTransaction->transaction_id")
                                 ->groupBy('equip_name')
                                 ->map(function($equipment, $equip_name) {
@@ -158,6 +161,11 @@ class EquipmentsController extends Controller
                                     ];
                                 })
                                 ->values();
+                $totalEquip = Equipment::where('transaction_id', $lastTransaction->transaction_id)->get();
+            } else {
+                $countCart = null;
+                $totalEquip = null;
+            }
 
             return view('equip.cam_equipment')->with('lastTransaction',$lastTransaction)
                                         ->with('countCart', $countCart)
@@ -181,11 +189,9 @@ class EquipmentsController extends Controller
                                     ->orderBy('equip_name', 'asc')
                                     ->paginate(27);
 
-            $totalEquip = Equipment::all();
-                        
-            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
-
-            $countCart = Equipment::all()
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
+            if($lastTransaction != null){
+                $countCart = Equipment::all()
                                 ->where("transaction_id", "$lastTransaction->transaction_id")
                                 ->groupBy('equip_name')
                                 ->map(function($equipment, $equip_name) {
@@ -194,7 +200,12 @@ class EquipmentsController extends Controller
                                         'record' => $equipment->count(),
                                     ];
                                 })
-                                ->values();  
+                                ->values();
+                $totalEquip = Equipment::where('transaction_id', $lastTransaction->transaction_id)->get();
+            } else {
+                $countCart = null;
+                $totalEquip = null;
+            }
 
             return view('equip.art_equipment')->with('equipments',$equipments)
                                 ->with('lastTransaction',$lastTransaction)
@@ -218,11 +229,9 @@ class EquipmentsController extends Controller
                                     ->orderBy('equip_name', 'asc')
                                     ->paginate(27);
             
-            $totalEquip = Equipment::all();
-
-            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
-        
-            $countCart = Equipment::all()
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
+            if($lastTransaction != null){
+                $countCart = Equipment::all()
                                 ->where("transaction_id", "$lastTransaction->transaction_id")
                                 ->groupBy('equip_name')
                                 ->map(function($equipment, $equip_name) {
@@ -232,6 +241,11 @@ class EquipmentsController extends Controller
                                     ];
                                 })
                                 ->values();
+                $totalEquip = Equipment::where('transaction_id', $lastTransaction->transaction_id)->get();
+            } else {
+                $countCart = null;
+                $totalEquip = null;
+            }
 
             return view('equip.sport_equipment')->with('equipments',$equipments)
                                 ->with('lastTransaction',$lastTransaction)
@@ -255,20 +269,23 @@ class EquipmentsController extends Controller
                                     ->orderBy('equip_name', 'asc')
                                     ->paginate(27);
 
-            $totalEquip = Equipment::all();
-
-            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
-
-            $countCart = Equipment::all()
-                                    ->where("transaction_id", "$lastTransaction->transaction_id")
-                                    ->groupBy('equip_name')
-                                    ->map(function($equipment, $equip_name) {
-                                        return [
-                                            'equip_name' => $equip_name,
-                                            'record' => $equipment->count(),
-                                        ];
-                                    })
-                                    ->values(); 
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
+            if($lastTransaction != null){
+                $countCart = Equipment::all()
+                                ->where("transaction_id", "$lastTransaction->transaction_id")
+                                ->groupBy('equip_name')
+                                ->map(function($equipment, $equip_name) {
+                                    return [
+                                        'equip_name' => $equip_name,
+                                        'record' => $equipment->count(),
+                                    ];
+                                })
+                                ->values();
+                $totalEquip = Equipment::where('transaction_id', $lastTransaction->transaction_id)->get();
+            } else {
+                $countCart = null;
+                $totalEquip = null;
+            }
 
             return view('equip.misc_equipment')->with('equipments',$equipments)
                                     ->with('lastTransaction',$lastTransaction)
@@ -291,18 +308,24 @@ class EquipmentsController extends Controller
                                     ->where('equip_avail', '0')
                                     ->orderBy('equip_name', 'asc')
                                     ->paginate(27);
-            $totalEquip = Equipment::all();
-            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
-            $countCart = Equipment::all()
-                                    ->where("transaction_id", "$lastTransaction->transaction_id")
-                                    ->groupBy('equip_name')
-                                    ->map(function($equipment, $equip_name) {
-                                        return [
-                                            'equip_name' => $equip_name,
-                                            'record' => $equipment->count(),
-                                        ];
-                                    })
-                                    ->values();  
+
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last(); 
+            if($lastTransaction != null){
+                $countCart = Equipment::all()
+                                ->where("transaction_id", "$lastTransaction->transaction_id")
+                                ->groupBy('equip_name')
+                                ->map(function($equipment, $equip_name) {
+                                    return [
+                                        'equip_name' => $equip_name,
+                                        'record' => $equipment->count(),
+                                    ];
+                                })
+                                ->values();
+                $totalEquip = Equipment::where('transaction_id', $lastTransaction->transaction_id)->get();
+            } else {
+                $countCart = null;
+                $totalEquip = null;
+            }
     
             return view('equip.laptop_equipment')->with('equipments',$equipments)
                                     ->with('lastTransaction',$lastTransaction)
@@ -326,20 +349,23 @@ class EquipmentsController extends Controller
                                     ->orderBy('equip_name', 'asc')
                                     ->paginate(27);
             
-            $totalEquip = Equipment::all();
-            
-            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
-
-            $countCart = Equipment::all()
-                                    ->where("transaction_id", "$lastTransaction->transaction_id")
-                                    ->groupBy('equip_name')
-                                    ->map(function($equipment, $equip_name) {
-                                        return [
-                                            'equip_name' => $equip_name,
-                                            'record' => $equipment->count(),
-                                        ];
-                                    })
-                                    ->values(); 
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();  
+            if($lastTransaction != null){
+                $countCart = Equipment::all()
+                                ->where("transaction_id", "$lastTransaction->transaction_id")
+                                ->groupBy('equip_name')
+                                ->map(function($equipment, $equip_name) {
+                                    return [
+                                        'equip_name' => $equip_name,
+                                        'record' => $equipment->count(),
+                                    ];
+                                })
+                                ->values();
+                $totalEquip = Equipment::where('transaction_id', $lastTransaction->transaction_id)->get();
+            } else {
+                $countCart = null;
+                $totalEquip = null;
+            }
                                     
     
             return view('equip.gaming_equipment')->with('equipments',$equipments)
@@ -358,20 +384,23 @@ class EquipmentsController extends Controller
     }
     
     public function faqs(){
-            $totalEquip = Equipment::all();
-            
-            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
-
-            $countCart = Equipment::all()
-                                    ->where("transaction_id", "$lastTransaction->transaction_id")
-                                    ->groupBy('equip_name')
-                                    ->map(function($equipment, $equip_name) {
-                                        return [
-                                            'equip_name' => $equip_name,
-                                            'record' => $equipment->count(),
-                                        ];
-                                    })
-                                    ->values(); 
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last(); 
+            if($lastTransaction != null){
+                $countCart = Equipment::all()
+                                ->where("transaction_id", "$lastTransaction->transaction_id")
+                                ->groupBy('equip_name')
+                                ->map(function($equipment, $equip_name) {
+                                    return [
+                                        'equip_name' => $equip_name,
+                                        'record' => $equipment->count(),
+                                    ];
+                                })
+                                ->values();
+                $totalEquip = Equipment::where('transaction_id', $lastTransaction->transaction_id)->get();
+            } else {
+                $countCart = null;
+                $totalEquip = null;
+            }
 
             $equipments = Equipment::all();
     
@@ -389,23 +418,27 @@ class EquipmentsController extends Controller
                                     ->orWhere('equipID', 'like', '%' . $search . '%')
                                     ->paginate(27);
                                     
-        $totalEquip = Equipment::all();
         $equipments = Equipment::all();
         if(auth()->user()->access_role != 'ADMIN'){
             $totalEquip = Equipment::all();
 
-            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last();  
-
-            $countCart = Equipment::all()
-                                    ->where("transaction_id", "$lastTransaction->transaction_id")
-                                    ->groupBy('equip_name')
-                                    ->map(function($equipment, $equip_name) {
-                                        return [
-                                            'equip_name' => $equip_name,
-                                            'record' => $equipment->count(),
-                                        ];
-                                    })
-                                    ->values(); 
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->get()->last(); 
+            if($lastTransaction != null){
+                $countCart = Equipment::all()
+                                ->where("transaction_id", "$lastTransaction->transaction_id")
+                                ->groupBy('equip_name')
+                                ->map(function($equipment, $equip_name) {
+                                    return [
+                                        'equip_name' => $equip_name,
+                                        'record' => $equipment->count(),
+                                    ];
+                                })
+                                ->values();
+                $totalEquip = Equipment::where('transaction_id', $lastTransaction->transaction_id)->get();
+            } else {
+                $countCart = null;
+                $totalEquip = null;
+            }
                                     
 
             return view('pages.search')->with('lastTransaction',$lastTransaction)

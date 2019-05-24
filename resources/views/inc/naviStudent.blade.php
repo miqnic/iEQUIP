@@ -121,9 +121,8 @@
                         </tr>
                       </thead>
                       <tbody class="text-center align-middle">
-                          @foreach ($totalEquip->unique('equip_name') as $equipment)
-                            @if ($lastTransaction != null)
-                              @if ($equipment->transaction_id == $lastTransaction->transaction_id)
+                          @if ($lastTransaction != null)
+                            @foreach ($totalEquip->unique('equip_name') as $equipment)
                                 <tr>
                                   <td>{{$equipment->equip_name}}</td>
                                   <td>
@@ -134,9 +133,12 @@
                                     @endforeach 
                                   </td>
                                 </tr>
-                              @endif
-                            @endif
-                          @endforeach
+                            @endforeach
+                          @else
+                              <tr>
+                                <td colspan="2">No equipments reserved!</td>
+                              </tr>
+                          @endif
                       </tbody>
                     </table>
                   </div>
