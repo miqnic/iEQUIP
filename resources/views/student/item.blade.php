@@ -81,6 +81,7 @@
         </div>
         
         <div class="items mt-4 mx-auto">
+            {!! Form::open(['action' => 'EquipmentsController@reserveEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <table class="table table-hover table-striped table-bordered" id="itemStock">
                 <thead class="text-center">
                     <tr>
@@ -92,10 +93,15 @@
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    @foreach($totalEquip as $equipment)
+                    @foreach($equipments as $equipment)
                     @if($equipment->equip_name==$item->equip_name )
                     <tr>
-                        <td class="align-middle"><input type="checkbox" id="qtyCheck" class="hide"></td>
+                        <td class="align-middle">
+                            @if ($equipment->equip_avail == 0)
+                                {{ Form::checkbox('selectReserve[]', "$equipment->equipID", null, array('id'=>'qtyCheck', 'class'=>'hide')) }}
+                            @endif
+                            <!--<input name="checkbox" type="checkbox" id="qtyCheck" class="hide">-->
+                        </td>
                         <td class="align-middle">{{$equipment->equipID}}</td>
                         <td class="align-middle">
                             @if($equipment->equip_avail==0)
@@ -106,39 +112,22 @@
                         </td>
                         <td class="align-middle">Enter specifications here</td>
                         <td class="align-middle">
-                        <!--<form action="EquipmentsController@reserveEquipment" method="POST" enctype="multipart/form-data">
-                        {{--{!! Form::open(['action' => 'EquipmentsController@reserveEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-                        {{Form::submit('Reserve', ['class' => 'btn btn-success'])}}
-                        {{Form::hidden('currentEquipID', $equipment_modal->equipID)}}
-                        {{Form::hidden('userID', Auth::user()->user_id)}}
-                        {!! Form::close() !!} --}}
-                        <form action="{{action('EquipmentsController@reserveEquipment')}}" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="currentEquipID" value="{{$equipment->equipID}}">
-                            <input type="hidden" name="userID" value="{{Auth::user()->user_id}}">-->
-                            @if ($equipment->transaction_id == null)
-                                {!! Form::open(['action' => 'EquipmentsController@reserveEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-                                {{Form::submit('Add to Cart', ['class' => 'btn btn-sm btn-primary indiv'])}}
-                                {{Form::hidden('currentEquipID', $equipment->equipID)}}
-                                {{Form::hidden('userID', Auth::user()->user_id)}}
-                                {!! Form::close() !!} 
+                            @if ($equipment->transaction_id == null && $equipment->equip_avail == 0)
+                                {{Form::button('<i class="fas fa-shopping-cart"></i> Add to Cart', ['type' => 'submit', 'class' => 'btn btn-sm btn-primary indiv'])}}
                             @else
                                 <button type="submit" class="btn btn-sm btn-primary indiv" disabled><i class="fas fa-shopping-cart"></i> Add to Cart</button>
                             @endif
-                            
-                            <!--<button type="submit" class="btn btn-sm btn-primary indiv"><i class="fas fa-shopping-cart"></i> Add to Cart</button>-->
-                        <!--</form>-->
-                            
                         </td>
                     </tr>
                     @endif
                     @endforeach
                 </tbody>
             </table>
-            {!! Form::open(['action' => 'EquipmentsController@reserveEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-                            {{Form::submit('Add to Cart', ['class' => 'btn btn-sm btn-primary selectSubmit float-right', 'style' => 'margin-top: -35px; margin-right: 200px;'])}}
-                            {{Form::hidden('currentEquipID', $equipment->equipID)}}
-                            {{Form::hidden('userID', Auth::user()->user_id)}}
-                            {!! Form::close() !!} 
+            {{Form::button('<i class="fas fa-shopping-cart"></i> Add to Cart', ['type' => 'submit', 'class' => 'btn btn-sm btn-primary float-left'])}}
+            {{--{{Form::button('<i class="fas fa-shopping-cart"></i> Add to Cart', ['type' => 'submit', 'class' => 'btn btn-sm btn-primary selectSubmit float-right', 'style' => 'margin-top: -35px; margin-right: 200px;'])}}--}}
+            {{Form::hidden('currentEquipID', $equipment->equipID)}}
+            {{Form::hidden('userID', Auth::user()->user_id)}}
+            {!! Form::close() !!} 
             <!--<button type="button" class="btn btn-sm btn-primary selectSubmit float-right" style="margin-top: -35px; margin-right: 200px;"><i class="fas fa-shopping-cart"></i> Add to Cart</button>-->
         </div>
     </div>

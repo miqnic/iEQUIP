@@ -45,18 +45,16 @@
       <div class="d-inline-flex flex-row flex-wrap align-items-center justify-content-start">
           @foreach ($equipments->unique('equip_name') as $equipment)
           <div class="card itemCard text-center mt-1 pt-3 mr-1">
-            @foreach ($countCurrAvail as $itemCurr)
-              @foreach($countTotalAvail as $itemTotal)
-                @if (Arr::get($itemCurr, 'equip_name') == $equipment->equip_name && Arr::get($itemTotal, 'equip_name') == $equipment->equip_name)
-                  @if(Arr::get($itemCurr, 'record')== '')
+            @foreach ($countEquip as $itemCurr)
+              @if (Arr::get($itemCurr, 'equip_name') == $equipment->equip_name)
+                  @if(Arr::get($itemCurr, 'total') == Arr::get($itemCurr, 'unavail'))
                   <span class="badge stockStat badge-danger ml-3">Out of stock</span>
-                  @elseif(Arr::get($itemTotal, 'record')/2 >= Arr::get($itemCurr, 'record'))
+                  @elseif(Arr::get($itemCurr, 'total')/2 >= Arr::get($itemCurr, 'avail'))
                   <span class="badge stockStat badge-warning ml-3">Low in stock</span>
                   @else 
                   <span class="badge stockStat badge-success ml-3">In stock</span>
-                @endif
-                @endif
-              @endforeach
+                  @endif
+              @endif
             @endforeach 
             <img src="{{ asset('img/'.$equipment->equip_img) }}" class="card-img-top align-self-center" alt="Item photo">
             <div class="card-body">
@@ -73,19 +71,9 @@
               @endif
               <p class="card-text mb-4">
                 Availability: 
-                @foreach ($countCurrAvail as $item)
+                @foreach ($countEquip as $item)
                   @if (Arr::get($item, 'equip_name') == $equipment->equip_name)
-                    {{Arr::get($item, 'record')}}
-                  @endif
-                @endforeach 
-                /
-                @foreach ($countTotalAvail as $item)
-                  @if (Arr::get($item, 'equip_name') == $equipment->equip_name)
-                    @if (Arr::get($item, 'record') == '')
-                        0
-                    @else
-                      {{Arr::get($item, 'record')}}
-                    @endif
+                    {{Arr::get($item, 'avail')}} / {{Arr::get($item, 'total')}}
                   @endif
                 @endforeach
               </p>

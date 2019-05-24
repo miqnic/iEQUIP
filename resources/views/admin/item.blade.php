@@ -95,24 +95,6 @@
                         Miscellaneous
                     @endif
                 </span>
-<<<<<<< HEAD
-                <h4 class="displayEquipName">{{$item->equip_name}}</h4>
-
-                <p class="displayDesc text-muted pt-2 description text-justify">{{$item->equip_description}}</p>
-                    <!--<button type="button" class="btn btn-sm btn-success float-right mb-3" id="saveEditEquip">Save</button>
-                    <form id="editEquipDetails" style="display:none; margin-top: 20px;">
-                        <div class="form-group">
-                        <label for="equipCategory">Category</label>
-                        <select class="custom-select custom-select-md" name="category" id="equipCategory">
-                            <option value="ART">Art Tools</option>
-                            <option value="CAMACC">Cameras and Accessories</option>
-                            <option value="GMNG">Gaming Devices</option>
-                            <option value="LPTP">Laptops and Accessories</option>
-                            <option value="SPRT">Sports Equipment</option>
-                            <option value="MISC">Miscellaneous</option>
-                        </select>
-                        </div>
-=======
                 <h4 class="displayEquipName text-primary">{{$item->equip_name}}</h4>
                 <h6 class="displayEquipFee">Base Price: P<span class="displayBasePrice">{{$item->equip_baseprice}}</span> | Penalty: P<span class="displayPenalty">{{$item->equip_penalty}}</span>.00</h6>
                 <p class="displayDesc text-muted pt-2 description text-justify">{{$item->equip_description}}</p>
@@ -129,7 +111,6 @@
                         <option value="MISC">Miscellaneous</option>
                     </select>
                     </div>
->>>>>>> b0cd0a861335555bad78167267a9181b6433a3e9
 
                     <div class="form-group">
                         <label for="equipName">Name</label>
