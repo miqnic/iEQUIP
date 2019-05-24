@@ -9,3 +9,13 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+public/.DS_Store
+public/img/.DS_Store
+public/js/.DS_Store
+.DS_Store
+.vscode/ipch/36767c1ca4157929/BILON-NICOLEKAYE-LinkedListExercise.ipch
+.vscode/ipch/36767c1ca4157929/mmap_address.bin
+composer.lock
+*.lock
+*.lock
+*.lock
