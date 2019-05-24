@@ -108,7 +108,7 @@
                 </tr>
                     @foreach($equipments as $equipment)
                     @if($form->transaction_id==$equipment->transaction_id)
-                    <tr>
+                    <tr class="border-top border-bottom">
                             <td class="text-right">{{$equipment->equipID}}</td>
                             <td class="text-center">{{$equipment->equip_name}}</td>
                     </tr>
@@ -137,7 +137,7 @@
            <tbody class="text-center">
                 @if($pendingForms->isEmpty())
                 <tr>
-                    <td colspan="4">No pending requests</td>
+                    <td colspan="4">Hooray! No pending requests.</td>
                 </tr>
                 @else
                     @foreach($pendingForms as $form)
@@ -173,7 +173,11 @@
            <tbody class="text-center">
                 @if($recentForms->isEmpty())
                 <tr>
+<<<<<<< HEAD
                     <td colspan="6">No approved requests</td>
+=======
+                    <td colspan="6">You dont have any recent requests.</td>
+>>>>>>> ccf0fb9708b1b11ce52dada69c46a07931a82e83
                 </tr>
                 @else
                 @foreach($recentForms as $form)

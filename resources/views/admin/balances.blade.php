@@ -17,7 +17,7 @@
               'pageLength',
               {
               extend: 'pdfHtml5',
-              text: 'Export All as PDF',
+              text: 'Export as PDF',
               exportOptions: {
                   modifier: {
                       selected: null

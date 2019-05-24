@@ -11,65 +11,118 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <div class="mt-2 alert @if($form->approval==1) alert-success @elseif($form->approval==0) alert-warning @else alert-danger @endif" role="alert"> 
-                    <div class="row text-center">
-                        <div class="col-md-4 offset-md-1">
-                            Transaction Form:<br>
-                            <b>{{$form->transaction_id}}</b>
-                        </div>
-                        <div class="col-md-4 offset-md-2">
-                            Request Status:<br>
-                            <b> 
-                                @if($form->approval==1)
-                                    APPROVED
-                                @elseif($form->approval==0)
-                                    PENDING
-                                @else
-                                    DECLINED
+                <div class="formInfo row">
+                    <div class="col-md-12">
+                        <small><b>Legend:</b> <i class="fas fa-exclamation-triangle text-danger"></i> - due date has passed</small>
+                        <table class="table table-sm mt-1">
+                            <tr>
+                                <th>ID and Status</th>
+                                <td>
+                                    {{$form->transaction_id}} 
+                                    @if($form->approval==1)
+                                        @if($form->claimed==1 and $form->returned==0)
+                                        <span class="badge badge-success">Approved</span>
+                                        <span class="badge badge-primary">Claimed</span>
+                                        @elseif($form->claimed==1 and $form->returned==1)
+                                        <span class="badge badge-success">Returned</span>
+                                        @else
+                                        <span class="badge badge-success">Approved</span>
+                                        <span class="badge badge-warning">Unclaimed</span>
+                                        @endif
+                                    @elseif($form->approval==0)
+                                    <span class="badge badge-warning">Pending</span>
+                                    @elseif($form->approval==-1)
+                                    <span class="badge badge-danger">Declined</span>
+                                    @else 
+                                    <span class="badge badge-danger">Cancelled</span>
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Date Submitted</th>
+                                <td>{{\Carbon\Carbon::parse($form->submitted_date)->toFormattedDateString()}}</td>
+                            </tr>
+                            <tr>
+                                <th>Date Responded</th>
+                                @if($form->approval!=0)
+                                <td>{{\Carbon\Carbon::parse($form->approval_date)->toFormattedDateString()}}</td>
+                                @else 
+                                <td>N/A</td>
                                 @endif
-                            </b>
-                        </div>
+                            </tr>
+                            @if($form->approval==1)
+                            <tr>
+                                <th>Date Claimed</th>
+                                @if($form->claimed==1)
+                                <td>{{\Carbon\Carbon::parse($form->claimed_date)->toFormattedDateString()}}</td>
+                                @else 
+                                <td>N/A</td>
+                                @endif
+                            </tr>
+                            <tr>
+                                <th>Date Returned</th>
+                                @if($form->returned==1)
+                                <td>{{\Carbon\Carbon::parse($form->returned_date)->toFormattedDateString()}}</td>
+                                @else 
+                                <td>N/A</td>
+                                @endif
+                            </tr>
+                            @elseif($form->approval==-1)
+                            <tr>
+                                <th>Reason for Declining</th>
+                                <td></td>
+                                {{-- <td>{{$form->decline_reason}}</td> --}}
+                            </tr>
+                            @elseif($form->approval==-2)
+                            <tr>
+                                <th>Date Cancelled</th>
+                                <td>{{\Carbon\Carbon::parse($form->cancelled_date)->toFormattedDateString()}}</td>
+                            </tr>
+                            @endif
+                            <tr>
+                                <th>Start Date and Time</th>
+                                <td>{{\Carbon\Carbon::parse($form->start_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->start_time)->format('h:i A')}}</td>
+                            </tr>
+                            <tr>
+                                <th>End Date and Time</th>
+                                <td>
+                                    {{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->end_time)->format('h:i A')}}
+                                    @if(\Carbon\Carbon::parse($form->due_date)->isPast())
+                                    <i class="fas fa-lg fa-exclamation-triangle text-danger"></i>
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Purpose</th>
+                                <td>{{$form->purpose}}</td>
+                            </tr>
+                        </table>
+
+                        <table class="table table-sm table-striped mt-3 text-center">
+                            <thead class="bg-dark text-light">
+                                <tr>
+                                    <th>Equipment Code</th>
+                                    <th>Equipment Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($equipments as $equipment)
+                                @if($equipment->transaction_id==$form->transaction_id)
+                                <tr>
+                                    <td>{{$equipment->equipID}}</td>
+                                    <td>
+                                        {{$equipment->equip_name}}
+                                        @if($form->returned==0 && \Carbon\Carbon::parse($form->due_date)->isPast())
+                                        <i class="fas fa-lg fa-exclamation-triangle text-danger"></i>
+                                        @endif
+                                    </td>     
+                                </tr>
+                                @endif
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
-                <div class="formInfo row pt-3">
-                    <div class="col-md-6">
-                    <p>
-                        <strong>Date Submitted:</strong> {{\Carbon\Carbon::parse($form->submitted_date)->toFormattedDateString()}}<br>
-                        <strong>Date Claimed:</strong> 02/02/2019<br>
-                        <strong>Start Date:</strong> {{\Carbon\Carbon::parse($form->start_date)->toFormattedDateString()}}<br>
-                        <strong>Start Time:</strong> {{$form->start_time}}
-                    </p>
-                    </div>
-                    <div class="col-md-6">
-                    <p>
-                        <strong>Date Approved:</strong> 01/02/2019<br> <!--not yet working-->
-                        <strong>Date Returned:</strong> 02/02/2019<br>
-                        <strong>End Date:</strong> {{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}<br>
-                        <strong>End Time:</strong> {{$form->end_time}}
-                    </p>
-                    </div>
-                </div>
-
-                <p class="legend pl-3 pt-2 text-danger">* Equipment/s not returned</p>
-                <table class="table table-md table-bordered mt-3 text-center">
-                    <thead>
-                        <tr>
-                            <th>Equipment Code</th>
-                            <th>Equipment Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($equipments as $equipment)
-                        @if($equipment->transaction_id==$form->transaction_id)
-                        <tr @if($equipment->returned==0 && $form->approval==1) class="text-danger"  @endif>
-                            <td>{{$equipment->equipID}}</td>
-                            <td>{{$equipment->equip_name}}</td>     
-                        </tr>
-                        @endif
-                        @endforeach
-                    </tbody>
-                </table>
             </div>
 
             <!-- Modal footer -->

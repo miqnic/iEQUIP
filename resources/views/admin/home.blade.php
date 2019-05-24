@@ -135,6 +135,61 @@
                                     {!! Form::close() !!}
                                 @endif
             </div>
+            <!--PLEASE CHECK -->
+                                    @endforeach
+                                </td>
+                                <td class="align-middle">
+                                    {{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}
+                                    @if($form->returned==0 && \Carbon\Carbon::parse($form->due_date)->isPast())
+                                        <i class="fas fa-lg fa-exclamation-triangle text-danger"></i>
+                                    @endif
+                                </td>
+                                <td class="align-middle">
+                                    <h5>
+                                    @if($form->approval==1)
+                                    <span class="badge badge-success">Approved</span>
+                                    @else
+                                    <span class="badge badge-warning">Pending</span>
+                                    @endif
+                                    </h5>
+                                </td>
+                                <td class="align-middle">
+                                    @if($form->approval==1)
+                                            @if ($form->claimed == 1)
+                                                <button class="btn btn-outline-primary" disabled>Claimed</button>
+                                                <button data-toggle="modal" data-target="#returnEquip-{{$form->transaction_id}}" class="btn btn-outline-primary">Returned</button>
+                                            @else
+                                                {!! Form::open(['action' => 'TransactionFormsController@afterApproval', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                                                    {{Form::hidden('currentForm', $form->transaction_id)}}
+                                                    {{ Form::submit('Claimed', array('class' => 'btn btn-outline-primary','name'=>'claimed')) }}
+                                                {!! Form::close() !!}
+                                                <button data-toggle="modal" data-target="#returnEquip-{{$form->transaction_id}}" class="btn btn-outline-primary" disabled>Returned</button>
+                                            @endif
+                                            
+                                    @else 
+                                        <form action="{{ action('TransactionFormsController@transactionApproval') }}" method="POST" enctype="multipart/form-data">
+                                        <input type="hidden" name="currentForm" value="{{$form->transaction_id}}">
+                                        <button type="submit" id="approveBtn" class="btn btn-outline-success" name="decision" value="approve">Approve</button>
+                                        <button type="button" id="declineBtn" class="btn btn-outline-danger" data-container="body" data-toggle="popover" data-placement="bottom">Decline</button>
+                                        </form>
+                                        <div id="declineReasonForm" style="display: none">
+                                        <form action="{{ action('TransactionFormsController@transactionApproval') }}" method="POST" enctype="multipart/form-data">
+                                            <input type="hidden" name="decision" value="decline">
+                                            <textarea type="text" name="declineReason" class="form-control" id="declineReason" placeholder="Enter reason" rows="2"></textarea>
+                                            <button type="submit" class="btn btn-sm btn-danger float-right my-2">Decline</button>
+                                        </form>
+                                        </div>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+        <span><b>Legend:</b> <i class="fas fa-exclamation-triangle text-danger"></i> - due date has passed</span>
+    </div>
+</div>
 @endsection
 
 @section('modal')

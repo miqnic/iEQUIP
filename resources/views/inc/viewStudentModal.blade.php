@@ -21,7 +21,11 @@
                                 <p><strong>Student ID: </strong>{{$user->user_id}}</p>
                                 <p><strong>Student Name: </strong>{{$user->first_name}} {{$user->last_name}}</p>
                                 <p><strong>Course: </strong>{{$user->course}}</p>
-                                <p><strong>Penalty: </strong>PHP{{$user->penalty}}.00</p>
+                                <p><strong>Penalty: </strong>PHP{{$user->penalty}}.00 
+                                    @if($user->penalty>0)
+                                    <i class="fas fa-lg fa-exclamation-triangle text-danger"></i>
+                                    @endif
+                            </p>
                             @endif
                         @endforeach
                     </div>

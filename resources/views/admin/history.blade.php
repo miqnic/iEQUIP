@@ -56,8 +56,13 @@
           </thead>
           <tbody class="text-center">
             @foreach ($transaction_forms as $form)
-            <tr @if($form->returned==0 && $form->approval==1)class="text-danger"; @endif>
-                <td data-toggle="modal" data-target="#checkForm{{$form->transaction_id}}" id="transaction">{{$form->transaction_id}}</td>
+            <tr>
+                <td data-toggle="modal" data-target="#checkForm{{$form->transaction_id}}" id="transaction">
+                    {{$form->transaction_id}}
+                    @if($form->returned==0 && \Carbon\Carbon::parse($form->due_date)->isPast())
+                        <i class="fas fa-lg fa-exclamation-triangle text-danger"></i>
+                    @endif
+                </td>
                 @foreach($users as $user)
                     @if($user->user_id==$form->user_id)
                         <td data-toggle="modal" data-target="#viewStudent{{$user->user_id}}" id="student">{{$user->user_id}}</td>
@@ -89,7 +94,7 @@
             @endforeach
           </tbody>
         </table>
-        <span><b>Legend:</b> <i class="fas fa-square-full text-danger"></i> - overdue/not yet returned</span>
+        <span><b>Legend:</b> <i class="fas fa-exclamation-triangle text-danger"></i> - due date has passed</span>
     </div>
 </div>
 

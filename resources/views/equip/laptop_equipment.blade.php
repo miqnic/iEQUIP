@@ -45,7 +45,19 @@
       <div class="d-inline-flex flex-row flex-wrap align-items-center justify-content-start">
           @foreach ($equipments->unique('equip_name') as $equipment)
           <div class="card itemCard text-center mt-1 pt-3 mr-1">
-            <span class="badge badge-success ml-3 w-25">In stock</span>
+            @foreach ($countCurrAvail as $itemCurr)
+              @foreach($countTotalAvail as $itemTotal)
+                @if (Arr::get($itemCurr, 'equip_name') == $equipment->equip_name && Arr::get($itemTotal, 'equip_name') == $equipment->equip_name)
+                  @if(Arr::get($itemCurr, 'record')== '')
+                  <span class="badge stockStat badge-danger ml-3">Out of stock</span>
+                  @elseif(Arr::get($itemTotal, 'record')/2 >= Arr::get($itemCurr, 'record'))
+                  <span class="badge stockStat badge-warning ml-3">Low in stock</span>
+                  @else 
+                  <span class="badge stockStat badge-success ml-3">In stock</span>
+                @endif
+                @endif
+              @endforeach
+            @endforeach 
             <img src="{{ asset('img/'.$equipment->equip_img) }}" class="card-img-top align-self-center" alt="Item photo">
             <div class="card-body">
               @php

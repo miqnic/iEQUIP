@@ -388,6 +388,9 @@ class EquipmentsController extends Controller
         $possibleEquips = Equipment::where('equip_name', 'like', '%' . $search . '%')
                                     ->orWhere('equipID', 'like', '%' . $search . '%')
                                     ->get();
+                                    ->paginate(27);
+                                    
+        $totalEquip = Equipment::all();
         $equipments = Equipment::all();
         if(auth()->user()->access_role != 'ADMIN'){
             $totalEquip = Equipment::all();
