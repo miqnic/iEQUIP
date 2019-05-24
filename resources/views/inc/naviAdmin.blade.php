@@ -64,12 +64,12 @@
             </div>
     
 
-                {!! Form::open(['action' => 'EquipmentsController@searchEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'class' => 'form-inline']) !!}
-                {{Form::text('search', '',['class' => 'form-control mr-sm-2', 'placeholder' => 'Search', 'aria-label' => 'Search'])}}
-                {{Form::submit('Search', ['class' => 'btn btn-outline-light'])}}
-                <!--<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                <button type="submit" class="btn btn-outline-light">Search</button>-->
-                {!! Form::close() !!}
+            {!! Form::open(['action' => 'EquipmentsController@searchEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'class' => 'form-inline']) !!}
+            {{Form::text('search', '',['class' => 'form-control mr-sm-2', 'placeholder' => 'Search', 'aria-label' => 'Search'])}}
+            {{Form::submit('Search', ['class' => 'btn btn-outline-light'])}}
+            <!--<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            <button type="submit" class="btn btn-outline-light">Search</button>-->
+            {!! Form::close() !!}
     
             <div class="btn dropdown">
             <a href="#" id="account" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip" data-placement="bottom" title="Sign Out">

@@ -146,7 +146,23 @@
             <!-- Modal footer -->
             <div class="modal-footer">
                 {!! Form::open(['action' => 'TransactionFormsController@submitForm', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-                {{Form::submit('Confirm', ['class' => 'btn btn-success'])}}
+                    {{Form::hidden('currentForm', $currentTransaction->transaction_id)}}
+                        {{Form::hidden('sub_date', $currentTransaction->submitted_date)}}
+                        {{Form::hidden('start_date', $currentTransaction->start_date)}}
+                        {{Form::hidden('start_time', $currentTransaction->start_time)}}
+                        {{Form::hidden('end_date', $currentTransaction->due_date)}}
+                        {{Form::hidden('end_time', $currentTransaction->end_time)}}
+                        {{Form::hidden('room', $currentTransaction->room_number)}}
+                        {{Form::hidden('reason', $currentTransaction->purpose)}}
+                        {{Form::hidden('user_id', $currentTransaction->user_id)}}
+                        @foreach ($users as $user)
+                            @if ($user->user_id == $currentTransaction->user_id)
+                                {{Form::hidden('first', $user->first_name)}}
+                                {{Form::hidden('last', $user->last_name)}}
+                                {{Form::hidden('course', $user->course)}}
+                            @endif
+                        @endforeach
+                    {{Form::submit('Confirm', ['class' => 'btn btn-success'])}}
                 {!! Form::close() !!}
                 <button type="button" class="btn btn" data-dismiss="modal">Close</button>
             </div>

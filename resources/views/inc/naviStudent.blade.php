@@ -98,41 +98,6 @@
             </a>
 
             <!--MODALS-->
-{{-- 
-            <div class="modal" id="logoutModal">
-              <div class="modal-dialog">
-                <div class="modal-content">
-    
-                  <!-- Modal Header -->
-                  <div class="modal-header">
-                    <h4 class="modal-title">Log Out Confirmation</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  </div>
-    
-                  <!-- Modal body -->
-                  <div class="modal-body">
-                    If you want to log out, click on the "Log out" button below.
-                  </div>
-    
-                  <!-- Modal footer -->
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-primary logout">
-                      <a class="" href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                                          document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                  </div>
-    
-                </div>
-              </div>
-            </div> --}}
     
             <!-- The Modal -->
             <div class="modal" id="cartModal">
@@ -157,6 +122,7 @@
                       </thead>
                       <tbody class="text-center align-middle">
                           @foreach ($totalEquip->unique('equip_name') as $equipment)
+                            @if ($lastTransaction != null)
                               @if ($equipment->transaction_id == $lastTransaction->transaction_id)
                                 <tr>
                                   <td>{{$equipment->equip_name}}</td>
@@ -169,6 +135,7 @@
                                   </td>
                                 </tr>
                               @endif
+                            @endif
                           @endforeach
                       </tbody>
                     </table>
