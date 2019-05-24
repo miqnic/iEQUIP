@@ -34,8 +34,6 @@ Route::group(['middleware' => ['admin']], function()
     Route::match(['get', 'post'],'/admin/sports-equipment', 'EquipmentsController@showSportEquipment');
     Route::match(['get', 'post'],'/admin/laptops-accessories', 'EquipmentsController@showLapEquipment');
 
-    Route::get('/admin/{name}', 'EquipmentsController@show');
-
     Route::get('/add','EquipmentsController@add');
     Route::get('/admin/add','EquipmentsController@add');
     Route::post('/addEquipment','EquipmentsController@addEquipment'); 
