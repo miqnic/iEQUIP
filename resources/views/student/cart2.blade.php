@@ -21,27 +21,19 @@
     <script>
         $(function () {
             $('#startdate').datetimepicker({
-                format: 'DD-MM-YYYY',
-                minDate: moment(),
-                disabledHours: [0, 1, 2, 3, 4, 5, 6, 21, 22, 23, 24]
+                format: 'MMMM DD, YYYY',
+                minDate: moment()
             });
-        });
 
-        $(function () {
             $('#enddate').datetimepicker({
-                format: 'DD-MM-YYYY',
-                minDate: moment(),
-                disabledHours: [0, 1, 2, 3, 4, 5, 6, 21, 22, 23, 24]
+                format: 'MMMM DD, YYYY',
+                minDate: moment()
             });
-        });
 
-        $(function () {
             $('#starttime').datetimepicker({
                 format: 'LT'
             });
-        });
 
-        $(function () {
             $('#endtime').datetimepicker({
                 format: 'LT'
             });
@@ -69,6 +61,15 @@
 <div class="row">
     <div class="col-md-12 mt-5">
         <div class="fill-up w-75 mx-auto">
+            @if(session('errorMsg'))
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                {{ session('errorMsg') }}
+            </div>
+            @endif
+
             <h2>Reservation Form Details</h2>
             <p>Please fill all fields.</p>
 
@@ -80,7 +81,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Start Date</span>
                         </div>
-                        {{Form::text('startdate', '',['class' => 'form-control date datetimepicker-input', 'placeholder'=>'DD-MM-YYYY', 'data-target-input'=>'nearest', 'data-target'=>'#startdate', 'data-toggle'=>'datetimepicker', 'id'=>'startdate'])}}
+                        {{Form::text('startdate', '',['class' => 'form-control date datetimepicker-input', 'placeholder'=>'Choose start date', 'data-target-input'=>'nearest', 'data-target'=>'#startdate', 'data-toggle'=>'datetimepicker', 'id'=>'startdate'])}}
                     </div>
                 </div>
 
@@ -89,7 +90,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">End Date</span>
                         </div>
-                        {{Form::text('enddate', '',['class' => 'form-control date datetimepicker-input', 'placeholder'=>'DD-MM-YYYY', 'data-target-input'=>'nearest', 'data-target'=>'#enddate', 'data-toggle'=>'datetimepicker', 'id'=>'enddate'])}}
+                        {{Form::text('enddate', '',['class' => 'form-control date datetimepicker-input', 'placeholder'=>'Choose end date', 'data-target-input'=>'nearest', 'data-target'=>'#enddate', 'data-toggle'=>'datetimepicker', 'id'=>'enddate'])}}
                         <!--<input type="text" class="form-control date datetimepicker-input" id="enddate" placeholder="DD-MM-YYYY" data-target-input="nearest" data-target="#enddate" data-toggle="datetimepicker" data-target="#enddate"/>-->
                     </div>
                 </div>
@@ -100,7 +101,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Start Time</span>
                         </div>
-                        {{Form::text('starttime', '',['class' => 'form-control date datetimepicker-input', 'placeholder'=>'hh:mm AM/PM', 'data-target-input'=>'nearest', 'data-target'=>'#starttime', 'data-toggle'=>'datetimepicker', 'id'=>'starttime'])}}
+                        {{Form::text('starttime', '',['class' => 'form-control date datetimepicker-input', 'placeholder'=>'Choose start time', 'data-target-input'=>'nearest', 'data-target'=>'#starttime', 'data-toggle'=>'datetimepicker', 'id'=>'starttime'])}}
                         <!--<input type="text" class="form-control date datetimepicker-input" id="starttime" placeholder="hh:mm AM/PM" data-target-input="nearest" data-target="#starttime" data-toggle="datetimepicker" data-target="#starttime"/>-->
                     </div>
                 </div>
@@ -110,12 +111,11 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">End Time</span>
                         </div>
-                        {{Form::text('endtime', '',['class' => 'form-control date datetimepicker-input', 'placeholder'=>'hh:mm AM/PM', 'data-target-input'=>'nearest', 'data-target'=>'#endtime', 'data-toggle'=>'datetimepicker', 'id'=>'endtime'])}}
+                        {{Form::text('endtime', '',['class' => 'form-control date datetimepicker-input', 'placeholder'=>'Choose end time', 'data-target-input'=>'nearest', 'data-target'=>'#endtime', 'data-toggle'=>'datetimepicker', 'id'=>'endtime'])}}
                         <!--<input type="text" class="form-control date datetimepicker-input" id="endtime" placeholder="hh:mm AM/PM" data-target-input="nearest" data-target="#endtime" data-toggle="datetimepicker" data-target="#endtime"/>-->
                     </div>
                 </div>
             </div>
-
             
             <div class="form-group text-center">
                 <div class="input-group w-50">
@@ -129,7 +129,7 @@
                                     '1003' => '1003',
                                     '1004' => '1004',
                                     '1005' => '1005',
-                                    '1006' => '1006'), 0, array('class' => 'form-control', 'required' => '', 'placeholder'=>'Choose Room Number'))}}
+                                    '1006' => '1006'), 0, array('class' => 'form-control custom-select', 'required' => '', 'placeholder'=>'Choose Room Number'))}}
                 </div>
             </div>
 
@@ -148,7 +148,7 @@
 <div class="text-center">
     <div class="btn-group text-center mt-2" role="group" aria-label="Basic example">
         <a href="cart" class="btn btn-outline-secondary btn-lg">Previous</a>
-        {{Form::submit('Next', ['class' => 'btn btn-outline-primary btn-lg', 'href'=>'cart3'])}}
+        {{Form::submit('Next', ['class' => 'btn btn-outline-primary btn-lg cartNext', 'href'=>'cart3'])}}
     </div>
 </div>
 {!! Form::close() !!}

@@ -225,18 +225,35 @@ class TransactionFormsController extends Controller
                                             ->get()->last();
         //dd($currentTransaction);
         $transaction_forms = TransactionForm::get();
+        
 
-   
+        $startDate = Carbon::parse($request->get('startdate'))->toDateString();
+        $startTime = Carbon::parse($request->get('starttime'))->format('h:i:s');
+        $endDate = Carbon::parse($request->get('enddate'))->toDateString();
+        $endTime = Carbon::parse($request->get('endtime'))->format('h:i:s');
+        
+        $now = Carbon::now();
+        $start = Carbon::parse($startDate." ".$startTime)->toDateTimeString();
+        $end = Carbon::parse($endDate." ".$endTime)->toDateTimeString();
+
+        if (Carbon::parse($start)->diffInHours($now)<3){
+            return redirect('student/cart2')->with('errorMsg','The start date and time cannot be less than 3 hours from now. Please try again.');
+        }
+        else if (Carbon::parse($start)->equalTo($end)){
+            return redirect('student/cart2')->with('errorMsg','The start and end of the reservation period cannot be the same. Please try again.');
+        }
+        else {
         $currentTransaction->update([
-            'start_time' => Carbon::parse($request->get('starttime')),
-            'end_time' => Carbon::parse($request->get('endtime')),
-            'start_date' => Carbon::parse($request->get('startdate')),
-            'due_date' => Carbon::parse($request->get('enddate')),
+            'start_time' => $startTime,
+            'end_time' => $endTime,
+            'start_date' => $startDate,
+            'due_date' => $endDate,
             'purpose' => $request->get('reason'),
-            'room_number' => $request->get('roomnumber'),
+            'room_number' => $request->get('roomnumber')
         ]);
 
         $currentTransaction->save();
+        }
         
         return view('student.cart3')->with('transaction_forms',$transaction_forms)
                                     ->with('currentTransaction', $currentTransaction)
