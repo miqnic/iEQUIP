@@ -173,11 +173,7 @@
            <tbody class="text-center">
                 @if($recentForms->isEmpty())
                 <tr>
-<<<<<<< HEAD
                     <td colspan="6">No approved requests</td>
-=======
-                    <td colspan="6">You dont have any recent requests.</td>
->>>>>>> ccf0fb9708b1b11ce52dada69c46a07931a82e83
                 </tr>
                 @else
                 @foreach($recentForms as $form)

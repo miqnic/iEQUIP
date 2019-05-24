@@ -93,7 +93,6 @@
                         </p>
                         </div>
                     </div>
-<<<<<<< HEAD
 
                     <!--MODAL SECTION-->
 
@@ -216,8 +215,6 @@
                     <!--Edit Modal for a SPECIFIC equipment (by equip_name)-->
                     @include('inc.confirmEquipChangesModal', $equipment)
                     @include('inc.editItemModal', [$equipment, $countTotalAvail])
-=======
->>>>>>> ccf0fb9708b1b11ce52dada69c46a07931a82e83
                 @endif
             @endforeach 
         @endforeach
