@@ -3,6 +3,11 @@
 @section('head')
     <title>{{ config('app.name') }} | {{$item->equip_name}}</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/equiplist.css') }}">
+    <style>
+        .selectSubmit, .hide, #triggerDeselect {
+            display: none;
+        }
+    </style>
     <script>
         $(document).ready(function() {
             $('#itemStock').DataTable({
@@ -10,29 +15,22 @@
             });
         });
 
-        $(document).ready(function () {
-            $('.selectSubmit').hide();
+        function selectItems() {
+            $('.hide').show(); 
             $("input:checkbox").prop('checked', false);
-            $('.indiv').show();
+            $('.indiv').hide();
+            $('.selectSubmit').show();
+            $('#triggerSelect').hide();
+            $('#triggerDeselect').show();
+        }
+
+        function deselectItems() {
             $('.hide').hide();
-            $('#triggerSelect').click(function () {  
-                var $this = $(this);
-                $this.toggleClass('selectLabel');
-                if($this.hasClass('selectLabel')){
-                $('.selectSubmit').hide(); 
-                $('.hide').hide(); 
-                $('.indiv').show();
-                $this.text('Select');			
-                } 
-                else {
-                $('.hide').show(); 
-                $("input:checkbox").prop('checked', false);
-                $('.indiv').hide();
-                $('.selectSubmit').show();
-                $this.text('Cancel');
-                }
-            });  
-        }); 
+            $('.indiv').show();
+            $('.selectSubmit').hide();
+            $('#triggerSelect').show();
+            $('#triggerDeselect').hide();
+        }
     </script>
 @endsection
 
@@ -85,7 +83,10 @@
             <table class="table table-hover table-striped table-bordered" id="itemStock">
                 <thead class="text-center">
                     <tr>
-                        <th class="align-middle"><button type="button" class="btn btn-sm btn-secondary mb-2" id="triggerSelect">Select</button></th>
+                        <th class="align-middle">
+                            <button type="button" class="btn btn-sm btn-secondary mb-2" id="triggerSelect" onclick="selectItems()">Select</button>
+                            <button type="button" class="btn btn-sm btn-secondary mb-2" id="triggerDeselect" onclick="deselectItems()">Cancel</button>
+                        </th>
                         <th class="align-middle">Equipment</th>
                         <th class="align-middle">Status</th>
                         <th class="align-middle">Remarks</th>
@@ -123,7 +124,7 @@
                     @endforeach
                 </tbody>
             </table>
-            {{Form::button('<i class="fas fa-shopping-cart"></i> Add to Cart', ['type' => 'submit', 'class' => 'btn btn-sm btn-primary float-left'])}}
+            {{Form::button('<i class="fas fa-shopping-cart"></i> Add to Cart', ['type' => 'submit', 'class' => 'btn btn-sm btn-primary float-left selectSubmit'])}}
             {{--{{Form::button('<i class="fas fa-shopping-cart"></i> Add to Cart', ['type' => 'submit', 'class' => 'btn btn-sm btn-primary selectSubmit float-right', 'style' => 'margin-top: -35px; margin-right: 200px;'])}}--}}
             {{Form::hidden('currentEquipID', $equipment->equipID)}}
             {{Form::hidden('userID', Auth::user()->user_id)}}
