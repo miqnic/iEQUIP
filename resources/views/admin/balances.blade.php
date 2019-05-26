@@ -27,7 +27,13 @@
               download: 'open'
               }
           ],
-          select: true
+          select: true,
+          columnDefs: [
+              {
+                  orderable: false,
+                  targets: 7
+              }
+            ]
           });
       });
   </script>
@@ -81,7 +87,7 @@
           <th>Equipment Borrowed</th>
           <th>Quantity</th>
           <th>Penalty Fee</th>
-          <th>Paid</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>

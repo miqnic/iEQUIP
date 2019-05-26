@@ -52,7 +52,7 @@
                 </tr>
                     @foreach($equipments as $equipment)
                     @if($form->transaction_id==$equipment->transaction_id && $equipment->equip_avail == 1)
-                    <tr>
+                    <tr class="border-top border-bottom">
                             <td class="text-right">{{$equipment->equipID}}</td>
                             <td class="text-center">{{$equipment->equip_name}}</td>
                     </tr>

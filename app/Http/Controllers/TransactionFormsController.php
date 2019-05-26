@@ -98,9 +98,23 @@ class TransactionFormsController extends Controller
                                             ->where('approval', '>=', 0)
                                             ->where('returned', '!=', 1)
                                             ->get();
+
+        $availableEquip = Equipment::where('equip_avail', 0)->count();
+        $borrowedEquip = Equipment::where('equip_avail', 1)->count();
+        $defectiveEquip = Equipment::where('equip_avail', -1)->count();
+        $defectiveList = Equipment::where('equip_avail', -1)->get();
+        $borrowedList = Equipment::where('equip_avail', 1)->get();
+        $dueTransactions = TransactionForm::where('due_date', Carbon::now())->count();
+
         $users = User::get();
         $equipments = Equipment::get();  
         return view('admin.home')->with('equipments',$equipments)
+                                 ->with('availableEquip',$availableEquip)
+                                 ->with('borrowedEquip',$borrowedEquip)
+                                 ->with('defectiveEquip',$defectiveEquip)
+                                 ->with('defectiveList',$defectiveList)
+                                 ->with('borrowedList',$borrowedList)
+                                 ->with('dueTransactions',$dueTransactions)
                                  ->with('users',$users)
                                  ->with('transaction_forms',$transaction_forms);
     }

@@ -118,7 +118,7 @@ class EquipmentsTableSeeder extends Seeder
                 'equip_name' => 'Zhiyun Crane 2 Stabilizer',
                 'equip_category' => 'CAMACC',
                 'transaction_id' => null,
-                'equip_avail' => '1', //borrowed
+                'equip_avail' => '0', //available
                 'equip_description' => '',
                 'equip_penalty' => '500',
                 'equip_baseprice' => '41995.00',
@@ -174,7 +174,7 @@ class EquipmentsTableSeeder extends Seeder
                 'equip_name' => 'Wacom CINTIQ 13HD Tablet',
                 'equip_category' => 'ART',
                 'transaction_id' => null,
-                'equip_avail' => '1', //borrowed
+                'equip_avail' => '0', //available
                 'equip_description' => '',
                 'equip_penalty' => '500',
                 'equip_baseprice' => '86830.00',
@@ -230,7 +230,7 @@ class EquipmentsTableSeeder extends Seeder
                 'equip_name' => 'Wacom Bamboo Ink Stylus',
                 'equip_category' => 'ART',
                 'transaction_id' => null,
-                'equip_avail' => '1', //borrowed
+                'equip_avail' => '0', //available
                 'equip_description' => '',
                 'equip_penalty' => '200',
                 'equip_baseprice' => '3769.00',
@@ -328,7 +328,7 @@ class EquipmentsTableSeeder extends Seeder
                 'equip_name' => 'Stiga Pro Carbon Table Tennis Racket',
                 'equip_category' => 'SPRT',
                 'transaction_id' => null,
-                'equip_avail' => '1', //borrowed
+                'equip_avail' => '0', //available
                 'equip_description' => '',
                 'equip_penalty' => '300',
                 'equip_baseprice' => '7752.00',
@@ -342,7 +342,7 @@ class EquipmentsTableSeeder extends Seeder
                 'equip_name' => 'Stiga Pro Carbon Table Tennis Racket',
                 'equip_category' => 'SPRT',
                 'transaction_id' => null,
-                'equip_avail' => '1', //borrowed
+                'equip_avail' => '0', //available
                 'equip_description' => '',
                 'equip_penalty' => '300',
                 'equip_baseprice' => '7752.00',
@@ -356,7 +356,7 @@ class EquipmentsTableSeeder extends Seeder
                 'equip_name' => 'Decathlon FT 950 Indoor Table Tennis Table',
                 'equip_category' => 'SPRT',
                 'transaction_id' => null,
-                'equip_avail' => '1', //borrowed
+                'equip_avail' => '-1', //under maintenance
                 'equip_description' => '',
                 'equip_penalty' => '400',
                 'equip_baseprice' => '26500.00',
@@ -412,7 +412,7 @@ class EquipmentsTableSeeder extends Seeder
                 'equip_name' => 'Sony Playstation 4 Slim Console',
                 'equip_category' => 'GMNG',
                 'transaction_id' => null,
-                'equip_avail' => '1', //borrowed
+                'equip_avail' => '-1', //under maintenance
                 'equip_description' => '',
                 'equip_penalty' => '400',
                 'equip_baseprice' => '17995.00',
