@@ -39,51 +39,53 @@
   <div class="row">
     <div class="col-md-12 pt-3">
     <h3 class="pb-4">Transaction History</h3>
-    <table class="table table-striped table-bordered table-hover text-center" id="dataTables">
-      <thead>
-        <tr>
-          <th>Transaction Number</th>
-          <th>Date Submitted</th>
-          <th>Start Date and Time</th>
-          <th>Due Date and Time</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody class="text-center">
-          @foreach ($transaction_forms as $form)
-          <tr data-toggle="modal" data-target="#checkForm{{$form->transaction_id}}" id="transaction">
-              <td>
-                {{$form->transaction_id}} 
-                @if($form->returned==0 && \Carbon\Carbon::parse($form->due_date)->isPast())
-                  <i class="fas fa-lg fa-exclamation-triangle text-danger"></i>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover text-center" id="dataTables">
+        <thead>
+          <tr>
+            <th>Transaction Number</th>
+            <th>Date Submitted</th>
+            <th>Start Date and Time</th>
+            <th>Due Date and Time</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+            @foreach ($transaction_forms as $form)
+            <tr data-toggle="modal" data-target="#checkForm{{$form->transaction_id}}" id="transaction">
+                <td>
+                  {{$form->transaction_id}} 
+                  @if($form->returned==0 && \Carbon\Carbon::parse($form->due_date)->isPast())
+                    <i class="fas fa-lg fa-exclamation-triangle text-danger"></i>
+                  @endif
+                </td>
+                <td>{{\Carbon\Carbon::parse($form->created_at)->format('F d, Y h:i A')}}</td>
+                <td>{{\Carbon\Carbon::parse($form->start_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->start_time)->format('h:i A')}}</td>
+                <td>{{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->end_time)->format('h:i A')}}</td>
+                <td>
+                  @if($form->approval==1)
+                    @if($form->claimed==1 and $form->returned==0)
+                      <span class="badge badge-success">Approved</span>
+                      <span class="badge badge-primary">Claimed</span>
+                    @elseif($form->claimed==1 and $form->returned==1)
+                      <span class="badge badge-success">Returned</span>
+                    @else
+                      <span class="badge badge-success">Approved</span>
+                      <span class="badge badge-warning">Unclaimed</span>
+                    @endif
+                  @elseif($form->approval==0)
+                    <span class="badge badge-warning">Pending</span>
+                  @elseif($form->approval==-1)
+                    <span class="badge badge-danger">Declined</span>
+                  @else 
+                    <span class="badge badge-danger">Cancelled</span>
                 @endif
               </td>
-              <td>{{\Carbon\Carbon::parse($form->created_at)->format('F d, Y h:i A')}}</td>
-              <td>{{\Carbon\Carbon::parse($form->start_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->start_time)->format('h:i A')}}</td>
-              <td>{{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->end_time)->format('h:i A')}}</td>
-              <td>
-                @if($form->approval==1)
-                  @if($form->claimed==1 and $form->returned==0)
-                    <span class="badge badge-success">Approved</span>
-                    <span class="badge badge-primary">Claimed</span>
-                  @elseif($form->claimed==1 and $form->returned==1)
-                    <span class="badge badge-success">Returned</span>
-                  @else
-                    <span class="badge badge-success">Approved</span>
-                    <span class="badge badge-warning">Unclaimed</span>
-                  @endif
-                @elseif($form->approval==0)
-                  <span class="badge badge-warning">Pending</span>
-                @elseif($form->approval==-1)
-                  <span class="badge badge-danger">Declined</span>
-                @else 
-                  <span class="badge badge-danger">Cancelled</span>
-              @endif
-            </td>
-          </tr>
-          @endforeach
-        </tbody>
-    </table>
+            </tr>
+            @endforeach
+          </tbody>
+      </table>
+    </div>
     <span><b>Legend:</b> <i class="fas fa-exclamation-triangle text-danger"></i> - due date has passed</span>
   </div>
 </div>
