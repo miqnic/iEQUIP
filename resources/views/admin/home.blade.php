@@ -153,10 +153,10 @@
         </div>
     </div>
 </div>
-<hr style="height: 5px">
+<hr style="height: 3px" class="bg-light">
 <div class="row">
     <div class="col-md-12">
-        <h3 class="pt-2">Active Requests</h3>
+        <h3 class="pt-1">Active Requests</h3>
         <table class="table table-striped table-hover text-center" id="activeForms">
             <thead>
             <tr>
