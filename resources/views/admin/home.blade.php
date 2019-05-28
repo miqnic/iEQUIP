@@ -259,7 +259,7 @@
                                             {{-- {{Form::button('Decline', array('class' => 'btn btn-outline-danger','name'=>'decision', 'value'=>'decline')) }} --}}
                                             {{ Form::submit('Approve', array('class' => 'btn btn-outline-success d-inline-block','name'=>'decision', 'value'=>'approve')) }}
                                         {!! Form::close() !!}
-                                        <button type="button" id="declineBtn" class="btn btn-outline-danger d-inline" data-container="body" data-toggle="popover" data-placement="bottom">Decline</button>
+                                        <button type="button" id="declineBtn" class="btn btn-outline-danger d-inline" data-container="body" data-toggle="popover" data-placement="left">Decline</button>
                                         <div id="declineReasonForm" style="display: none">
                                         <form action="{{ action('TransactionFormsController@transactionApproval') }}" method="POST" enctype="multipart/form-data">
                                             <input type="hidden" name="decision" value="decline">
