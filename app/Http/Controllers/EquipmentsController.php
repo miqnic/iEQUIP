@@ -98,8 +98,31 @@ class EquipmentsController extends Controller
 
     public function showAllEquipment(){
         if(auth()->user()->access_role != 'ADMIN'){
+            $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
+
             if(auth()->user()->penalty>5000){
-                return view('student.equipError');
+                if($lastTransaction != null){
+                    $countCart = Cart::all()
+                                    ->where("transaction_id", "$lastTransaction->transaction_id")
+                                    ->where("deleted_at", null)
+                                    ->groupBy('equip_name')
+                                    ->map(function($equipment, $equip_name) {
+                                        return [
+                                            'equip_name' => $equip_name,
+                                            'record' => $equipment->count(),
+                                        ];
+                                    })
+                                    ->values();
+                    $totalEquip = Cart::where('transaction_id', $lastTransaction->transaction_id)->get();
+                } else {
+                    $countCart = null;
+                    $totalEquip = null;
+                }
+
+                return view('student.equipError')->with('lastTransaction',$lastTransaction)
+                                                  ->with('countCart', $countCart)
+                                                  ->with('totalEquip',$totalEquip)
+                                                  ->with('countEquip', $this->countEquip);
             } else {
                 $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
 
@@ -145,7 +168,30 @@ class EquipmentsController extends Controller
         
         if(auth()->user()->access_role != 'ADMIN'){
             if(auth()->user()->penalty>5000){
-                return view('student.equipError');
+                $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
+
+                if($lastTransaction != null){
+                    $countCart = Cart::all()
+                                    ->where("transaction_id", "$lastTransaction->transaction_id")
+                                    ->where("deleted_at", null)
+                                    ->groupBy('equip_name')
+                                    ->map(function($equipment, $equip_name) {
+                                        return [
+                                            'equip_name' => $equip_name,
+                                            'record' => $equipment->count(),
+                                        ];
+                                    })
+                                    ->values();
+                    $totalEquip = Cart::where('transaction_id', $lastTransaction->transaction_id)->get();
+                } else {
+                    $countCart = null;
+                    $totalEquip = null;
+                }
+
+                return view('student.equipError')->with('lastTransaction',$lastTransaction)
+                                                  ->with('countCart', $countCart)
+                                                  ->with('totalEquip',$totalEquip)
+                                                  ->with('countEquip', $this->countEquip);
             } else {
                 $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
 
@@ -188,7 +234,30 @@ class EquipmentsController extends Controller
     public function showArtEquipment(){
         if(auth()->user()->access_role != 'ADMIN'){
             if(auth()->user()->penalty>5000){
-                return view('student.equipError');
+                $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
+
+                if($lastTransaction != null){
+                    $countCart = Cart::all()
+                                    ->where("transaction_id", "$lastTransaction->transaction_id")
+                                    ->where("deleted_at", null)
+                                    ->groupBy('equip_name')
+                                    ->map(function($equipment, $equip_name) {
+                                        return [
+                                            'equip_name' => $equip_name,
+                                            'record' => $equipment->count(),
+                                        ];
+                                    })
+                                    ->values();
+                    $totalEquip = Cart::where('transaction_id', $lastTransaction->transaction_id)->get();
+                } else {
+                    $countCart = null;
+                    $totalEquip = null;
+                }
+
+                return view('student.equipError')->with('lastTransaction',$lastTransaction)
+                                                ->with('countCart', $countCart)
+                                                ->with('totalEquip',$totalEquip)
+                                                ->with('countEquip', $this->countEquip);
             } else {
                 $equipments =  Equipment::where('equip_category', 'ART')
                                         ->orderBy('equip_name', 'asc')
@@ -230,7 +299,30 @@ class EquipmentsController extends Controller
     public function showSportEquipment(){
         if(auth()->user()->access_role != 'ADMIN'){
             if(auth()->user()->penalty>5000){
-                return view('student.equipError');
+                $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
+
+                if($lastTransaction != null){
+                    $countCart = Cart::all()
+                                    ->where("transaction_id", "$lastTransaction->transaction_id")
+                                    ->where("deleted_at", null)
+                                    ->groupBy('equip_name')
+                                    ->map(function($equipment, $equip_name) {
+                                        return [
+                                            'equip_name' => $equip_name,
+                                            'record' => $equipment->count(),
+                                        ];
+                                    })
+                                    ->values();
+                    $totalEquip = Cart::where('transaction_id', $lastTransaction->transaction_id)->get();
+                } else {
+                    $countCart = null;
+                    $totalEquip = null;
+                }
+
+                return view('student.equipError')->with('lastTransaction',$lastTransaction)
+                                                ->with('countCart', $countCart)
+                                                ->with('totalEquip',$totalEquip)
+                                                ->with('countEquip', $this->countEquip);
             } else {
                 $equipments =  Equipment::where('equip_category', 'SPRT')
                                         ->orderBy('equip_name', 'asc')
@@ -273,7 +365,30 @@ class EquipmentsController extends Controller
     public function showMiscEquipment(){
         if(auth()->user()->access_role != 'ADMIN'){
             if(auth()->user()->penalty>5000){
-                return view('student.equipError');
+                $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
+               
+                if($lastTransaction != null){
+                    $countCart = Cart::all()
+                                    ->where("transaction_id", "$lastTransaction->transaction_id")
+                                    ->where("deleted_at", null)
+                                    ->groupBy('equip_name')
+                                    ->map(function($equipment, $equip_name) {
+                                        return [
+                                            'equip_name' => $equip_name,
+                                            'record' => $equipment->count(),
+                                        ];
+                                    })
+                                    ->values();
+                    $totalEquip = Cart::where('transaction_id', $lastTransaction->transaction_id)->get();
+                } else {
+                    $countCart = null;
+                    $totalEquip = null;
+                }
+
+                return view('student.equipError')->with('lastTransaction',$lastTransaction)
+                                                ->with('countCart', $countCart)
+                                                ->with('totalEquip',$totalEquip)
+                                                ->with('countEquip', $this->countEquip);
             } else {
                 $equipments =  Equipment::where('equip_category', 'MISC')
                                         ->orderBy('equip_name', 'asc')
@@ -315,7 +430,30 @@ class EquipmentsController extends Controller
     public function showLapEquipment(){
         if(auth()->user()->access_role != 'ADMIN'){
             if(auth()->user()->penalty>5000){
-                return view('student.equipError');
+                $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
+
+                if($lastTransaction != null){
+                    $countCart = Cart::all()
+                                    ->where("transaction_id", "$lastTransaction->transaction_id")
+                                    ->where("deleted_at", null)
+                                    ->groupBy('equip_name')
+                                    ->map(function($equipment, $equip_name) {
+                                        return [
+                                            'equip_name' => $equip_name,
+                                            'record' => $equipment->count(),
+                                        ];
+                                    })
+                                    ->values();
+                    $totalEquip = Cart::where('transaction_id', $lastTransaction->transaction_id)->get();
+                } else {
+                    $countCart = null;
+                    $totalEquip = null;
+                }
+
+                return view('student.equipError')->with('lastTransaction',$lastTransaction)
+                                                ->with('countCart', $countCart)
+                                                ->with('totalEquip',$totalEquip)
+                                                ->with('countEquip', $this->countEquip);
             } else {
                 $equipments =  Equipment::where('equip_category', 'LPTP')
                                         ->orderBy('equip_name', 'asc')
@@ -357,7 +495,30 @@ class EquipmentsController extends Controller
     public function showGameEquipment(){
         if(auth()->user()->access_role != 'ADMIN'){
             if(auth()->user()->penalty>5000){
-                return view('student.equipError');
+                $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
+
+                if($lastTransaction != null){
+                    $countCart = Cart::all()
+                                    ->where("transaction_id", "$lastTransaction->transaction_id")
+                                    ->where("deleted_at", null)
+                                    ->groupBy('equip_name')
+                                    ->map(function($equipment, $equip_name) {
+                                        return [
+                                            'equip_name' => $equip_name,
+                                            'record' => $equipment->count(),
+                                        ];
+                                    })
+                                    ->values();
+                    $totalEquip = Cart::where('transaction_id', $lastTransaction->transaction_id)->get();
+                } else {
+                    $countCart = null;
+                    $totalEquip = null;
+                }
+
+                return view('student.equipError')->with('lastTransaction',$lastTransaction)
+                                                    ->with('countCart', $countCart)
+                                                    ->with('totalEquip',$totalEquip)
+                                                    ->with('countEquip', $this->countEquip);
             } else {
                 $equipments =  Equipment::where('equip_category', 'GMNG')
                                         ->orderBy('equip_name', 'asc')

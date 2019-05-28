@@ -124,8 +124,7 @@
                     </tr>
                   {{-- @endif --}}
                 @endif
-              @endforeach
-              <div class="modal fade" id="confirm" tabindex="-1">
+                <div class="modal fade" id="confirm" tabindex="-1">
                   <div class="modal-dialog">
                     <div class="modal-content">
           
@@ -141,15 +140,17 @@
                       <div class="modal-footer">
                           {!! Form::open(['action' => 'TransactionFormsController@paidPenalty', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                           {{Form::hidden('user', $user->user_id)}}
-                          {{Form::hidden('form', $form->transacton_id)}}
-                          {{Form::submit('Confirm', ['class' => 'btn btn-success'])}}
+                          {{Form::hidden('form', $form->transaction_id)}}
+                          {{Form::button('Confirm', ['class' => 'btn btn-success', 'name' => 'uhuh', "value" => "$form->transaction_id", 'type' => 'submit'])}}
                           {!! Form::close() !!}
                         <button type="button" class="btn btn" data-dismiss="modal">Cancel</button>
                       </div>
           
                     </div>
-                  </div>
                 </div>
+              </div>
+              @endforeach
+              
           @endforeach
         </tbody>
       </table>

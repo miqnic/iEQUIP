@@ -62,21 +62,33 @@ class TransactionFormsController extends Controller
         $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
         $equipments = Equipment::get();
         $user = User::where('user_id', auth()->user()->user_id)->first();
-        
+        $sum = 0;
+
         foreach ($transaction_forms as $form) {
             if($form->approval == 1 && $form->claimed == 1 && $form->due_date < (Carbon::now()->toDateTimeString())){
                 foreach ($equipments as $equipment) {
                     if($equipment->transaction_id == $form->transaction_id){
-                        $user->update([
-                            'penalty' => $user->penalty + $equipment->equip_penalty,
-                        ]);
-                        
+                        $sum += $equipment->equip_penalty;
                     }
                 }
+
+                $now = Carbon::now();
+                $due_date = Carbon::parse($form->due_date);
+                $length = $due_date->diffInDays($now);
+
+                $sum *= $length+1;
             }
         }
 
         //dd($user->penalty);
+
+        if($sum != $user->penalty){
+            //dd('update');
+            $user->update([
+                'penalty' => $sum
+            ]);
+            $user->save();
+        }
 
         if($lastTransaction != null){
             $countCart = Cart::all()
@@ -153,14 +165,26 @@ class TransactionFormsController extends Controller
 
     public function paidPenalty(Request $request){
         $userInput = $request->get('user');
-        $formInput = $request->get('form');
+        $formInput = $request->get('uhuh');
         $users = User::get();
-
+        $forms = TransactionForm::get();
+        //dd($formInput);
         foreach ($users as $user) {
             if($user->user_id == $userInput){
                 $user->update([
                     'penalty' => 0
                 ]);
+                $user->save();
+            }
+        }
+        
+        foreach ($forms as $form) {
+            if($form->transaction_id == $formInput){
+                //dd($form);
+                $form->update([
+                    'returned' => 1
+                ]);
+                $form->save();
             }
         }
 
