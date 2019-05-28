@@ -31,7 +31,7 @@
 
     <style>
     .inside {
-        background-color: transparent !important;
+        background-color: transparent;
     }
     </style>
 @endsection

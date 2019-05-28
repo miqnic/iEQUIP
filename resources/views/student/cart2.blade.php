@@ -15,7 +15,7 @@
         background-color: none;
     }
     .inside {
-        background-color: transparent !important;
+        background-color: transparent;
     }
     </style>
     <script>
