@@ -73,7 +73,7 @@
                 <div id="reservationqcollapse1" class="collapse" aria-labelledby="reservationq1" data-parent="#faq1">
                 <div class="faq-body text-secondary text-justify my-2">
                     <h2 class="float-left text-primary pr-2 d-inline"><b>|</b> A.</h2>
-                    You may browse for equipment by clicking the corresponding category in the <b>Equipments</b> dropdown. 
+                    You may browse for equipment by clicking the corresponding category on the <b>Equipment</b> page. 
                     Alternatively, you may use the search bar if you have a specific item in mind. By clicking on the corresponding equipment, 
                     its details and individual stock description and availability.
                 </div>
@@ -89,10 +89,12 @@
                 <div id="reservationqcollapse2" class="collapse" aria-labelledby="reservationq2" data-parent="#faq1">
                 <div class="faq-body text-secondary text-justify my-2">
                     <h2 class="float-left text-primary pr-2 d-inline"><b>|</b> A.</h2>
-                    Find the item/s that you need, click the <b>Reserve</b> button to specify the quantity then click <b>Add to Cart</b>. 
-                    Once you are done adding items, click on the <i class="fas fa-shopping-cart"></i>Cart icon located at the top right of the site, which will allow 
-                    you to finalize your cart contents (edit quantity and/or delete items) and provide necessary details, 
-                    (i.e. reservation period, room number, and purpose).
+                    Clicking on your preferred equipment will take you to a page where its masterlist and details can be found. 
+                    Simply click the <b>Add to Cart</b> button of the corresponding item, or click the <b>Select</b> button, 
+                    check the items that you need, and click the <b>Add to Cart</b> located at the bottom left of the 
+                    masterlist to mass add items. Once you are done adding items, click on the <i class="fas fa-shopping-cart"></i>Cart 
+                    icon located at the top right of the site, which will allow you to finalize your cart contents (edit quantity 
+                    and/or delete items) and provide necessary details, (i.e. reservation period, room number, and purpose).
                 </div>
                 </div>
             </div>
@@ -153,7 +155,7 @@
                 <div class="faq-body text-secondary text-justify my-2">
                     <h2 class="float-left text-primary pr-2 d-inline"><b>|</b> A.</h2>
                     Unfortunately, revisions aren’t permitted to avoid confusion on the Facilities Department’s side. If ever you need to make changes, 
-                    please cancel your request on the Homepage and submit another one.
+                    please cancel your request on the <b>Homepage</b> and submit another one.
                 </div>
                 </div>
             </div>
@@ -168,7 +170,7 @@
                 <div class="faq-body text-secondary text-justify my-2">
                     <h2 class="float-left text-primary pr-2 d-inline"><b>|</b> A.</h2>
                     To give way to other users, extension is not allowed. However, if you haven’t claimed your reserved item/s yet and your target date/time 
-                    for extension is still vacant, you may cancel your reservation and submit another one.
+                    for extension is still vacant, you may cancel your reservation on the <b>Homepage</b> and submit another one.
                 </div>
                 </div>
             </div>   
@@ -188,7 +190,7 @@
                 <div id="penaltyqcollapse1" class="collapse" aria-labelledby="penaltyq1" data-parent="#faq2">
                 <div class="faq-body text-secondary text-justify my-2">
                     <h2 class="float-left text-primary pr-2 d-inline"><b>|</b> A.</h2>
-                    Your outstanding balance (if there’s any) will appear on the left side of the Homepage along with your photo, student ID, and name. 
+                    Your outstanding balance (if there’s any) will appear in a red box at the top of the <b>Homepage</b>. 
                     Aside from this, you may also receive an email notification reminding you of your penalty from time to time.
                 </div>
                 </div>
@@ -203,7 +205,7 @@
                 <div id="penaltyqcollapse2" class="collapse" aria-labelledby="penaltyq2" data-parent="#faq2">
                 <div class="faq-body text-secondary text-justify my-2">
                     <h2 class="float-left text-primary pr-2 d-inline"><b>|</b> A.</h2>
-                    Your account will start incurring penalties a day right after your declared end date and will continue to do so weekly until the 
+                    Your account will start incurring penalties <b>a day right after your declared end date</b> and will continue to do so <b>daily</b> until the 
                     admin declares your transaction status as returned.
                 </div>
                 </div>
@@ -233,7 +235,7 @@
                 <div id="penaltyqcollapse4" class="collapse" aria-labelledby="penaltyq4" data-parent="#faq2">
                 <div class="faq-body text-secondary text-justify my-2">
                     <h2 class="float-left text-primary pr-2 d-inline"><b>|</b> A.</h2>
-                    The item details provided for the Equipment list includes the corresponding base price, which will be the basis for your penalty in case 
+                    The item details provided for the <b>Equipment</b> masterlist includes the corresponding base price, which will be the basis for your penalty in case 
                     the item gets returned with defect.
                 </div>
                 </div>
@@ -297,7 +299,7 @@
             <div class="faq">
                 <div class="faq-header" id="accountq4" data-toggle="collapse" data-target="#accountqcollapse4" aria-expanded="true" aria-controls="accountqcollapse4">
                 <h2 class="mt-1">
-                    <span class="float-left question pr-2 pt-1"><b>|</b> Q.</span><span style="font-size: 16px;">How do I delete my account?</span>
+                    <span class="float-left question pr-2 pt-1"><b>|</b> Q.</span><span style="font-size: 16px;">Am I allowed to change my picture?</span>
                     <span class="float-right pt-1"><i class="fas fa-chevron-down fa-xs"></i></span>
                 </h2>
                 </div>
@@ -305,8 +307,7 @@
                 <div id="accountqcollapse4" class="collapse" aria-labelledby="accountq4" data-parent="#faq3">
                 <div class="faq-body text-secondary text-justify my-2">
                     <h2 class="float-left text-primary pr-2 d-inline"><b>|</b> A.</h2>
-                    Since iEQUIP's connected to the school's active directory, account deletion won't be possible. 
-                    Unenrolled students, however, will have their accounts set to inactive.
+                    Unfortunately, your ID picture will be set as your permanent account picture for formality.
                 </div>
                 </div>
             </div>
@@ -314,7 +315,7 @@
             <div class="faq">
                 <div class="faq-header" id="accountq5" data-toggle="collapse" data-target="#accountqcollapse5" aria-expanded="true" aria-controls="accountqcollapse5">
                 <h2 class="mt-1">
-                    <span class="float-left question pr-2 pt-1"><b>|</b> Q.</span><span style="font-size: 16px;">Am I allowed to change my picture?</span>
+                    <span class="float-left question pr-2 pt-1"><b>|</b> Q.</span><span style="font-size: 16px;">How do I delete my account?</span>
                     <span class="float-right pt-1"><i class="fas fa-chevron-down fa-xs"></i></span>
                 </h2>
                 </div>
@@ -322,7 +323,8 @@
                 <div id="accountqcollapse5" class="collapse" aria-labelledby="accountq5" data-parent="#faq3">
                 <div class="faq-body text-secondary text-justify my-2">
                     <h2 class="float-left text-primary pr-2 d-inline"><b>|</b> A.</h2>
-                    Unfortunately, your ID picture will be set as your permanent account picture for formality.
+                    Since iEQUIP's connected to the school's active directory, account deletion won't be possible. 
+                    Unenrolled students, however, will have their accounts set to inactive.
                 </div>
                 </div>
             </div>

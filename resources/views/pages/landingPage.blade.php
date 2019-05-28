@@ -3,6 +3,14 @@
 @section('head')
     <title>{{ config('app.name') }} | Login</title>
     <link rel="stylesheet" href="{{ asset('css/landingPage.css') }}" type=text/css>
+
+    <script>
+        $(document).ready(function(){
+        $('.popover-dismiss').popover({
+            trigger: 'focus'
+        })
+        });
+    </script>
 @endsection
 
 @section('content')
@@ -15,8 +23,8 @@
         <div class="fadeIn first">
             <div class="row">
                 <div>
-                        <img class = "col-md-3" src="img\iacademylogo.png" id="iaclogo" alt="User Icon" style='max-width: auto'/>
-                        <img class = "col-md-3" src="img\logo.png" id="iequiplogo" alt="User Icon" style='max-width: auto'/>
+                    <img class = "col-md-3" src="img\iacademylogo.png" id="iaclogo" alt="User Icon" style='max-width: auto'/>
+                    <img class = "col-md-3" src="img\logo.png" id="iequiplogo" alt="User Icon" style='max-width: auto'/>
                 </div>
             </div>
             <img src="img\logotext.png" id="icon" alt="User Icon"/>
@@ -51,7 +59,7 @@
 
         <!-- Remind Passowrd -->
         <div id="formFooter">
-            <a class="underlineHover" href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>
+                <a tabindex="0" role="button" class="popover-dismiss" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="Please proceed to the IT Department at the Mezzanine, iACADEMY Nexus.">Forgot your password?</a>
         </div>
 
     </div>
