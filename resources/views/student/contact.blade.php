@@ -7,7 +7,7 @@
     <style>
     .inside {
         margin-top: 150px;
-        background-color: transparent !important;
+        background-color: transparent;
     }
     </style>
 @endsection

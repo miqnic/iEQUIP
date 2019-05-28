@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\StudentFeedback;
+use App\Mail\ReadFeedback;
 use App\Mail\EmailAll;
 use App\Feedback;
 use App\User;
@@ -29,11 +30,9 @@ class FeedbacksController extends Controller
             'body' => 'required'
         ]);
 
-        //make dummy email to  admin-ca3ec7@inbox.mailtrap.io
-       // Mail::to('ac01f813b2-8ea59b@inbox.mailtrap.io')->send(new StudentFeedback($request));
+        //make dummy email to admin-ca3ec7@inbox.mailtrap.io
+        Mail::to('ac01f813b2-8ea59b@inbox.mailtrap.io')->send(new StudentFeedback($request));
         
-        //return view('/student/contact);
-
         $feedback = new Feedback([
             'user_id' =>  auth()->user()->user_id,
             'subject' => $request->get('subject'),
@@ -84,10 +83,11 @@ class FeedbacksController extends Controller
     }
 
     public function read(Request $request){
-        $feedback = Feedback::find($request->get('feedbackid'));
+        $feedback = Feedback::where('id', $request->get('feedbackid'))->first();
         $feedback->read = true;
-
         $feedback->save();
+        
+        Mail::to('ac01f813b2-8ea59b@inbox.mailtrap.io')->send(new ReadFeedback($feedback));
 
         return redirect()->back();
     }

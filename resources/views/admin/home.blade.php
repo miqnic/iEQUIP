@@ -64,7 +64,7 @@
         {{--borrowed and available equip pie--}}
         <div class="count-container" style="background-image: linear-gradient(to bottom right, rgb(154,208,245), rgb(54, 162, 235))">
             <p>{{$borrowedEquip}}</p>
-            <h6 data-toggle="dropdown"><a class="dropdown-toggle">Items Currently Borrowed</a></h6>
+            <h6 data-toggle="dropdown"><a class="dropdown-toggle">Items Currently Reserved</a></h6>
             <div class="dropdown-menu px-2 py-2" style="min-width: 40vw; max-height: 400px; overflow: scroll;">
                 <table class="table table-sm">
                     <thead class="bg-dark text-light text-center">
@@ -88,7 +88,7 @@
                                 <a href="{{ url('admin/'.$trimmedString) }}">{{$item->equip_name}}</a>
                                 @foreach($transaction_forms as $form)
                                 @if($form->transaction_id==$item->transaction_id)
-                                    @if($form->returned==0 && \Carbon\Carbon::parse($form->due_date)->isPast())
+                                    @if($form->approval==1 && $form->claimed==1 && $form->returned==0 && \Carbon\Carbon::parse($form->due_date)->isPast())
                                         <i class="fas fa-lg fa-exclamation-triangle text-danger"></i>
                                     @endif
                                 @endif
@@ -197,7 +197,7 @@
                                 </td>
                                 <td class="align-middle">
                                     {{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}
-                                    @if($form->returned==0 && \Carbon\Carbon::parse($form->due_date)->isPast())
+                                    @if($form->approval==1 && $form->claimed==1 && $form->returned==0 && \Carbon\Carbon::parse($form->due_date)->isPast())
                                         <i class="fas fa-lg fa-exclamation-triangle text-danger"></i>
                                     @endif
                                 </td>
@@ -259,8 +259,7 @@
                                             {{-- {{Form::button('Decline', array('class' => 'btn btn-outline-danger','name'=>'decision', 'value'=>'decline')) }} --}}
                                             {{ Form::submit('Approve', array('class' => 'btn btn-outline-success d-inline-block','name'=>'decision', 'value'=>'approve')) }}
                                         {!! Form::close() !!}
-
-                                        <button type="button" id="declineBtn" class="btn btn-outline-danger d-inline" data-container="body" data-toggle="popover" data-placement="bottom">Decline</button>
+                                        <button type="button" id="declineBtn" class="btn btn-outline-danger d-inline" data-container="body" data-toggle="popover" data-placement="left">Decline</button>
                                         <div id="declineReasonForm" style="display: none">
                                         <!--<form action="{{ action('TransactionFormsController@transactionApproval') }}" method="POST" enctype="multipart/form-data">
                                             <input type="hidden" name="decision" value="decline">
