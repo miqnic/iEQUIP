@@ -259,13 +259,34 @@
                                             {{-- {{Form::button('Decline', array('class' => 'btn btn-outline-danger','name'=>'decision', 'value'=>'decline')) }} --}}
                                             {{ Form::submit('Approve', array('class' => 'btn btn-outline-success d-inline-block','name'=>'decision', 'value'=>'approve')) }}
                                         {!! Form::close() !!}
+
                                         <button type="button" id="declineBtn" class="btn btn-outline-danger d-inline" data-container="body" data-toggle="popover" data-placement="bottom">Decline</button>
                                         <div id="declineReasonForm" style="display: none">
-                                        <form action="{{ action('TransactionFormsController@transactionApproval') }}" method="POST" enctype="multipart/form-data">
+                                        <!--<form action="{{ action('TransactionFormsController@transactionApproval') }}" method="POST" enctype="multipart/form-data">
                                             <input type="hidden" name="decision" value="decline">
                                             <textarea type="text" name="declineReason" class="form-control" id="declineReason" placeholder="Enter reason" rows="2"></textarea>
                                             <button type="submit" class="btn btn-sm btn-danger float-right my-2">Decline</button>
-                                        </form>
+                                        </form>-->
+                                        {!! Form::open(['action' => 'TransactionFormsController@transactionApproval', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                                            {{Form::hidden('currentForm', $form->transaction_id)}}
+                                            {{Form::hidden('sub_date', $form->submitted_date)}}
+                                            {{Form::hidden('start_date', $form->start_date)}}
+                                            {{Form::hidden('start_time', $form->start_time)}}
+                                            {{Form::hidden('end_date', $form->due_date)}}
+                                            {{Form::hidden('end_time', $form->end_time)}}
+                                            {{Form::hidden('room', $form->room_number)}}
+                                            {{Form::hidden('reason', $form->purpose)}}
+                                            {{Form::hidden('user_id', $form->user_id)}}
+                                            @foreach ($users as $user)
+                                                @if ($user->user_id == $form->user_id)
+                                                    {{Form::hidden('first', $user->first_name)}}
+                                                    {{Form::hidden('last', $user->last_name)}}
+                                                    {{Form::hidden('course', $user->course)}}
+                                                @endif
+                                            @endforeach
+                                            {{Form::textarea('declineReason', '',['id' => 'declineReason','class' => 'form-control', 'placeholder' => 'Enter reason', 'rows' => '2', 'required' => ''])}}  
+                                            {{ Form::submit('Decline', array('class' => 'btn btn-sm btn-danger float-right my-2','name'=>'decision', 'value'=>'approve')) }}
+                                        {!! Form::close() !!}
                                         </div>
                                     @endif
                                 </td>

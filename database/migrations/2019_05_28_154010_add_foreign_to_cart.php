@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRFAdminsTable extends Migration
+class AddForeignToCart extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,9 @@ class CreateRFAdminsTable extends Migration
      */
     public function up()
     {
-        Schema::create('r_f-_admins', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('transaction_id');
-            $table->string('user_id');
-            $table->string('approval');
-            $table->string('claiming');
-            $table->timestamps();
-
+        Schema::table('carts', function(Blueprint $table){
             $table->foreign('user_id')->references('user_id')->on('users');
+            $table->foreign('equipID')->references('equipID')->on('equipment');
             $table->foreign('transaction_id')->references('transaction_id')->on('transaction_forms');
         });
     }
@@ -33,6 +27,8 @@ class CreateRFAdminsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('r_f-_admins');
+        Schema::table('cart', function (Blueprint $table) {
+            //
+        });
     }
 }

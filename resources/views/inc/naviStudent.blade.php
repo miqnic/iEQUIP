@@ -121,8 +121,12 @@
                         </tr>
                       </thead>
                       <tbody class="text-center align-middle">
-                          @if ($lastTransaction != null)
-                            @foreach ($totalEquip->unique('equip_name') as $equipment)
+                          @if ($countCart == null || $countCart->isEmpty())
+                            <tr>
+                              <td colspan="2">No equipments reserved!</td>
+                            </tr>
+                          @else
+                              @foreach ($totalEquip->unique('equip_name') as $equipment)
                                 <tr>
                                   <td>{{$equipment->equip_name}}</td>
                                   <td>
@@ -134,10 +138,6 @@
                                   </td>
                                 </tr>
                             @endforeach
-                          @else
-                              <tr>
-                                <td colspan="2">No equipments reserved!</td>
-                              </tr>
                           @endif
                       </tbody>
                     </table>

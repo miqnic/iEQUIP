@@ -25,6 +25,7 @@ class Declined extends Mailable
     public $room;
     public $reason;
     public $form_id;
+    public $decline_reason;
 
     public $equipments;
     public $unique;
@@ -49,7 +50,8 @@ class Declined extends Mailable
         $this->end_time = $request->end_time;   
         $this->room = $request->room;
         $this->reason = $request->reason;   
-        $this->form_id = $request->currentForm;   
+        $this->form_id = $request->currentForm; 
+        $this->decline_reason = $request->declineReason;  
 
         $this->equipments = Equipment::where('transaction_id', $this->form_id)->get();
         //dd($this->equipments);
@@ -79,6 +81,7 @@ class Declined extends Mailable
             'room' => $this->room,
             'reason' => $this->reason,
             'form_id' => $this->form_id,
+            'decline_reason' => $this->decline_reason,
             //'unique' => $this->unique,
             'equipments' => $this->equipments
         ]);

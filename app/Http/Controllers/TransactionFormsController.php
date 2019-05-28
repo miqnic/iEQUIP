@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Equipment;
 use App\User;
 use App\TransactionForm;
+use App\Cart;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -59,10 +60,28 @@ class TransactionFormsController extends Controller
                                             ->orderBy('transaction_id', 'desc')
                                             ->get();                         
         $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
+        $equipments = Equipment::get();
+        $user = User::where('user_id', auth()->user()->user_id)->first();
+        
+        foreach ($transaction_forms as $form) {
+            if($form->approval == 1 && $form->claimed == 1 && $form->due_date < (Carbon::now()->toDateTimeString())){
+                foreach ($equipments as $equipment) {
+                    if($equipment->transaction_id == $form->transaction_id){
+                        $user->update([
+                            'penalty' => $user->penalty + $equipment->equip_penalty,
+                        ]);
+                        
+                    }
+                }
+            }
+        }
+
+        //dd($user->penalty);
 
         if($lastTransaction != null){
-            $countCart = Equipment::all()
+            $countCart = Cart::all()
                             ->where("transaction_id", "$lastTransaction->transaction_id")
+                            ->where("deleted_at", null)
                             ->groupBy('equip_name')
                             ->map(function($equipment, $equip_name) {
                                 return [
@@ -71,7 +90,7 @@ class TransactionFormsController extends Controller
                                 ];
                             })
                             ->values();
-            $totalEquip = Equipment::where('transaction_id', $lastTransaction->transaction_id)->get();
+            $totalEquip = Cart::where('transaction_id', $lastTransaction->transaction_id)->get();
         } else {
             $countCart = null;
             $totalEquip = null;
@@ -164,9 +183,10 @@ class TransactionFormsController extends Controller
         $equipments = Equipment::orderBy('equip_name','asc')->get();
         
         if($lastTransaction != null){
-            $countCart = Equipment::all()
+            $countCart = Cart::all()
                             ->where("transaction_id", "$lastTransaction->transaction_id")
                             ->groupBy('equip_name')
+                            ->where("deleted_at", null)
                             ->map(function($equipment, $equip_name) {
                                 return [
                                     'equip_name' => $equip_name,
@@ -174,7 +194,7 @@ class TransactionFormsController extends Controller
                                 ];
                             })
                             ->values();
-            $totalEquip = Equipment::where('transaction_id', $lastTransaction->transaction_id)->get();
+            $totalEquip = Cart::where('transaction_id', $lastTransaction->transaction_id)->get();
         } else {
             $countCart = null;
             $totalEquip = null;
@@ -192,8 +212,9 @@ class TransactionFormsController extends Controller
         $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
         $equipments = Equipment::get();
         if($lastTransaction != null){
-            $countCart = Equipment::all()
+            $countCart = Cart::all()
                             ->where("transaction_id", "$lastTransaction->transaction_id")
+                            ->where("deleted_at", null)
                             ->groupBy('equip_name')
                             ->map(function($equipment, $equip_name) {
                                 return [
@@ -202,7 +223,7 @@ class TransactionFormsController extends Controller
                                 ];
                             })
                             ->values();
-            $totalEquip = Equipment::where('transaction_id', $lastTransaction->transaction_id)->get();
+            $totalEquip = Cart::where('transaction_id', $lastTransaction->transaction_id)->get();
         } else {
             $countCart = null;
             $totalEquip = null;
@@ -225,8 +246,9 @@ class TransactionFormsController extends Controller
         
         $equipments = Equipment::get();
         if($lastTransaction != null){
-            $countCart = Equipment::all()
+            $countCart = Cart::all()
                             ->where("transaction_id", "$lastTransaction->transaction_id")
+                            ->where("deleted_at", null)
                             ->groupBy('equip_name')
                             ->map(function($equipment, $equip_name) {
                                 return [
@@ -235,7 +257,7 @@ class TransactionFormsController extends Controller
                                 ];
                             })
                             ->values();
-            $totalEquip = Equipment::where('transaction_id', $lastTransaction->transaction_id)->get();
+            $totalEquip = Cart::where('transaction_id', $lastTransaction->transaction_id)->get();
         } else {
             $countCart = null;
             $totalEquip = null;
@@ -257,8 +279,9 @@ class TransactionFormsController extends Controller
         $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
         $equipments = Equipment::get();
         if($lastTransaction != null){
-            $countCart = Equipment::all()
+            $countCart = Cart::all()
                             ->where("transaction_id", "$lastTransaction->transaction_id")
+                            ->where("deleted_at", null)
                             ->groupBy('equip_name')
                             ->map(function($equipment, $equip_name) {
                                 return [
@@ -267,7 +290,7 @@ class TransactionFormsController extends Controller
                                 ];
                             })
                             ->values();
-            $totalEquip = Equipment::where('transaction_id', $lastTransaction->transaction_id)->get();
+            $totalEquip = Cart::where('transaction_id', $lastTransaction->transaction_id)->get();
         } else {
             $countCart = null;
             $totalEquip = null;
@@ -348,11 +371,38 @@ class TransactionFormsController extends Controller
         $totalEquip = null;
         $countCart = null;
 
+        $carts = Cart::get();
+        $currentCart = Cart::where('transaction_id', $currentTransaction->transaction_id)->get();
+        //dd($currentCart);
+
+        foreach ($currentCart as $cart) {
+            $cart->delete();
+        }
+
+        foreach ($currentCart as $doneCart) {
+            foreach ($carts as $cart) {
+                if($doneCart->equipID == $cart->equipID && $cart->deleted_at == null){
+                    $cart->delete();
+                }
+            }
+
+            foreach ($equipments as $equipment) {
+                if($doneCart->equipID == $equipment->equipID){
+                    $equipment->update([
+                        'transaction_id' => $currentTransaction->transaction_id,
+                        'equip_avail' => 1,
+                    ]);
+                }
+            }
+        }
+
+        
+
         $pendingForms =  TransactionForm::where(['user_id' => auth()->user()->user_id, 'approval' => 0])
                                         ->orderBy('transaction_id', 'desc')
                                         ->take(5)
                                         ->get();
-                                        $recentForms =  TransactionForm::where(['user_id' => auth()->user()->user_id, 'approval' => 1])
+        $recentForms =  TransactionForm::where(['user_id' => auth()->user()->user_id, 'approval' => 1])
                                         ->orderBy('transaction_id', 'desc')
                                         ->take(5)
                                         ->get();
@@ -393,9 +443,10 @@ class TransactionFormsController extends Controller
         $equipments = Equipment::get();
     
         if($lastTransaction != null){
-            $countCart = Equipment::all()
+            $countCart = Cart::all()
                             ->where("transaction_id", "$lastTransaction->transaction_id")
                             ->groupBy('equip_name')
+                            ->where("deleted_at", null)
                             ->map(function($equipment, $equip_name) {
                                 return [
                                     'equip_name' => $equip_name,
@@ -403,7 +454,7 @@ class TransactionFormsController extends Controller
                                 ];
                             })
                             ->values();
-            $totalEquip = Equipment::where('transaction_id', $lastTransaction->transaction_id)->get();
+            $totalEquip = Cart::where('transaction_id', $lastTransaction->transaction_id)->get();
         } else {
             $countCart = null;
             $totalEquip = null;
@@ -420,9 +471,10 @@ class TransactionFormsController extends Controller
         $equipments = Equipment::get();
         
         if($lastTransaction != null){
-            $countCart = Equipment::all()
+            $countCart = Cart::all()
                             ->where("transaction_id", "$lastTransaction->transaction_id")
                             ->groupBy('equip_name')
+                            ->where("deleted_at", null)
                             ->map(function($equipment, $equip_name) {
                                 return [
                                     'equip_name' => $equip_name,
@@ -430,7 +482,7 @@ class TransactionFormsController extends Controller
                                 ];
                             })
                             ->values();
-            $totalEquip = Equipment::where('transaction_id', $lastTransaction->transaction_id)->get();
+            $totalEquip = Cart::where('transaction_id', $lastTransaction->transaction_id)->get();
         } else {
             $countCart = null;
             $totalEquip = null;
@@ -444,6 +496,7 @@ class TransactionFormsController extends Controller
 
     public function transactionApproval(Request $request){
         $decision = $request->get('decision');
+        $reason = $request->get('declineReason');
         $equipments = Equipment::get();
 
         //dd($decision);

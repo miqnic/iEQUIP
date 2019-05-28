@@ -151,6 +151,12 @@
                         {{Form::label('equipName', 'Name', ['class' => 'pt-3'])}}
                         {{Form::text('equipName', '',['id' => 'equipName', 'class' => 'form-control form-control-sm mb-3', 'placeholder' => 'Enter item name'])}}
 
+                        {{Form::label('price', 'Base Price', ['class' => 'pt-3'])}}
+                        {{Form::text('price', '',['id' => 'price', 'class' => 'form-control form-control-sm mb-3', 'placeholder' => 'Enter Base Price'])}}
+
+                        {{Form::label('penalty', 'Equipment Penalty', ['class' => 'pt-3'])}}
+                        {{Form::textarea('penalty', '',['id' => 'penalty', 'class' => 'form-control form-control-sm mb-3', 'placeholder' => 'Enter Equipment Description'])}}
+
                 {{-- <div class="row pb-3">
                         <div class="col-md-6">
                                 {{Form::label('basePrice', 'Base Price (PHP)', ['class' => 'pt-3'])}}
