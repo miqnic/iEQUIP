@@ -449,7 +449,7 @@
   <div class="col-md-10 pt-4">
     <h3>Availability Calendar</h3>
   </div>
-  <div class="col-md-2 pt-2 pb-3">
+  <div class="col-md-2 pt-4 pb-3">
     Choose Category: 
     <select class="form-control custom-select" id="selectCategory">
         <option value="1">Art Tools</option>
@@ -462,7 +462,7 @@
   </div>
 </div>
 
-<div class="row">   
+<div class="row mt-4" style="overflow-y: hidden">   
   <div class="col-md-12">         
     <div class="calendar" id="category1"></div>
     <div class="calendar" id="category2"></div>
