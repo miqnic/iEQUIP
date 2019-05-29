@@ -137,9 +137,11 @@ class TransactionFormsController extends Controller
         $borrowedList = Equipment::where('equip_avail', 1)->get();
         $dueTransactions = TransactionForm::where('due_date', Carbon::now())->count();
 
+        $carts = Cart::get();
         $users = User::get();
         $equipments = Equipment::get();  
         return view('admin.home')->with('equipments',$equipments)
+                                 ->with('carts',$carts)
                                  ->with('availableEquip',$availableEquip)
                                  ->with('borrowedEquip',$borrowedEquip)
                                  ->with('defectiveEquip',$defectiveEquip)
@@ -410,14 +412,14 @@ class TransactionFormsController extends Controller
                 }
             }
 
-            foreach ($equipments as $equipment) {
+            /*foreach ($equipments as $equipment) {
                 if($doneCart->equipID == $equipment->equipID){
                     $equipment->update([
                         'transaction_id' => $currentTransaction->transaction_id,
                         'equip_avail' => 1,
                     ]);
                 }
-            }
+            }*/
         }
 
         
@@ -522,6 +524,9 @@ class TransactionFormsController extends Controller
         $decision = $request->get('decision');
         $reason = $request->get('declineReason');
         $equipments = Equipment::get();
+        $cart = Cart::where('transaction_id', $request->get('currentForm'))->get();
+        //dd($request->get('currentForm'));
+        //dd($cart);
 
         //dd($decision);
         if($decision == "Approve"){
@@ -531,6 +536,21 @@ class TransactionFormsController extends Controller
                                 'approval_date' => Carbon::now()
                             ]);
             //dd($request);
+            foreach ($cart as $item) {
+                foreach ($equipments as $equipment) {
+                    if($item->equipID == $equipment->equipID){
+                        if($item->transaction_id == $request->get('currentForm')){
+                            $equipment->update([
+                                'transaction_id' => $request->get('currentForm'),
+                                'equip_avail' => '1'
+                            ]);
+                            $equipment->save();
+                        }
+                        $item->delete();
+                    } 
+                }
+            }
+
             Mail::to('ac01f813b2-8ea59b@inbox.mailtrap.io')->send(new Approved($request));               
             return redirect()->back()->with('success', 'Transaction Form has been successfully Approved!');
         } else {
