@@ -28,11 +28,11 @@ class UsersTableSeeder extends Seeder
             [
                 'first_name' => 'Nicole Kaye',
                 'last_name' => 'Bilon',
-                'user_id' => '201702021',
+                'user_id' => '201702012',
                 'user_img' => '',
                 'access_role' => 'STUDENT',
                 'course' => 'BSCS-SE',
-                'email' => '201702021@iacademy.edu.ph',
+                'email' => '201702012@iacademy.edu.ph',
                 'penalty' => '0',
                 'password' => bcrypt('nicolekaye'),
                 'created_at' => date('Y-m-d H:i:s'),

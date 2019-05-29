@@ -22,20 +22,28 @@
         $(function () {
             $('#startdate').datetimepicker({
                 format: 'MMMM DD, YYYY',
-                minDate: moment()
+                minDate: moment(),
+                daysOfWeekDisabled: [0],
+                disabledHours: [0, 1, 2, 3, 4, 5, 6, 22, 23, 24]
             });
 
             $('#enddate').datetimepicker({
                 format: 'MMMM DD, YYYY',
-                minDate: moment()
+                minDate: moment(),
+                daysOfWeekDisabled: [0],
+                disabledHours: [0, 1, 2, 3, 4, 5, 6, 22, 23, 24]
             });
 
             $('#starttime').datetimepicker({
-                format: 'LT'
+                format: 'LT',
+                minDate: moment(),
+                disabledHours: [0, 1, 2, 3, 4, 5, 6, 22, 23, 24]
             });
 
             $('#endtime').datetimepicker({
-                format: 'LT'
+                format: 'LT',
+                minDate: moment(),
+                disabledHours: [0, 1, 2, 3, 4, 5, 6, 22, 23, 24]
             });
         });
     </script>
