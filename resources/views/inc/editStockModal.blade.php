@@ -21,17 +21,17 @@
                     {{Form::select('availability', array(
                             'Available' => 'Available',
                             'Under Maintenance' => 'Under Maintenance',
-                            'Reserved' => 'Reserved'), NULL, array('class' => 'form-control', 'required' => ''))}}
+                            'Reserved' => 'Reserved'), NULL, array('class' => 'form-control custom-select', 'required' => ''))}}
 
                 </div> 
                 </div>
                 <label class="pt-3" for="remarks">Remarks</label>
-                {{Form::textarea('description', '',['class' => 'form-control', 'placeholder' => 'Enter specifications here', 'required' => ''])}}   
+                {{Form::textarea('description', '',['class' => 'form-control', 'placeholder' => 'Enter specifications here', 'rows' => '3', 'required' => ''])}}   
                 
             </div>
 
             <div class="modal-footer">
-            {{Form::submit('Edit Equipment', ['class' => 'btn btn-success'])}}
+            {{Form::submit('Edit Stock', ['class' => 'btn btn-success'])}}
             <button type="button" class="btn btn-outline-secondary" data-target="#itemList-{{$equipment_modal->equipID}}" data-dismiss="modal" data-toggle="modal">Cancel</button>
             </div>
         </div>

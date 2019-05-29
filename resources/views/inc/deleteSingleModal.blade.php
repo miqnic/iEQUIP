@@ -11,7 +11,7 @@
             </div>
     
             <div class="modal-body m-3">
-                Are you sure you want to delete this item? This process cannot be undone.
+                Are you sure you want to delete this item?<br>This process cannot be undone.
                 {{Form::hidden('currentEquip', $equipment_modal->equipID)}}
             </div>
     

@@ -8,33 +8,16 @@
         .popover {
             max-width: 200px;
         }
+        .selectDelete, .hide, #triggerDeselect {
+            display: none;
+        }
     </style>
     <script>
-        $(document).ready(function () { 
-            $('#itemStockEdit').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "ajax": "{!! route('equip.index', ['equip_name' => $item->equip_name]) !!}",
-                "columns":[
-                    { "data": "equipID" },
-                    { data: null, render: function ( data, type, row ) {
-                        if (row.equip_avail == 0) {
-                            return 'AVAILABLE';
-                        }
-                        else if (row.equip_avail == -1){
-                            return 'NOT AVAILABLE';
-                        }
-                        else{
-                            return 'BORROWED';
-                        }
-                        }
-                    },  
-                    { data: null, render: function ( data, type, row) {
-                        return '<span>'+data.equip_description+'</span>';
-                    }
-                    }, 
-                ]
+        $(document).ready(function() {
+            $('#itemStock').DataTable({
+                "ordering": false
             });
+
             $('#saveEditEquip').hide();
             $('#editEquip').click(function () {  
                 $('.displayCategory').hide();
@@ -55,6 +38,23 @@
                 $('#editEquipDetails').submit();
             });
         });  
+
+        function selectItems() {
+            $('.hide').show(); 
+            $("input:checkbox").prop('checked', false);
+            $('.indiv').hide();
+            $('.selectDelete').show();
+            $('#triggerSelect').hide();
+            $('#triggerDeselect').show();
+        }
+
+        function deselectItems() {
+            $('.hide').hide();
+            $('.indiv').show();
+            $('.selectDelete').hide();
+            $('#triggerSelect').show();
+            $('#triggerDeselect').hide();
+        }
     </script>
 @endsection
 
@@ -178,21 +178,58 @@
         </div>
         
         <div class="items mt-4 mx-auto">
-            <table class="table table-hover table-striped table-bordered" id="itemStockEdit">
+            <table class="table table-hover table-striped table-bordered" id="itemStock">
                 <thead class="text-center">
                     <tr>
+                        <th class="align-middle">
+                            <button type="button" class="btn btn-sm btn-secondary mb-2" id="triggerSelect" onclick="selectItems()">Select</button>
+                            <button type="button" class="btn btn-sm btn-secondary mb-2" id="triggerDeselect" onclick="deselectItems()">Cancel</button>
+                        </th>
                         <th class="align-middle">Equipment</th>
                         <th class="align-middle">Status</th>
                         <th class="align-middle">Remarks</th>
+                        <th class="align-middle">Option</th>
                     </tr>
                 </thead>
+                <tbody class="text-center">
+                    @foreach($equipments as $equipment)
+                        @if($equipment->equip_name==$item->equip_name)
+                        <tr>
+                            <td class="align-middle">
+                                @if ($equipment->equip_avail == 0 || $equipment->equip_avail == 2)
+                                    {{ Form::checkbox('selectDelete[]', "$equipment->equipID", null, array('id'=>'qtyCheck', 'class'=>'hide')) }}
+                                @endif
+                            </td>
+                            <td class="align-middle">{{$equipment->equipID}}</td>
+                            <td class="align-middle">
+                                @if($equipment->equip_avail==0 || $equipment->equip_avail==2)
+                                    Available
+                                @else
+                                    Reserved
+                                @endif
+                            </td>
+                            <td class="align-middle">Enter specifications here</td>
+                            <td class="align-middle">
+                                <button type="button" class="btn btn-sm btn-primary" data-target="#editStockModal-{{$equipment->equipID}}" data-toggle="modal">Edit</button>
+                                <button type="button" class="btn btn-sm btn-danger indiv" data-target="#deleteSingleModal-{{$equipment->equipID}}" data-toggle="modal">Delete</button>
+                            </td>
+                        </tr>
+                        @endif
+                    @endforeach
+                </tbody>
             </table>
+            <div class="row">
+                <div class="col-xs-1 mx-auto">
+                    {{Form::button('Delete Selected', ['type' => 'submit', 'class' => 'btn btn-sm btn-danger selectDelete'])}}
+                </div>
+            </div>
         </div>
     </div>
 </div>
 @endsection
-{{-- 
+
 @section('modal')
+    @include('inc.editStockModal')
     @include('inc.deleteSingleModal')
     @include('inc.deleteConfirmationModal')
-@endsection --}}
+@endsection

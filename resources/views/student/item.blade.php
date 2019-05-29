@@ -126,9 +126,13 @@
                     @endforeach
                 </tbody>
             </table>
-            {{Form::button('<i class="fas fa-shopping-cart"></i> Add to Cart', ['type' => 'submit', 'class' => 'btn btn-sm btn-primary float-left selectSubmit'])}}
-            {{Form::hidden('userID', Auth::user()->user_id)}}
-            {!! Form::close() !!} 
+            <div class="row">
+                <div class="col-xs-1 mx-auto">
+                    {{Form::button('<i class="fas fa-shopping-cart"></i> Add to Cart', ['type' => 'submit', 'class' => 'btn btn-sm btn-primary float-left selectSubmit'])}}
+                    {{Form::hidden('userID', Auth::user()->user_id)}}
+                    {!! Form::close() !!} 
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -91,7 +91,9 @@ class EquipmentsController extends Controller
         } else {
             $itemName = str_replace('-', ' ', $id);
             $item = Equipment::where('equip_name',$itemName)->first();
-            return view('admin.item')->with('item',$item);
+            $equipments = Equipment::get();
+            return view('admin.item')->with('equipments',$equipments)
+                                     ->with('item',$item);
                                     
         }
     }
