@@ -7,6 +7,10 @@
         .selectSubmit, .hide, #triggerDeselect {
             display: none;
         }
+
+        #quantity {
+            width: 50px;
+        }
     </style>
     <script>
         $(document).ready(function() {
@@ -57,6 +61,10 @@
         <div class="media">
             <img class="itemPhoto align-self-center border mr-3 mt-2 py-3 px-4" src="{{ asset('img/'.$item->equip_img) }}" style="width: 230px;" alt="Sample photo">
             <div class="media-body mt-4">
+                    {!! Form::open(['action' => 'EquipmentsController@editEquipment', 'class' => 'form-inline float-right', 'method' => 'POST', 'id' => 'itemQty']) !!}
+                    {{ Form::text('itemQuantity', '',['id' => 'quantity', 'class' => 'form-control form-control-sm rounded-0 border-right-0', 'placeholder' => '1'])}}
+                    {{Form::button('<i class="fas fa-shopping-cart"></i> Add', ['type' => 'submit', 'class' => 'btn btn-sm btn-primary  rounded-0 float-right'])}}
+                    {!! Form::close() !!}
                 <span class="text-muted displayCategory">
                     @if($item->equip_category=='ART')
                         Art Tools
