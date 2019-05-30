@@ -204,7 +204,9 @@ class TransactionFormsController extends Controller
 
     public function calendar(){
         $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
-        $transaction_forms = TransactionForm::where('returned', 0)->get();
+        $transaction_forms = TransactionForm::where('approval', 1)
+                                            ->where('returned', 0)
+                                            ->get();
         $users = User::get();
         $equipments = Equipment::orderBy('equip_name','asc')->get();
         
