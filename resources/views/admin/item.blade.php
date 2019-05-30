@@ -228,11 +228,13 @@
                             <td class="align-middle">
                                 @if($equipment->equip_avail==0 || $equipment->equip_avail==2)
                                     Available
+                                @elseif($equipment->equip_avail==-1)
+                                    Currently Under Maintenance
                                 @else
                                     Reserved
                                 @endif
                             </td>
-                            <td class="align-middle">Enter specifications here</td>
+                            <td class="align-middle">@if($equipment->equip_remarks==NULL) N/A @else {{$equipment->equip_remarks}} @endif</td>
                             <td class="align-middle">
                                 <button type="button" class="btn btn-sm btn-primary" data-target="#editStockModal-{{$equipment->equipID}}" data-toggle="modal">Edit</button>
                                 <button type="button" class="btn btn-sm btn-danger indiv" data-target="#deleteSingleModal-{{$equipment->equipID}}" data-toggle="modal">Delete</button>

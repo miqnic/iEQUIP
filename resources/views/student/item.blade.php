@@ -117,11 +117,13 @@
                         <td class="align-middle">
                             @if($equipment->equip_avail==0 || $equipment->equip_avail==2)
                                 Available
+                            @elseif($equipment->equip_avail==-1)
+                                Currently Under Maintenance
                             @else
                                 Reserved
                             @endif
                         </td>
-                        <td class="align-middle">Enter specifications here</td>
+                        <td class="align-middle">@if($equipment->equip_remarks==NULL) N/A @else {{$equipment->equip_remarks}} @endif</td>
                         <td class="align-middle">
                             @if ($equipment->transaction_id == null && $equipment->equip_avail == 0 || $equipment->equip_avail == 2) 
                                 {{Form::button('<i class="fas fa-shopping-cart"></i> Add to Cart', ['value' => "$equipment->equipID", 'name' => 'currentEquipID', 'type' => 'submit', 'class' => 'btn btn-sm btn-primary indiv'])}}
