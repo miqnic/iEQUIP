@@ -123,7 +123,7 @@
                       <tbody class="text-center align-middle">
                           @if ($countCart == null || $countCart->isEmpty())
                             <tr>
-                              <td colspan="2">No equipment reserved!</td>
+                              <td colspan="2">Your cart is empty!</td>
                             </tr>
                           @else
                               @foreach ($totalEquip->unique('equip_name') as $equipment)
