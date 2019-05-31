@@ -1098,19 +1098,18 @@ class EquipmentsController extends Controller
     }
 
     public function deleteReservation(Request $request){
-        if(auth()->user()->access_role != 'ADMIN'){
-            return abort(403, 'Unauthorized action.');
-        }
-
         $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
-        $totalEquip = Equipment::where('transaction_id', $lastTransaction->transaction_id)->get();
+        //dd($lastTransaction);
+        $carts = Cart::where('transaction_id', $lastTransaction->transaction_id)->get();
 
-        foreach ($totalEquip as $tEquip) {
-            if($tEquip->equip_name == $request->get('equip_name')){
-                $tEquip->transaction_id = null;
-                $tEquip->equip_avail = null;
+        //dd($carts);
+        foreach ($carts as $cart) {
+            if($cart->equip_name == $request->get('equip_name')){
+                $cart->delete();
             }
         }
+
+        return redirect()->back()->with('success', 'Equipment Reservation Deleted!');
     }
 
     //RESRVATION FUNCTIONS END

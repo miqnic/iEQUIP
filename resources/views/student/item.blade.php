@@ -115,16 +115,11 @@
                         </td>
                         <td class="align-middle">{{$equipment->equipID}}</td>
                         <td class="align-middle">
+                            {{$isAvail=false}}
                             @if ($lastTransaction != null)
                                 @foreach ($carts as $cart)
                                     @if ($cart->transaction_id == $lastTransaction->transaction_id && $cart->equipID == $equipment->equipID)
                                         {{$isAvail='In Cart'}}
-                                    @endif
-                                @endforeach
-                            @else
-                                @foreach ($forms as $form)
-                                    @if ($form->transaction_id == $lastCart->transaction_id && $form->submitted_by != null)
-                                        {{$isAvail='Pending'}}
                                     @endif
                                 @endforeach
                             @endif

@@ -66,7 +66,13 @@
                                     @endif
                                 @endforeach
                             </td>
-                            <td class="text-center align-middle"><button type="button" class="btn btn-danger">Remove</button></td>
+                            <td class="text-center align-middle">
+                                {!! Form::open(['action' => 'EquipmentsController@deleteReservation', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                                {{Form::hidden('equip_name', $equipment->equip_name)}}
+                                {{Form::submit('Remove', ['class' => 'btn btn-danger'])}}
+                                {!! Form::close() !!} 
+                                <!--<button type="button" class="btn btn-danger">Remove</button>-->
+                            </td>
                         </tr>
                         @endif
                     @endforeach

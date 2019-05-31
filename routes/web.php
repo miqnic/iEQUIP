@@ -93,6 +93,7 @@ Route::group(['middleware' => ['student']], function()
     Route::post('/reserveEquip','EquipmentsController@reserveEquipment');
     Route::post('/submitForm','TransactionFormsController@submitForm');
     Route::post('/cancel','TransactionFormsController@cancelForm');
+    Route::post('/delRes','EquipmentsController@deleteReservation');
 
     
     //Route::post('/student/search','EquipmentsController@searchEquipment');

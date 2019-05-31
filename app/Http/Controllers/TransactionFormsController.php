@@ -419,24 +419,6 @@ class TransactionFormsController extends Controller
         foreach ($currentCart as $cart) {
             $cart->delete();
         }
-
-        foreach ($currentCart as $doneCart) {
-            foreach ($carts as $cart) {
-                if($doneCart->equipID == $cart->equipID && $cart->deleted_at == null){
-                    $cart->delete();
-                }
-            }
-
-            /*foreach ($equipments as $equipment) {
-                if($doneCart->equipID == $equipment->equipID){
-                    $equipment->update([
-                        'transaction_id' => $currentTransaction->transaction_id,
-                        'equip_avail' => 1,
-                    ]);
-                }
-            }*/
-        }
-
         
 
         $pendingForms =  TransactionForm::where(['user_id' => auth()->user()->user_id, 'approval' => 0])
@@ -482,6 +464,7 @@ class TransactionFormsController extends Controller
         $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
         $transaction_forms = TransactionForm::where('user_id', auth()->user()->user_id)->get();
         $equipments = Equipment::get();
+        $carts = Cart::get();
     
         if($lastTransaction != null){
             $countCart = Cart::all()
@@ -502,6 +485,7 @@ class TransactionFormsController extends Controller
         }
         return view('student.history')->with('transaction_forms',$transaction_forms)
                                       ->with('countCart', $countCart)
+                                      ->with('carts', $carts)
                                       ->with('lastTransaction',$lastTransaction)
                                       ->with('totalEquip', $totalEquip)
                                       ->with('equipments',$equipments);

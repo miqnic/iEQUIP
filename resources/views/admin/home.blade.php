@@ -182,22 +182,39 @@
                                 <td class="align-middle" id="transaction" data-toggle="modal" data-target = "#checkForm{{$form->transaction_id}}">{{$form->transaction_id}}</td>
                                 <td class="align-middle" id="student" data-toggle="modal" data-target = "#viewStudent{{$form->user_id}}">{{$form->user_id}}</td>
                                 <td class="align-middle">
-                                    @foreach ($carts as $cart)
+                                    @if ($form->approval == 0)
+                                        @foreach ($carts as $cart)
+                                            @foreach($equipments as $equipment)
+                                                @if($cart->equipID == $equipment->equipID && $form->transaction_id == $cart->transaction_id)
+                                                    {{$equipment->equipID}}<br>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    @else
                                         @foreach($equipments as $equipment)
-                                            @if($cart->equipID == $equipment->equipID && $form->transaction_id == $cart->transaction_id)
+                                            @if($equipment->transaction_id == $form->transaction_id)
                                                 {{$equipment->equipID}}<br>
                                             @endif
                                         @endforeach
-                                    @endforeach
+                                    @endif
+                                    
                                 </td>
                                 <td class="align-middle">
-                                    @foreach ($carts as $cart)
+                                    @if ($form->approval == 0)
+                                        @foreach ($carts as $cart)
+                                            @foreach($equipments as $equipment)
+                                                @if($cart->equipID == $equipment->equipID && $form->transaction_id == $cart->transaction_id)
+                                                    {{$equipment->equip_name}}<br>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    @else
                                         @foreach($equipments as $equipment)
-                                            @if($cart->equipID == $equipment->equipID && $form->transaction_id == $cart->transaction_id)
+                                            @if($equipment->transaction_id == $form->transaction_id)
                                                 {{$equipment->equip_name}}<br>
                                             @endif
                                         @endforeach
-                                    @endforeach
+                                    @endif
                                 </td>
                                 <td class="align-middle">
                                     {{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}}
