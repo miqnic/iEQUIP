@@ -983,27 +983,38 @@ class EquipmentsController extends Controller
     public function returnEquipment(Request $request){
         $equipments = Equipment::where('transaction_id', $request->get('currentForm'))
                                 ->get();
-
-        $form = TransactionForm::where('transaction_id', $request->get('currentForm'));
+        //dd($equipments);
+        $form = TransactionForm::where('transaction_id', $request->get('currentForm'))->get();
+        $inputs = $request->input('checkbox');
         
-        //Check if admin
+        //dd($equipments->isEmpty());        //Check if admin
         if(auth()->user()->access_role != 'ADMIN'){
             return abort(403, 'Unauthorized action.');
         }
 
-        foreach($equipments as $equipment){
-            if(Input::get("checkbox-$equipment->equipID") === "$equipment->equipID"){
-                $equipment->update(array('transaction_id' => null));
+        foreach($inputs as $input){
+            foreach($equipments as $equipment){
+                if($input == $equipment->equipID){
+                    //dd($equipment);
+                    $equipment->update([
+                        'transaction_id' => null,
+                        'equip_avail' => 0
+                    ]);
+                }
             }
         }
 
-        if($equipments->isEmpty() == 0){
-            $form->update([
-                'returned'=>'1', 
-                'returned_date' => Carbon::now()
-            ]);
+        $equipments = Equipment::where('transaction_id', $request->get('currentForm'))
+                                ->get();
+
+        if($equipments->isEmpty()){
+            foreach ($form as $actualForm) {
+                $actualForm->update([
+                    'returned'=>'1', 
+                    'returned_date' => Carbon::now()
+                ]);
+            }
         }
-        
         return redirect()->back()->with('warning', 'Equipments of Transaction# '.$request->get('currentForm').' have been returned!');
     }
 

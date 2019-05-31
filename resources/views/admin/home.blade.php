@@ -236,6 +236,7 @@
                                         @if ($form->claimed == 1)
                                             <button class="btn btn-outline-primary" disabled>Claimed</button>
                                             <button data-toggle="modal" data-target="#returnEquip-{{$form->transaction_id}}" class="btn btn-outline-primary">Returned</button>
+                                            @include('inc.returnEquipModal')
                                         @else
                                             {!! Form::open(['action' => 'TransactionFormsController@afterApproval', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                                                 {{Form::hidden('currentForm', $form->transaction_id)}}
@@ -325,6 +326,6 @@
 @if (!$transaction_forms->isEmpty())
 @include('inc.checkFormModal')
 @include('inc.viewStudentModal')
-@include('inc.returnEquipModal')
+
 @endif
 @endsection

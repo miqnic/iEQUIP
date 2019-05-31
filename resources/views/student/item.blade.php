@@ -116,7 +116,6 @@
                         <td class="align-middle">{{$equipment->equipID}}</td>
                         <td class="align-middle">
                             {{$isAvail=false}}
-                            {{dd($lastTransaction)}}
                             @if ($lastTransaction != null)
                                 @foreach ($carts as $cart)
                                     @if ($cart->transaction_id == $lastTransaction->transaction_id && $cart->equipID == $equipment->equipID && $lastTransaction)
