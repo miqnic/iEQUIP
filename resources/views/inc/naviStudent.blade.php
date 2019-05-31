@@ -81,7 +81,7 @@
             </a>
               <div class="dropdown-menu dropdown-menu-right bg-white" aria-labelledby="account" style="width: 300px;">
                 <div class="profileInfo h-50 text-center mx-auto bg-white">
-                    <img src = "{{ url('img/user-account-box.jpg') }}" class="my-2 rounded-circle" height="80">
+                    <img src = "{{ asset('img/'.Auth::user()->user_img) }}" class="my-2 rounded-circle" height="70">
                     <h5 class="pt-2 text-uppercase">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</h5>
                     <p>{{Auth::user()->user_id}} | {{Auth::user()->course}}</p>
                 </div>

@@ -16,21 +16,6 @@
         background-color: transparent;
     }
     </style>
-
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-    $( function() {
-        var spinner1 = $( "#qty1" ).spinner({ 
-            min: 1,
-            max: 6
-        });
-        var spinner2 = $( "#qty2" ).spinner({
-            min: 1,
-            max: 6
-        });
-    });
-    </script>
 @endsection
 
 @section('navi')
@@ -75,13 +60,11 @@
                                 @endforeach
                             </td>
                             <td class="text-center align-middle">
-                                    <input id="qty1" name="quantity" 
-                                    value="@foreach ($countCart as $item)
-                                                @if (Arr::get($item, 'equip_name') == $equipment->equip_name)
-                                                    {{Arr::get($item, 'record')}}
-                                                @endif
-                                            @endforeach" 
-                                    style="width:25px;">
+                                @foreach ($countCart as $item)
+                                    @if (Arr::get($item, 'equip_name') == $equipment->equip_name)
+                                        {{Arr::get($item, 'record')}}
+                                    @endif
+                                @endforeach
                             </td>
                             <td class="text-center align-middle"><button type="button" class="btn btn-danger">Remove</button></td>
                         </tr>

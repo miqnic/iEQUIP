@@ -23,6 +23,7 @@ class CreateEquipmentTable extends Migration
             $table->integer('equip_penalty');
             $table->decimal('equip_baseprice', 10, 2);
             $table->mediumText('equip_description')->nullable();
+            $table->text('equip_remarks')->nullable();
             $table->boolean('returned');
             $table->string('equip_img');
             $table->softDeletes();

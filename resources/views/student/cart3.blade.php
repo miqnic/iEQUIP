@@ -43,11 +43,11 @@
         <div class="formsum mt-4 ml-2">
             <p>
                 <b>Start Date and Time:</b><br>
-                {{\Carbon\Carbon::parse($currentTransaction->start_date)->toDayDateTimeString()}}
+                {{\Carbon\Carbon::parse($currentTransaction->start_date." ".$currentTransaction->start_time)->toDayDateTimeString()}}
             </p>
             <p>
                 <b>End Date and Time:</b><br>
-                {{\Carbon\Carbon::parse($currentTransaction->due_date)->toDayDateTimeString()}}
+                {{\Carbon\Carbon::parse($currentTransaction->due_date." ".$currentTransaction->end_time)->toDayDateTimeString()}}
             <p>
                 <b>Room Number:</b><br>
                 {{$currentTransaction->room_number}}
