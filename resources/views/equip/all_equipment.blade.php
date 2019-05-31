@@ -43,7 +43,7 @@
       @endif
       <hr style="clear:both;">
       <div class="d-inline-flex flex-row flex-wrap align-items-center justify-content-start">
-          @foreach ($equipments->unique('equip_name') as $equipment)
+        @foreach ($equipments as $equipment)
           <div class="card itemCard text-center mt-1 pt-3 mr-1">
             @foreach ($countEquip as $itemCurr)
                 @if (Arr::get($itemCurr, 'equip_name') == $equipment->equip_name)
@@ -79,9 +79,9 @@
               </p>
             </div>
           </div>
-          @endforeach
+        @endforeach
       </div>
-      <div class="pagination d-block position-absolute mt-3" style="right:20px">
+      <div class="d-block position-absolute mt-3" style="right:20px">
       {{ $equipments->links() }}
       </div>
     </div>

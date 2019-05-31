@@ -43,7 +43,7 @@
       @endif
       <hr style="clear:both;">
       <div class="d-inline-flex flex-row flex-wrap align-items-center justify-content-start">
-          @foreach ($equipments->unique('equip_name') as $equipment)
+          @foreach ($equipments as $equipment)
           <div class="card itemCard text-center mt-1 pt-3 mr-1">
             @foreach ($countEquip as $itemCurr)
               @if (Arr::get($itemCurr, 'equip_name') == $equipment->equip_name)
@@ -70,7 +70,6 @@
                   <a class="card-link" href="{{ url('student/'.$trimmedString) }}"><h6 class="card-title text-truncate">{{$equipment->equip_name}}</h6></a>
               @endif
               <p class="card-text mb-4">
-                Availability: 
                 Availability: 
                 @foreach ($countEquip as $item)
                   @if (Arr::get($item, 'equip_name') == $equipment->equip_name)
