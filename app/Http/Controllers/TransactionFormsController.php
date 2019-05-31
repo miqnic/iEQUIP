@@ -214,6 +214,7 @@ class TransactionFormsController extends Controller
     }
 
     public function calendar(){
+        if(auth()->user()->access_role != 'ADMIN'){
         $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
         $transaction_forms = TransactionForm::where('approval', 1)
                                             ->where('returned', 0)
@@ -247,6 +248,20 @@ class TransactionFormsController extends Controller
                                      ->with('totalEquip', $totalEquip)
                                      ->with('equipments',$equipments)
                                      ->with('countCart', $countCart);
+        }
+        else {
+        $transaction_forms = TransactionForm::where('approval', 1)
+                                            ->where('returned', 0)
+                                            ->get();
+        $users = User::get();
+        $equipments = Equipment::orderBy('equip_name','asc')->get();
+        $feedbackCount = Feedback::where('read', '0')->get()->count();
+
+        return view('admin.calendar')->with('transaction_forms',$transaction_forms)
+                                     ->with('users',$users) 
+                                     ->with('feedbackCount', $feedbackCount)
+                                     ->with('equipments',$equipments);
+        }
     }
 
     public function cart1(){

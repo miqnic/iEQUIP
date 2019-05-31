@@ -624,6 +624,7 @@ class EquipmentsController extends Controller
     }
     
     public function faqs(){
+        if(auth()->user()->access_role != 'ADMIN'){
             $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last(); 
             if($lastTransaction != null){
                 $countCart = Cart::all()
@@ -650,6 +651,11 @@ class EquipmentsController extends Controller
                                       ->with('equipments', $equipments)
                                       ->with('totalEquip',$totalEquip)
                                       ->with('countEquip', $this->countEquip);
+        }
+        else {
+            $feedbackCount = Feedback::where('read', '0')->get()->count();
+            return view('student.faq')->with('feedbackCount', $feedbackCount);
+        }
     }
 
     public function searchEquipment(Request $request){
