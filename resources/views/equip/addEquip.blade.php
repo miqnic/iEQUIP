@@ -3,20 +3,6 @@
 @section('head')
     <title>{{ config('app.name') }} | Add Equipment</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/equiplist.css') }}">
-
-    <script>
-    $(document).ready(function() {
-        $("body").on("click","#addMore",function(){
-            var form = $("#addForm").first().clone();
-            $(form).find(".remove").html('<button type="button" id="remove" class="btn btn-light float-right"><i class="fas fa-lg fa-minus-circle text-danger"></i></button>');      
-            $("#addForm").last().after(form);
-        });
-
-        $("body").on("click","#remove",function(){ 
-            $(this).parents("#addForm").remove();
-        });
-    });
-    </script>
 @endsection
 
 @section('navi')
@@ -32,7 +18,7 @@
     <div class="col-md-3 pt-2 padding-right-0">
       <div class="list-group" id="list-tab" role="tablist">
         <a class="list-group-item text-uppercase font-weight-bold">Browse Categories</a>
-        <a class="list-group-item list-group-item-action active" href="equipmentlist" role="tab">All</a>
+        <a class="list-group-item list-group-item-action" href="equipmentlist" role="tab">All</a>
         <a class="list-group-item list-group-item-action" href="art-tools" role="tab">Art Tools</a>
         <a class="list-group-item list-group-item-action" href="camera-equipment" role="tab">Cameras and Accessories</a>
         <a class="list-group-item list-group-item-action" href="gaming-equipment" role="tab">Gaming Devices</a>
@@ -53,7 +39,6 @@
             <div class="row my-3 w-75 mx-auto">
                 <div class="col-md-12">
                     <div class="border px-3 py-3 bg-light">
-                        <div class="remove"></div>
                         <label for="itemName">Item Name</label>
                         <input type="text" name="itemName" class="form-control" id="itemName" placeholder="Enter item name">
                         <div class="row">
@@ -94,16 +79,9 @@
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-10 text-right">
-                <button type="button" id="addMore" class="btn btn-md btn-light float-right mx-auto"><i class="fas fa-md fa-plus-circle text-success"></i> Add More</button>
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-md-12">
-                <div class="text-center pt-4">
+                <div class="text-center">
                     <button type="submit" class="btn btn-success text-center">Add Equipment</button>
                 </form>
                 </div>

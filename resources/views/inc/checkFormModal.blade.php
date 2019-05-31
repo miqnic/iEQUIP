@@ -87,7 +87,7 @@
                                 <th>End Date and Time</th>
                                 <td>
                                     {{\Carbon\Carbon::parse($form->due_date)->toFormattedDateString()}} {{\Carbon\Carbon::parse($form->end_time)->format('h:i A')}}
-                                    @if(\Carbon\Carbon::parse($form->due_date)->isPast())
+                                    @if($form->approval==1 && $form->claimed==1 && $form->returned==0 && \Carbon\Carbon::parse($form->due_date)->isPast())
                                     <i class="fas fa-lg fa-exclamation-triangle text-danger"></i>
                                     @endif
                                 </td>

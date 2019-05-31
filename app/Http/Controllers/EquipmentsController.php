@@ -791,7 +791,8 @@ class EquipmentsController extends Controller
     }
 
     public function del(){
-        return view('inc.deleteEquipModal');
+        $equipments = Equipment::get();
+        return view('equip.delEquip')->with('equipments', $equipments);
     }
     
     public function delEquipment(Request $request){
