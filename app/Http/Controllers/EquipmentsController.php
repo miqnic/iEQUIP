@@ -706,26 +706,71 @@ class EquipmentsController extends Controller
             'description' => 'nullable',
             'penalty' => 'required',
             'basePrice' => 'required',
-            'equipIMG' => 'image|nullable|max:1999'
-          ]);
-          $equipment = new Equipment([
-            'equip_name' => $request->get('itemName'),
-            'equip_description' => $request->get('description'),
-            'equip_penalty' => $request->get('penalty'),
-            'equip_baseprice' => $request->get('basePrice'),
-            'equip_category' => $request->get('category'),
-            'equip_img' => $fileNameToStore,
-            'equip_avail' => '0',
-            'returned' => true,
-          ]);
+            'equipIMG' => 'image|nullable|max:1999',
+            'totalAmount' => 'required'
+        ]);
+        
+        for ($i=0; $i < $request->get('totalAmount'); $i++) { 
+            $equipment = new Equipment([
+                'equipID' => 'hbjhbjhj',
+                'equip_name' => $request->get('itemName'),
+                'equip_description' => $request->get('description'),
+                'equip_penalty' => $request->get('penalty'),
+                'equip_baseprice' => $request->get('basePrice'),
+                'equip_category' => $request->get('category'),
+                'equip_img' => $fileNameToStore,
+                'equip_avail' => '0',
+                'returned' => true,
+              ]);
+    
+              $equipment->save();
+    
+              $equipment->equipID = "$equipment->equip_category"."$equipment->id";
+              //dd($equipment->category);
+    
+              $equipment->save();
+              //return redirect(URL::current());
+        }
 
-          $equipment->save();
+          return redirect()->back()->with('success', 'Equipment Added!');
+    }
 
-          $equipment->equipID = "$equipment->equip_category"."$equipment->id";
-          //dd($equipment->category);
+    public function addStock(Request $request){
+        if(auth()->user()->access_role != 'ADMIN'){
+            return abort(403, 'Unauthorized action.');
+        }
 
-          $equipment->save();
-          //return redirect(URL::current());
+        $request->validate([
+            'itemName' => 'required',
+            'category' => 'required',
+            'description' => 'nullable',
+            'penalty' => 'required',
+            'basePrice' => 'required',
+            'equipIMG' => 'required',
+            'totalAmount' => 'required'
+        ]);
+        
+        for ($i=0; $i < $request->get('totalAmount'); $i++) { 
+            $equipment = new Equipment([
+                'equipID' => 'hbjhbjhj',
+                'equip_name' => $request->get('itemName'),
+                'equip_description' => $request->get('description'),
+                'equip_penalty' => $request->get('penalty'),
+                'equip_baseprice' => $request->get('basePrice'),
+                'equip_category' => $request->get('category'),
+                'equip_img' => $request->get('equipIMG'),
+                'equip_avail' => '0',
+                'returned' => true,
+              ]);
+    
+              $equipment->save();
+    
+              $equipment->equipID = "$equipment->equip_category"."$equipment->id";
+              //dd($equipment->category);
+    
+              $equipment->save();
+              //return redirect(URL::current());
+        }
 
           return redirect()->back()->with('success', 'Equipment Added!');
     }
@@ -735,7 +780,7 @@ class EquipmentsController extends Controller
     }
     
     public function delEquipment(Request $request){
-        $equipments = Equipment::get()->unique('equip_name');
+        $equipments = Equipment::get();
         $inputs = $request->input('checkbox');
         
         //Check if admin

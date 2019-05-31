@@ -187,8 +187,9 @@
                         <i class="fas fa-lg fa-plus-circle text-success"></i>Add Stock
                     </button>
                     <div id="addStockForm" style="display: none">
-                      <form action="{{ action('EquipmentsController@addEquipment') }}" class="form-inline" id="addStock" method="POST" enctype="multipart/form-data">
-                          <input type="hidden" name="itemName" value="{{$item->equipName}}">
+                      <form action="{{ action('EquipmentsController@addStock')}}" class="form-inline" id="addStock" method="POST" enctype="multipart/form-data">
+                            @csrf
+                          <input type="hidden" name="itemName" value="{{$item->equip_name}}">
                           <input type="hidden" name="category" value="{{$item->equip_category}}">
                           <input type="hidden" name="basePrice" value="{{$item->equip_baseprice}}">
                           <input type="hidden" name="penalty" value="{{$item->equip_penalty}}">

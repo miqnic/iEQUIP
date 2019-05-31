@@ -37,6 +37,7 @@ class TransactionFormsController extends Controller
      */
     public function studentHome()
     {
+        $carts = Cart::get();
         $transaction_forms = TransactionForm::where('user_id', auth()->user()->user_id)->get();
         $recentForms =  TransactionForm::where(['user_id' => auth()->user()->user_id, 'approval' => 1])
                                         ->orderBy('transaction_id', 'desc')
@@ -121,6 +122,7 @@ class TransactionFormsController extends Controller
                                    ->with('lastTransaction', $lastTransaction)
                                    ->with('countCart', $countCart)
                                    ->with('equipments',$equipments)
+                                   ->with('carts',$carts)
                                    ->with('totalEquip',$totalEquip);
     }
 
