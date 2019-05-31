@@ -7,7 +7,13 @@
     <script>
     $(document).ready(function() {
         $('#equipList').DataTable({
-            order: [[1, "asc"]]
+            order: [[1, "asc"]],
+            columnDefs: [
+                    {
+                        orderable: false,
+                        targets: 0
+                    }
+                ]
         });
     });
     </script>
