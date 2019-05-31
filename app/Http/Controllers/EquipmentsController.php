@@ -62,6 +62,11 @@ class EquipmentsController extends Controller
             $itemName = str_replace('-', ' ', $id);
             $item = Equipment::where('equip_name',$itemName)->first();
             $equipments = Equipment::get();
+            $carts = Cart::where('user_id', auth()->user()->user_id)->get();
+            $isAvail = false;
+            $lastCart = Cart::where('user_id', auth()->user()->user_id)->get()->last();
+            $forms = TransactionForm::get();
+            //dd($carts);
             
             $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last(); 
             if($lastTransaction != null){
@@ -82,9 +87,15 @@ class EquipmentsController extends Controller
                 $totalEquip = null;
             }
 
+            //dd($lastTransaction);
+            //dd($lastCart);
             return view('student.item')->with('lastTransaction',$lastTransaction)
                                      ->with('countCart', $countCart)
                                      ->with('item',$item)
+                                     ->with('carts',$carts)
+                                     ->with('lastCart',$lastCart)
+                                     ->with('isAvail',$isAvail)
+                                     ->with('forms',$forms)
                                      ->with('equipments',$equipments)
                                      ->with('totalEquip',$totalEquip)
                                      ->with('countEquip', $this->countEquip);

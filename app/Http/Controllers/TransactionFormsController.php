@@ -65,7 +65,7 @@ class TransactionFormsController extends Controller
         $sum = 0;
 
         foreach ($transaction_forms as $form) {
-            if($form->approval == 1 && $form->claimed == 1 && $form->due_date < (Carbon::now()->toDateTimeString())){
+            if($form->approval == 1 && $form->claimed == 1 && $form->returned == 0 && $form->due_date < (Carbon::now()->toDateTimeString())){
                 foreach ($equipments as $equipment) {
                     if($equipment->transaction_id == $form->transaction_id){
                         $sum += $equipment->equip_penalty;
