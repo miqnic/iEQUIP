@@ -37,7 +37,11 @@
 @endsection
 
 @section('navi')
+    @if (Auth::user()->access_role == 'ADMIN')
+    @include('inc.naviAdmin')
+    @else
     @include('inc.naviStudent', [$equipments, $lastTransaction, $countCart]) 
+    @endif
 @endsection
 
 @section('content')
@@ -173,7 +177,22 @@
                     for extension is still vacant, you may cancel your reservation on the <b>Homepage</b> and submit another one.
                 </div>
                 </div>
-            </div>   
+            </div>
+            <div class="faq">
+                <div class="faq-header" id="reservationq8" data-toggle="collapse" data-target="#reservationqcollapse8" aria-expanded="false" aria-controls="reservationqcollapse8">
+                <h2 class="mt-1">
+                    <span class="float-left question pr-2 pt-1"><b>|</b> Q.</span><span style="font-size: 16px;">Where and how am I going to claim my item/s?</span>
+                    <span class="float-right pt-1"><i class="fas fa-chevron-down fa-xs"></i></span>
+                </h2>
+                </div>
+                <div id="reservationqcollapse8" class="collapse" aria-labelledby="reservationq8" data-parent="#faq1">
+                <div class="faq-body text-secondary text-justify my-2">
+                    <h2 class="float-left text-primary pr-2 d-inline"><b>|</b> A.</h2>
+                    Once you get an email notification saying that your request has been approved, you may now proceed to the <b>Facilities Department</b> at the 2nd Floor, Parking Lot 
+                    to claim your reserved item/s. Please don't forget to bring your <b>student ID</b> and <b>copy of email notification</b> for verification purposes.
+                </div>
+                </div>
+            </div>  
         </div>
 
         <h4 class="text-center pt-5 mb-3 text-uppercase" id="jump2">Penalties</h4>

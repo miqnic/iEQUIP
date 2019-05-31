@@ -24,6 +24,7 @@ Route::group(['middleware' => ['admin']], function()
     Route::match(['get', 'post'],'/admin/balances', 'TransactionFormsController@adminBalances');
     Route::match(['get', 'post'],'/admin/calendar', 'TransactionFormsController@calendar');
     Route::match(['get', 'post'],'/admin/feedbacks', 'FeedbacksController@adminFeedbacks');
+    Route::match(['get', 'post'],'/admin/faq', 'EquipmentsController@faqs');
     Route::match(['get', 'post'],'/admin/search', 'EquipmentsController@searchEquipmentAdmin');
 
     Route::match(['get', 'post'],'/admin/equipmentlist', 'EquipmentsController@showAllEquipment');
@@ -73,7 +74,7 @@ Route::group(['middleware' => ['student']], function()
     Route::match(['get', 'post'],'/student/history', 'TransactionFormsController@studentHistory');
     Route::match(['get', 'post'],'/student/calendar', 'TransactionFormsController@calendar');
     Route::match(['get', 'post'],'/student/contact', 'TransactionFormsController@studentContact');
-    Route::match(['get', 'post'],'/student/faqs', 'EquipmentsController@faqs');
+    Route::match(['get', 'post'],'/student/faq', 'EquipmentsController@faqs');
     Route::match(['get', 'post'],'/student/search', 'EquipmentsController@searchEquipment');
     Route::post('feedback','FeedbacksController@feedback');
 
