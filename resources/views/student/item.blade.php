@@ -118,8 +118,14 @@
                             {{$isAvail=false}}
                             @if ($lastTransaction != null)
                                 @foreach ($carts as $cart)
-                                    @if ($cart->transaction_id == $lastTransaction->transaction_id && $cart->equipID == $equipment->equipID)
+                                    @if ($cart->transaction_id == $lastTransaction->transaction_id && $cart->equipID == $equipment->equipID && $lastTransaction)
                                         {{$isAvail='In Cart'}}
+                                    @endif
+                                @endforeach
+                            @else
+                                @foreach ($carts as $cart)
+                                    @if ($cart->user_id == Auth::user()->user_id && $cart->equipID == $equipment->equipID && $cart->deleted_at == null)
+                                        {{$isAvail='Pending'}}
                                     @endif
                                 @endforeach
                             @endif

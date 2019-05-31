@@ -430,10 +430,6 @@ class TransactionFormsController extends Controller
         $carts = Cart::get();
         $currentCart = Cart::where('transaction_id', $currentTransaction->transaction_id)->get();
         //dd($currentCart);
-
-        foreach ($currentCart as $cart) {
-            $cart->delete();
-        }
         
 
         $pendingForms =  TransactionForm::where(['user_id' => auth()->user()->user_id, 'approval' => 0])
