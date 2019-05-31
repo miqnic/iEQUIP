@@ -22,7 +22,7 @@
             <div>
                 <h2 style="padding-bottom: 2px; text-align: center;">Your Feedback Has Been Read!</h2>
                 <div style="float: right;">
-                <small>{{ date('Y-m-d H:i:s') }}</small>
+                <small>{{ date('F d, Y h:i A') }}</small>
             </div>
 
             <div style="padding-top: 30px;">
@@ -36,8 +36,7 @@
                             <span style="color: gray">{!! $feedbackBody !!}</span>
                         </p>
                         <br>
-                        <p>We appreciate your patience. If your concern is urgent, please get in touch via phone by calling <b>889 5555 ext. 2234 - 2235</b> or by proceeding to the <b>Facilities Department</b> 
-                        at the 2nd Floor Parking Lot, iACADEMY Nexus.</p>
+                        <p>We appreciate your patience. If your concern is urgent, please get in touch by calling <b>889 5555 ext. 2234 - 2235</b> or by proceeding to our office located at the 2nd Floor Parking Lot, iACADEMY Nexus.</p>
 
                         Sincerely,<br>
                         Facilities Department

@@ -80,7 +80,7 @@
             <div>
                 <h2 style="padding-bottom: 2px; text-align: center;">New Feedback Submission: {!!$subject!!}</h2> <!--just change the word approved to declined-->
                 <div style="float: right;">
-                <small>{{ date('Y-m-d H:i:s') }}</small>
+                <small>{{ date('F d, Y h:i A') }}</small>
             </div>
 
             <div style="padding-top: 30px;">
