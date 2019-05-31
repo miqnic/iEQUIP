@@ -30,8 +30,8 @@
                 $('#equipCategory').val('{{$item->equip_category}}');
                 $('#equipName').val($('.displayEquipName').text());
                 $('#equipDesc').val($('.displayDesc').text());
-                /* $('#basePrice').val($('.displayBasePrice').text());
-                $('#penalty').val($('.displayPenalty').text()); */
+                $('#price').val($('.displayBasePrice').text());
+                $('#penalty').val($('.displayPenalty').text());
                 $('#saveEditEquip').show();
             });  
             $('#saveEditEquip').click(function () { 
@@ -159,23 +159,23 @@
                         {{Form::label('equipName', 'Name', ['class' => 'pt-3'])}}
                         {{Form::text('equipName', '',['id' => 'equipName', 'class' => 'form-control form-control-sm mb-3', 'placeholder' => 'Enter item name'])}}
 
-                        {{Form::label('price', 'Base Price', ['class' => 'pt-3'])}}
+                        {{-- {{Form::label('price', 'Base Price', ['class' => 'pt-3'])}}
                         {{Form::text('price', '',['id' => 'price', 'class' => 'form-control form-control-sm mb-3', 'placeholder' => 'Enter Base Price'])}}
 
                         {{Form::label('penalty', 'Equipment Penalty', ['class' => 'pt-3'])}}
-                        {{Form::textarea('penalty', '',['id' => 'penalty', 'class' => 'form-control form-control-sm mb-3', 'placeholder' => 'Enter Equipment Description'])}}
+                        {{Form::textarea('penalty', '',['id' => 'penalty', 'class' => 'form-control form-control-sm mb-3', 'placeholder' => 'Enter Equipment Description'])}} --}}
 
-                {{-- <div class="row pb-3">
+                        <div class="row pb-3">
                         <div class="col-md-6">
                                 {{Form::label('basePrice', 'Base Price (PHP)', ['class' => 'pt-3'])}}
-                                {{Form::text('basePrice', '',['id' => 'basePrice', 'class' => 'form-control form-control-sm', 'placeholder' => 'Enter base price'])}}
+                                {{Form::text('price', '',['id' => 'price', 'class' => 'form-control form-control-sm', 'placeholder' => 'Enter base price'])}}
                         </div>
 
                         <div class="col-md-6">
                                 {{Form::label('penalty', 'Penalty (PHP)', ['class' => 'pt-3'])}}
                                 {{Form::text('penalty', '',['id' => 'penalty', 'class' => 'form-control form-control-sm', 'placeholder' => 'Enter penalty fee'])}}
                         </div>
-                        </div> --}}
+                        </div>
 
                         {{Form::label('description', 'Description')}}
                         {{Form::textarea('description', '',['id' => 'equipDesc','class' => 'form-control form-control-sm', 'placeholder' => 'Enter specifications here', 'rows' => '3'])}}     

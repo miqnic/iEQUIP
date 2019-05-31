@@ -944,7 +944,7 @@ class EquipmentsController extends Controller
                         'equip_description' => $request->get('description'),
                         'equip_category' => $request->get('category'),
                         'equip_penalty' => $request->get('penalty'),
-                        'equip_baseprice' => $request->get('basePrice')
+                        'equip_baseprice' => $request->get('price')
                     ]); 
                 $equipment->save();
               }
