@@ -112,18 +112,18 @@
     
                   <!-- Modal body -->
                   <div class="modal-body">
-                    <p class="cartbody">These are the equipments you have added.<br>Click "Checkout" to proceed.</p>
+                    <p class="cartbody">Listed below is/are the current equipment in your cart.<br>Click "Checkout" to proceed.</p>
                     <table class="table table-bordered table-striped">
                       <thead class="text-center align-middle">
                         <tr>
-                          <th>Equipments</th>
+                          <th>Equipment</th>
                           <th>Quantity</th>
                         </tr>
                       </thead>
                       <tbody class="text-center align-middle">
                           @if ($countCart == null || $countCart->isEmpty())
                             <tr>
-                              <td colspan="2">No equipments reserved!</td>
+                              <td colspan="2">No equipment reserved!</td>
                             </tr>
                           @else
                               @foreach ($totalEquip->unique('equip_name') as $equipment)
