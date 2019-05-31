@@ -50,7 +50,6 @@ class FeedbacksController extends Controller
         $users = User::where('penalty', '>', '0')
                         ->get();
         //dd($users);
-        
 
         foreach ($users as $user) {
             $request->request->add(['penalty' => $user->penalty, 'id' => $user->user_id, 'first' => $user->first_name, 'last' => $user->last_name]);
@@ -73,9 +72,11 @@ class FeedbacksController extends Controller
                                 ->get();  
         $filterAll = Feedback::get();  
         $users = User::get();
+        $feedbackCount = Feedback::where('read', '0')->get()->count();
         return view('admin.feedbacks')->with('newest', $newest)
                                       ->with('oldest', $oldest)
                                       ->with('types',$types)
+                                      ->with('feedbackCount', $feedbackCount)
                                       ->with('users',$users)
                                       ->with('filterUnread',$filterUnread)
                                       ->with('filterRead',$filterRead)

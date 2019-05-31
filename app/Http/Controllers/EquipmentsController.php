@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Equipment;
 use App\TransactionForm;
 use App\Cart;
+use App\Feedback;
 use DB;
 use Yajra\Datatables\Datatables;
 use Session;
@@ -138,7 +139,7 @@ class EquipmentsController extends Controller
                                                   ->with('countEquip', $this->countEquip);
             } else {
                 $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
-
+                
 
                 $equipments = Equipment::select('equip_name','equip_img')->distinct()->orderBy('equip_name', 'asc')->simplePaginate(9); 
 
@@ -168,8 +169,10 @@ class EquipmentsController extends Controller
             }
         } else {
             $equipments =  Equipment::select('equip_name','equip_img')->distinct()->orderBy('equip_name', 'asc')->simplePaginate(9); 
+            $feedbackCount = Feedback::where('read', '0')->get()->count();
             return view('equip.all_equipment')->with('equipments',$equipments)
-                                              ->with('countEquip', $this->countEquip);
+                                            ->with('feedbackCount', $feedbackCount)
+                                            ->with('countEquip', $this->countEquip);
         }
     }
 
@@ -243,7 +246,9 @@ class EquipmentsController extends Controller
                                     ->distinct()
                                     ->orderBy('equip_name', 'asc')
                                     ->simplePaginate(9);
+            $feedbackCount = Feedback::where('read', '0')->get()->count();
             return view('equip.cam_equipment')->with('equipments',$equipments)
+                                        ->with('feedbackCount', $feedbackCount)
                                         ->with('countEquip', $this->countEquip);
                                     
         }
@@ -314,7 +319,9 @@ class EquipmentsController extends Controller
                                     ->distinct()
                                     ->orderBy('equip_name', 'asc')
                                     ->simplePaginate(9);
+            $feedbackCount = Feedback::where('read', '0')->get()->count();
             return view('equip.art_equipment')->with('equipments',$equipments)
+                                            ->with('feedbackCount', $feedbackCount)
                                             ->with('countEquip', $this->countEquip);
                                     
         }
@@ -385,7 +392,9 @@ class EquipmentsController extends Controller
                                     ->distinct()
                                     ->orderBy('equip_name', 'asc')
                                     ->simplePaginate(9);
+            $feedbackCount = Feedback::where('read', '0')->get()->count();
             return view('equip.sport_equipment')->with('equipments',$equipments)
+                                            ->with('feedbackCount', $feedbackCount)
                                             ->with('countTotalAvail', $this->countTotalAvail)
                                             ->with('countEquip', $this->countEquip);
                                     
@@ -457,7 +466,9 @@ class EquipmentsController extends Controller
                                     ->distinct()
                                     ->orderBy('equip_name', 'asc')
                                     ->simplePaginate(9);
+            $feedbackCount = Feedback::where('read', '0')->get()->count();
             return view('equip.misc_equipment')->with('equipments',$equipments)
+                                            ->with('feedbackCount', $feedbackCount)
                                             ->with('countEquip', $this->countEquip);
                                     
         }
@@ -528,7 +539,9 @@ class EquipmentsController extends Controller
                                     ->distinct()
                                     ->orderBy('equip_name', 'asc')
                                     ->simplePaginate(9);
+            $feedbackCount = Feedback::where('read', '0')->get()->count();
             return view('equip.laptop_equipment')->with('equipments',$equipments)
+                                            ->with('feedbackCount', $feedbackCount)
                                             ->with('countEquip', $this->countEquip);
                                     
         }
@@ -600,7 +613,9 @@ class EquipmentsController extends Controller
                                     ->distinct()
                                     ->orderBy('equip_name', 'asc')
                                     ->simplePaginate(9);
+            $feedbackCount = Feedback::where('read', '0')->get()->count();
             return view('equip.gaming_equipment')->with('equipments',$equipments)
+                                            ->with('feedbackCount', $feedbackCount)
                                             ->with('countEquip', $this->countEquip);
                                     
         }

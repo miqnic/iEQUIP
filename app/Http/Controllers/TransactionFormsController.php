@@ -6,6 +6,7 @@ use App\Equipment;
 use App\User;
 use App\TransactionForm;
 use App\Cart;
+use App\Feedback;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -131,7 +132,7 @@ class TransactionFormsController extends Controller
                                             ->where('approval', '>=', 0)
                                             ->where('returned', '!=', 1)
                                             ->get();
-
+        
         $availableEquip = Equipment::where('equip_avail', 0)->count();
         $borrowedEquip = Equipment::where('equip_avail', 1)->count();
         $defectiveEquip = Equipment::where('equip_avail', -1)->count();
@@ -141,6 +142,7 @@ class TransactionFormsController extends Controller
 
         $carts = Cart::get();
         $users = User::get();
+        $feedbackCount = Feedback::where('read', '0')->get()->count();
         $equipments = Equipment::get();  
         return view('admin.home')->with('equipments',$equipments)
                                  ->with('carts',$carts)
@@ -149,6 +151,7 @@ class TransactionFormsController extends Controller
                                  ->with('defectiveEquip',$defectiveEquip)
                                  ->with('defectiveList',$defectiveList)
                                  ->with('borrowedList',$borrowedList)
+                                 ->with('feedbackCount', $feedbackCount)
                                  ->with('dueTransactions',$dueTransactions)
                                  ->with('users',$users)
                                  ->with('transaction_forms',$transaction_forms);
@@ -157,13 +160,15 @@ class TransactionFormsController extends Controller
     public function adminBalances(){
         $transaction_forms = TransactionForm::where('approval', '1')
                                             ->get();
-                                          
+        $feedbackCount = Feedback::where('read', '0')->get()->count();                                        
         $users = User::where('penalty','>',0)
                      ->get();
-        
+        $carts = Cart::get();
         $equipments = Equipment::get();
         return view('admin.balances')->with('transaction_forms',$transaction_forms)
                                     ->with('users',$users)
+                                    ->with('carts', $carts)
+                                    ->with('feedbackCount', $feedbackCount)
                                     ->with('equipments',$equipments);
     }
 
@@ -198,9 +203,13 @@ class TransactionFormsController extends Controller
     public function reqHistory(){
         $transaction_forms = TransactionForm::orderBy('transaction_id','desc')->get();
         $users = User::get();
+        $carts = Cart::get();
         $equipments = Equipment::get();
+        $feedbackCount = Feedback::where('read', '0')->get()->count();
         return view('admin.history')->with('transaction_forms',$transaction_forms)
                                     ->with('users',$users)
+                                    ->with('carts', $carts)
+                                    ->with('feedbackCount', $feedbackCount)
                                     ->with('equipments',$equipments);
     }
 
@@ -211,6 +220,7 @@ class TransactionFormsController extends Controller
                                             ->get();
         $users = User::get();
         $equipments = Equipment::orderBy('equip_name','asc')->get();
+        $feedbackCount = Feedback::where('read', '0')->get()->count();
         
         if($lastTransaction != null){
             $countCart = Cart::all()
@@ -233,6 +243,7 @@ class TransactionFormsController extends Controller
         return view('admin.calendar')->with('transaction_forms',$transaction_forms)
                                      ->with('lastTransaction',$lastTransaction)
                                      ->with('users',$users) 
+                                     ->with('feedbackCount', $feedbackCount)
                                      ->with('totalEquip', $totalEquip)
                                      ->with('equipments',$equipments)
                                      ->with('countCart', $countCart);
