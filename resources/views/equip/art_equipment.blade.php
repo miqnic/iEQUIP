@@ -32,7 +32,7 @@
       @if(Auth::user()->access_role == "ADMIN")
       <div class="addEdit float-left mb-2">
         <button type="button" name="addEquip" class="btn btn-sm btn-light"><a href="add" class="text-dark"><i class="fas fa-lg fa-plus-circle text-success"></i> Add Equipment</a></button>
-        <button type="button" name="delEquip" class="btn btn-sm btn-light" data-toggle="modal" data-target="#delEquip"><i class="fas fa-lg fa-minus-circle text-danger"></i> Delete Equipment</button>
+        <button type="button" name="delEquip" class="btn btn-sm btn-light"><a href="del" class="text-dark"><i class="fas fa-lg fa-minus-circle text-danger"></i> Delete Equipment</a></button>
         @include('inc.addEquipModal')
         @include('inc.delEquipModal')
       </div>
