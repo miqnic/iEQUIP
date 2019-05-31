@@ -44,7 +44,7 @@
                         <div class="row">
                         <div class="col-md-4">
                             <label class="pt-3" for="category">Category</label>
-                            <select id="category" name="category" class="form-control">
+                            <select id="category" name="category" class="form-control custom-select">
                                 <option selected disabled>Select category</option>
                                 <option value="CAMACC">Cameras & Accessories</option>
                                 <option value="ART">Art Tools</option>
