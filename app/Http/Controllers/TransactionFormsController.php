@@ -562,13 +562,20 @@ class TransactionFormsController extends Controller
             }
 
             Mail::to('ac01f813b2-8ea59b@inbox.mailtrap.io')->send(new Approved($request));               
-            return redirect()->back()->with('success', 'Transaction Form #'.$$request->get('currentForm').' has been successfully approved!');
+            return redirect()->back()->with('success', 'Transaction Form #'.$request->get('currentForm').' has been successfully approved!');
         } else {
             TransactionForm::where('transaction_id', $request->get('currentForm'))
                             ->update([
                                 'approval' => '-1',
                                 'approval_date' => Carbon::now()
                             ]);
+            foreach ($cart as $item) {
+                foreach ($equipments as $equipment) {
+                    if($item->equipID == $equipment->equipID){
+                        $item->delete();
+                    }
+                }
+            }
             Mail::to('ac01f813b2-8ea59b@inbox.mailtrap.io')->send(new Declined($request)); 
             return redirect()->back()->with('success', 'Transaction Form #'.$$request->get('currentForm').' has been successfully declined.');
         }
