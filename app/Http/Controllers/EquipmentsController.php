@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Equipment;
 use App\TransactionForm;
 use App\Cart;
+use App\Feedback;
 use DB;
 use Yajra\Datatables\Datatables;
 use Session;
@@ -138,7 +139,7 @@ class EquipmentsController extends Controller
                                                   ->with('countEquip', $this->countEquip);
             } else {
                 $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
-
+                
 
                 $equipments =  Equipment::orderBy('equip_name', 'asc')
                                         ->paginate(27);
@@ -168,8 +169,10 @@ class EquipmentsController extends Controller
                                                   ->with('countEquip', $this->countEquip);
             }
         } else {
+            $feedbackCount = Feedback::where('read', '0')->get()->count();
             $equipments =  Equipment::orderBy('equip_name', 'asc')->paginate(27); 
             return view('equip.all_equipment')->with('equipments',$equipments)
+                                            ->with('feedbackCount', $feedbackCount)
                                             ->with('countEquip', $this->countEquip);
         }
     }
@@ -237,8 +240,10 @@ class EquipmentsController extends Controller
                                                  ->with('countEquip', $this->countEquip);
             }
         } else {
+            $feedbackCount = Feedback::where('read', '0')->get()->count();
             $equipments =  Equipment::where('equip_category', 'CAMACC')->orderBy('equip_name', 'asc')->paginate(27);
             return view('equip.cam_equipment')->with('equipments',$equipments)
+                                        ->with('feedbackCount', $feedbackCount)
                                         ->with('countEquip', $this->countEquip);
                                     
         }
@@ -302,8 +307,10 @@ class EquipmentsController extends Controller
                                                  ->with('countEquip', $this->countEquip);
             }
         } else {
+            $feedbackCount = Feedback::where('read', '0')->get()->count();
             $equipments =  Equipment::where('equip_category', 'ART')->orderBy('equip_name', 'asc')->paginate(27); 
             return view('equip.art_equipment')->with('equipments',$equipments)
+                                            ->with('feedbackCount', $feedbackCount)
                                             ->with('countEquip', $this->countEquip);
                                     
         }
@@ -367,8 +374,10 @@ class EquipmentsController extends Controller
                                                     ->with('countEquip', $this->countEquip); 
             }
         } else {
+            $feedbackCount = Feedback::where('read', '0')->get()->count();
             $equipments =  Equipment::where('equip_category', 'SPRT')->orderBy('equip_name', 'asc')->paginate(27); 
             return view('equip.sport_equipment')->with('equipments',$equipments)
+                                            ->with('feedbackCount', $feedbackCount)
                                             ->with('countTotalAvail', $this->countTotalAvail)
                                             ->with('countEquip', $this->countEquip);
                                     
@@ -433,8 +442,10 @@ class EquipmentsController extends Controller
                                                    ->with('countEquip', $this->countEquip);
             }
         } else {
+            $feedbackCount = Feedback::where('read', '0')->get()->count();
             $equipments =  Equipment::where('equip_category', 'MISC')->orderBy('equip_name', 'asc')->paginate(27); 
             return view('equip.misc_equipment')->with('equipments',$equipments)
+                                            ->with('feedbackCount', $feedbackCount)
                                             ->with('countEquip', $this->countEquip);
                                     
         }
@@ -498,8 +509,10 @@ class EquipmentsController extends Controller
                                                     ->with('countEquip', $this->countEquip);
             }
         } else {
+            $feedbackCount = Feedback::where('read', '0')->get()->count();
             $equipments =  Equipment::where('equip_category', 'LPTP')->orderBy('equip_name', 'asc')->paginate(27); 
             return view('equip.laptop_equipment')->with('equipments',$equipments)
+                                            ->with('feedbackCount', $feedbackCount)
                                             ->with('countEquip', $this->countEquip);
                                     
         }
@@ -564,8 +577,10 @@ class EquipmentsController extends Controller
                                         ->with('countEquip', $this->countEquip);
             }
         } else {
+            $feedbackCount = Feedback::where('read', '0')->get()->count();
             $equipments =  Equipment::where('equip_category', 'GMNG')->orderBy('equip_name', 'asc')->paginate(27); 
             return view('equip.gaming_equipment')->with('equipments',$equipments)
+                                            ->with('feedbackCount', $feedbackCount)
                                             ->with('countEquip', $this->countEquip);
                                     
         }

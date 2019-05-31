@@ -57,7 +57,7 @@
                   <a class="nav-link" href="request-history">Request History</a>
                 </li>
                 <li class="nav-item">
-                  <span class="badge badge-pill badge-primary text-light" style="float:right;margin-bottom:-10px;margin-right:-15px;">1</span>
+                  <span class="badge badge-pill badge-primary text-light" style="float:right;margin-bottom:-10px;margin-right:-15px;">{{$feedbackCount}}</span>
                   <a class="nav-link" href="feedbacks">Feedback</a>
                 </li>
               </div>
