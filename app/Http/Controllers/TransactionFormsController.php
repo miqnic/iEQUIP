@@ -40,7 +40,7 @@ class TransactionFormsController extends Controller
     {
         $carts = Cart::get();
         $transaction_forms = TransactionForm::where('user_id', auth()->user()->user_id)->get();
-        $recentForms =  TransactionForm::where(['user_id' => auth()->user()->user_id, 'approval' => 1])
+        $recentForms =  TransactionForm::where(['user_id' => auth()->user()->user_id, 'approval' => 1, 'returned' => 0])
                                         ->orderBy('transaction_id', 'desc')
                                         ->take(5)
                                         ->get();
