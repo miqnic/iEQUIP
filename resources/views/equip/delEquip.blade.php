@@ -48,6 +48,7 @@
         </div>
         <hr style="clear:both;">
         <div class="items mt-4 mx-auto">
+                {!! Form::open(['action' => 'EquipmentsController@delEquipment', 'method' => "POST", 'enctype' => 'multipart/form-data']) !!}
             <table class="table table-hover table-striped table-bordered" id="equipList">
                 <thead class="text-center">
                     <tr>
@@ -60,7 +61,7 @@
                     @foreach($equipments->unique('equip_name') as $equipment)
                     <tr>
                         <td class="align-middle">
-                            {{ Form::checkbox('selectDelete[]', "$equipment->equipID", null, array('id'=>'qtyCheck')) }}
+                            {{ Form::checkbox('checkbox[]', "$equipment->equip_name", null, array('id'=>'qtyCheck')) }}
                         </td>
                         <td class="align-middle">
                             @if($equipment->equip_category=='ART')
@@ -89,4 +90,5 @@
             </div>
         </div>
     </div>
+    {!! Form::close() !!}
 @endsection

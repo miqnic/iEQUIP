@@ -101,10 +101,12 @@ class EquipmentsController extends Controller
                                      ->with('totalEquip',$totalEquip)
                                      ->with('countEquip', $this->countEquip);
         } else {
+            $feedbackCount = Feedback::where('read', '0')->get()->count();
             $itemName = str_replace('-', ' ', $id);
             $item = Equipment::where('equip_name',$itemName)->first();
             $equipments = Equipment::get();
             return view('admin.item')->with('equipments',$equipments)
+                                    ->with('feedbackCount', $feedbackCount)
                                      ->with('item',$item);
                                     
         }
@@ -677,21 +679,35 @@ class EquipmentsController extends Controller
                                             ->with('search', $search)
                                             ->with('countCart', $countCart)
                                             ->with('equipments', $equipments)
+                                            ->with('countEquip', $this->countEquip)
                                             ->with('totalEquip',$totalEquip);
             }
-        } else {
-            return view('pages.search')->with('equipments',$equipments)
+        }                      
+    }
+
+    public function searchEquipmentAdmin(Request $request){
+        $search = Input::get('search');
+        $possibleEquips = Equipment::where('equip_name', 'like', '%' . $search . '%')
+                                    ->orWhere('equipID', 'like', '%' . $search . '%')
+                                    ->paginate(27);
+                                    
+        $equipments = Equipment::all();
+
+            $feedbackCount = Feedback::where('read', '0')->get()->count();
+            return view('admin.search')->with('equipments',$equipments)
+                                                ->with('feedbackCount', $feedbackCount)
                                                 ->with('possibleEquips', $possibleEquips)
+                                                ->with('countEquip', $this->countEquip)
                                                 ->with('search', $search);
-        } 
-                            
+    
     }
 
     //SHOW EQUIPMENT END
 
     //EQUIPMENT FUNCTIONS START
     public function add(){
-        return view('equip.addEquip');
+        $feedbackCount = Feedback::where('read', '0')->get()->count();
+        return view('equip.addEquip')->with('feedbackCount', $feedbackCount);
     }
 
     public function addEquipment(Request $request){
@@ -791,13 +807,17 @@ class EquipmentsController extends Controller
     }
 
     public function del(){
+        $feedbackCount = Feedback::where('read', '0')->get()->count();
         $equipments = Equipment::get();
-        return view('equip.delEquip')->with('equipments', $equipments);
+        return view('equip.delEquip')->with('equipments', $equipments)
+                                    ->with('feedbackCount', $feedbackCount);
     }
     
     public function delEquipment(Request $request){
         $equipments = Equipment::get();
         $inputs = $request->input('checkbox');
+
+        //dd($inputs);
         
         //Check if admin
         if(auth()->user()->access_role != 'ADMIN'){

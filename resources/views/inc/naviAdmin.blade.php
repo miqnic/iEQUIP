@@ -64,7 +64,7 @@
             </div>
     
 
-            {!! Form::open(['action' => 'EquipmentsController@searchEquipment', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'class' => 'form-inline']) !!}
+            {!! Form::open(['action' => 'EquipmentsController@searchEquipmentAdmin', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'class' => 'form-inline']) !!}
             {{Form::text('search', '',['class' => 'form-control mr-sm-2', 'placeholder' => 'Search', 'aria-label' => 'Search'])}}
             {{Form::submit('Search', ['class' => 'btn btn-outline-light'])}}
             <!--<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
