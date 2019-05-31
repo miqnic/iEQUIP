@@ -37,6 +37,7 @@ Route::group(['middleware' => ['admin']], function()
     Route::get('/add','EquipmentsController@add');
     Route::get('/admin/add','EquipmentsController@add');
     Route::post('/addEquipment','EquipmentsController@addEquipment'); 
+    Route::post('/addStockEquipment','EquipmentsController@addStock'); 
 
     Route::get('/edit','EquipmentsController@edit');
     Route::post('/editEquipment','EquipmentsController@editEquipment'); 

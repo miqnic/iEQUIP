@@ -115,17 +115,31 @@
                         </td>
                         <td class="align-middle">{{$equipment->equipID}}</td>
                         <td class="align-middle">
-                            @if($equipment->equip_avail==0 || $equipment->equip_avail==2)
-                                Available
-                            @elseif($equipment->equip_avail==-1)
-                                Currently Under Maintenance
+                            @if ($lastTransaction != null)
+                                @foreach ($carts as $cart)
+                                    @if ($cart->transaction_id == $lastTransaction->transaction_id && $cart->equipID == $equipment->equipID)
+                                        {{$isAvail='In Cart'}}
+                                    @endif
+                                @endforeach
                             @else
+                                @foreach ($forms as $form)
+                                    @if ($form->transaction_id == $lastCart->transaction_id && $form->submitted_by != null)
+                                        {{$isAvail='Pending'}}
+                                    @endif
+                                @endforeach
+                            @endif
+
+                            @if($equipment->equip_avail==1)
                                 Reserved
+                            @elseif($equipment->equip_avail==-1)
+                                Under Maintenance
+                            @elseif(!$isAvail)
+                                Available
                             @endif
                         </td>
                         <td class="align-middle">@if($equipment->equip_remarks==NULL) N/A @else {{$equipment->equip_remarks}} @endif</td>
                         <td class="align-middle">
-                            @if ($equipment->transaction_id == null && $equipment->equip_avail == 0 || $equipment->equip_avail == 2) 
+                            @if ($equipment->transaction_id == null && $equipment->equip_avail == 0 && !$isAvail) 
                                 {{Form::button('<i class="fas fa-shopping-cart"></i> Add to Cart', ['value' => "$equipment->equipID", 'name' => 'currentEquipID', 'type' => 'submit', 'class' => 'btn btn-sm btn-primary indiv'])}}
                             @else
                                 <button type="submit" class="btn btn-sm btn-primary indiv" disabled><i class="fas fa-shopping-cart"></i> Add to Cart</button>

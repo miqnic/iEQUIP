@@ -40,11 +40,11 @@
                 <div class="col-md-12">
                     <div class="border px-3 py-3 bg-light">
                         <label for="itemName">Item Name</label>
-                        <input type="text" name="itemName[]" class="form-control" id="itemName" placeholder="Enter item name">
+                        <input type="text" name="itemName" class="form-control" id="itemName" placeholder="Enter item name">
                         <div class="row">
                         <div class="col-md-4">
                             <label class="pt-3" for="category">Category</label>
-                            <select id="category" name="category[]" class="form-control">
+                            <select id="category" name="category" class="form-control">
                                 <option selected disabled>Select category</option>
                                 <option value="CAMACC">Cameras & Accessories</option>
                                 <option value="ART">Art Tools</option>
@@ -56,23 +56,23 @@
                         </div>
                         <div class="col-md-4">
                             <label class="pt-3" for="remarks">Base Price (PHP)</label>
-                            <input type="text" name="basePrice[]" class="form-control" id="basePrice" placeholder="Enter amount">
+                            <input type="text" name="basePrice" class="form-control" id="basePrice" placeholder="Enter amount">
                         </div>
                         <div class="col-md-4">
                             <label class="pt-3" for="remarks">Penalty Fee (PHP)</label>
-                            <input type="text" name="penalty[]" class="form-control" id="penalty" placeholder="Enter amount">
+                            <input type="text" name="penalty" class="form-control" id="penalty" placeholder="Enter amount">
                         </div>
                         </div>
                         <label class="pt-3" for="remarks">Specifications</label>
-                        <textarea class="form-control" name="description[]" rows="5" placeholder="Enter specifications here"></textarea>
+                        <textarea class="form-control" name="description" rows="5" placeholder="Enter specifications here"></textarea>
                         <div class="row">
                         <div class="col-md-4">
                         <label class="pt-3" for="totalAmount">Item Quantity</label>
-                        <input type="text" name="totalAmount[]" class="form-control" id="itemName" placeholder="Enter quantity">
+                        <input type="text" name="totalAmount" class="form-control" id="itemName" placeholder="Enter quantity">
                         </div>
                         <div class="col-md-6">
                             <label class="pt-3" for="itemImage">Item Image</label>
-                            <input type="file" name="equipIMG[]">
+                            <input type="file" name="equipIMG">
                         </div>
                         </div>
                     </div>

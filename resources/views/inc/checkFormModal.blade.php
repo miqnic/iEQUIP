@@ -106,18 +106,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($equipments as $equipment)
-                                @if($equipment->transaction_id==$form->transaction_id)
-                                <tr>
-                                    <td>{{$equipment->equipID}}</td>
-                                    <td>
-                                        {{$equipment->equip_name}}
-                                        @if($form->approval==1 && $form->claimed==1 && $form->returned==0 && \Carbon\Carbon::parse($form->due_date)->isPast())
-                                        <i class="fas fa-lg fa-exclamation-triangle text-danger"></i>
+                                @foreach ($carts as $cart)
+                                    @foreach($equipments as $equipment)
+                                        @if($cart->equipID == $equipment->equipID && $cart->transaction_id == $form->transaction_id)
+                                            <tr>
+                                                <td>{{$equipment->equipID}}</td>
+                                                <td>
+                                                    {{$equipment->equip_name}}
+                                                    @if($form->approval==1 && $form->claimed==1 && $form->returned==0 && \Carbon\Carbon::parse($form->due_date)->isPast())
+                                                    <i class="fas fa-lg fa-exclamation-triangle text-danger"></i>
+                                                    @endif
+                                                </td>     
+                                            </tr>
                                         @endif
-                                    </td>     
-                                </tr>
-                                @endif
+                                    @endforeach
                                 @endforeach
                             </tbody>
                         </table>
