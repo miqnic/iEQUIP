@@ -25,7 +25,7 @@ class TransactionsTableSeeder extends Seeder
                 'submitted_date' => date('Y-m-d H:i:s'),
                 'approval' => '1', //approved
                 'claimed' => true,
-                'returned' => false,
+                'returned' => true,
                 'claimed_date' => null,
                 'returned_date' => null,
             ],

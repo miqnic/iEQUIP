@@ -1054,19 +1054,23 @@ class EquipmentsController extends Controller
                     }
                 }
             } else {
+                //dd(Input::get('selectReserve'));
                 foreach (Input::get('selectReserve') as $select) {
+                    //dd($lastTransaction);
                     if($equipment->equipID == $select){
                         if($lastTransaction == null){
                             $transaction_form = new TransactionForm([
                                 'transaction_id' => 'tc',
                                 'user_id' => Input::get('userID'),
-                              ]);
+                            ]);
             
                             $transaction_form->save();
             
                             $transaction_form->transaction_id = "TC"."$transaction_form->id";
             
                             $transaction_form->save();
+
+                            $lastTransaction = $transaction_form;
         
                             /*$equipment->update([
                                 'equip_avail' => '2', //currently in cart
@@ -1085,7 +1089,7 @@ class EquipmentsController extends Controller
                            /* $equipment->update([
                                 'equip_avail' => '2', //currently in cart
                             ]); */
-
+                            //dd('hello2');
                             $cart = new Cart([
                                 'transaction_id' => $lastTransaction->transaction_id,
                                 'equipID' => $equipment->equipID,
