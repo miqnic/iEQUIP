@@ -143,8 +143,7 @@ class EquipmentsController extends Controller
                 $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
                 
 
-                $equipments =  Equipment::orderBy('equip_name', 'asc')
-                                        ->paginate(27);
+                $equipments = Equipment::select('equip_name','equip_img')->distinct()->orderBy('equip_name', 'asc')->simplePaginate(9); 
 
                 if($lastTransaction != null){
                     $countCart = Cart::all()
@@ -171,8 +170,8 @@ class EquipmentsController extends Controller
                                                   ->with('countEquip', $this->countEquip);
             }
         } else {
+            $equipments =  Equipment::select('equip_name','equip_img')->distinct()->orderBy('equip_name', 'asc')->simplePaginate(9); 
             $feedbackCount = Feedback::where('read', '0')->get()->count();
-            $equipments =  Equipment::orderBy('equip_name', 'asc')->paginate(27); 
             return view('equip.all_equipment')->with('equipments',$equipments)
                                             ->with('feedbackCount', $feedbackCount)
                                             ->with('countEquip', $this->countEquip);
@@ -214,8 +213,10 @@ class EquipmentsController extends Controller
                 $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
 
                 $equipments =  Equipment::where('equip_category', 'CAMACC')
+                                        ->select('equip_name','equip_img')
+                                        ->distinct()
                                         ->orderBy('equip_name', 'asc')
-                                        ->paginate(27);
+                                        ->simplePaginate(9);
 
                 if($lastTransaction != null){
                     $countCart = Cart::all()
@@ -242,8 +243,12 @@ class EquipmentsController extends Controller
                                                  ->with('countEquip', $this->countEquip);
             }
         } else {
+            $equipments =  Equipment::where('equip_category', 'CAMACC')
+                                    ->select('equip_name','equip_img')
+                                    ->distinct()
+                                    ->orderBy('equip_name', 'asc')
+                                    ->simplePaginate(9);
             $feedbackCount = Feedback::where('read', '0')->get()->count();
-            $equipments =  Equipment::where('equip_category', 'CAMACC')->orderBy('equip_name', 'asc')->paginate(27);
             return view('equip.cam_equipment')->with('equipments',$equipments)
                                         ->with('feedbackCount', $feedbackCount)
                                         ->with('countEquip', $this->countEquip);
@@ -280,8 +285,10 @@ class EquipmentsController extends Controller
                                                 ->with('countEquip', $this->countEquip);
             } else {
                 $equipments =  Equipment::where('equip_category', 'ART')
+                                        ->select('equip_name','equip_img')
+                                        ->distinct()
                                         ->orderBy('equip_name', 'asc')
-                                        ->paginate(27);
+                                        ->simplePaginate(9);
 
                 $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
                 if($lastTransaction != null){
@@ -309,8 +316,12 @@ class EquipmentsController extends Controller
                                                  ->with('countEquip', $this->countEquip);
             }
         } else {
+            $equipments =  Equipment::where('equip_category', 'ART')
+                                    ->select('equip_name','equip_img')
+                                    ->distinct()
+                                    ->orderBy('equip_name', 'asc')
+                                    ->simplePaginate(9);
             $feedbackCount = Feedback::where('read', '0')->get()->count();
-            $equipments =  Equipment::where('equip_category', 'ART')->orderBy('equip_name', 'asc')->paginate(27); 
             return view('equip.art_equipment')->with('equipments',$equipments)
                                             ->with('feedbackCount', $feedbackCount)
                                             ->with('countEquip', $this->countEquip);
@@ -347,8 +358,10 @@ class EquipmentsController extends Controller
                                                 ->with('countEquip', $this->countEquip);
             } else {
                 $equipments =  Equipment::where('equip_category', 'SPRT')
+                                        ->select('equip_name','equip_img')
+                                        ->distinct()
                                         ->orderBy('equip_name', 'asc')
-                                        ->paginate(27);
+                                        ->simplePaginate(9);
                 
                 $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
                 if($lastTransaction != null){
@@ -376,8 +389,12 @@ class EquipmentsController extends Controller
                                                     ->with('countEquip', $this->countEquip); 
             }
         } else {
+            $equipments =  Equipment::where('equip_category', 'SPRT')
+                                    ->select('equip_name','equip_img')
+                                    ->distinct()
+                                    ->orderBy('equip_name', 'asc')
+                                    ->simplePaginate(9);
             $feedbackCount = Feedback::where('read', '0')->get()->count();
-            $equipments =  Equipment::where('equip_category', 'SPRT')->orderBy('equip_name', 'asc')->paginate(27); 
             return view('equip.sport_equipment')->with('equipments',$equipments)
                                             ->with('feedbackCount', $feedbackCount)
                                             ->with('countTotalAvail', $this->countTotalAvail)
@@ -415,8 +432,10 @@ class EquipmentsController extends Controller
                                                 ->with('countEquip', $this->countEquip);
             } else {
                 $equipments =  Equipment::where('equip_category', 'MISC')
+                                        ->select('equip_name','equip_img')
+                                        ->distinct()
                                         ->orderBy('equip_name', 'asc')
-                                        ->paginate(27);
+                                        ->simplePaginate(9);
 
                 $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();
                 if($lastTransaction != null){
@@ -444,8 +463,12 @@ class EquipmentsController extends Controller
                                                    ->with('countEquip', $this->countEquip);
             }
         } else {
+            $equipments =  Equipment::where('equip_category', 'MISC')
+                                    ->select('equip_name','equip_img')
+                                    ->distinct()
+                                    ->orderBy('equip_name', 'asc')
+                                    ->simplePaginate(9);
             $feedbackCount = Feedback::where('read', '0')->get()->count();
-            $equipments =  Equipment::where('equip_category', 'MISC')->orderBy('equip_name', 'asc')->paginate(27); 
             return view('equip.misc_equipment')->with('equipments',$equipments)
                                             ->with('feedbackCount', $feedbackCount)
                                             ->with('countEquip', $this->countEquip);
@@ -482,8 +505,10 @@ class EquipmentsController extends Controller
                                                 ->with('countEquip', $this->countEquip);
             } else {
                 $equipments =  Equipment::where('equip_category', 'LPTP')
+                                        ->select('equip_name','equip_img')
+                                        ->distinct()
                                         ->orderBy('equip_name', 'asc')
-                                        ->paginate(27);
+                                        ->simplePaginate(9);
 
                 $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last(); 
                 if($lastTransaction != null){
@@ -511,8 +536,12 @@ class EquipmentsController extends Controller
                                                     ->with('countEquip', $this->countEquip);
             }
         } else {
+            $equipments =  Equipment::where('equip_category', 'LPTP')
+                                    ->select('equip_name','equip_img')
+                                    ->distinct()
+                                    ->orderBy('equip_name', 'asc')
+                                    ->simplePaginate(9);
             $feedbackCount = Feedback::where('read', '0')->get()->count();
-            $equipments =  Equipment::where('equip_category', 'LPTP')->orderBy('equip_name', 'asc')->paginate(27); 
             return view('equip.laptop_equipment')->with('equipments',$equipments)
                                             ->with('feedbackCount', $feedbackCount)
                                             ->with('countEquip', $this->countEquip);
@@ -549,8 +578,10 @@ class EquipmentsController extends Controller
                                                     ->with('countEquip', $this->countEquip);
             } else {
                 $equipments =  Equipment::where('equip_category', 'GMNG')
+                                        ->select('equip_name','equip_img')
+                                        ->distinct()
                                         ->orderBy('equip_name', 'asc')
-                                        ->paginate(27);
+                                        ->simplePaginate(9);
                 
                 $lastTransaction = TransactionForm::where('user_id', auth()->user()->user_id)->where('submitted_date', null)->get()->last();  
                 if($lastTransaction != null){
@@ -579,8 +610,12 @@ class EquipmentsController extends Controller
                                         ->with('countEquip', $this->countEquip);
             }
         } else {
+            $equipments =  Equipment::where('equip_category', 'GMNG')
+                                    ->select('equip_name','equip_img')
+                                    ->distinct()
+                                    ->orderBy('equip_name', 'asc')
+                                    ->simplePaginate(9);
             $feedbackCount = Feedback::where('read', '0')->get()->count();
-            $equipments =  Equipment::where('equip_category', 'GMNG')->orderBy('equip_name', 'asc')->paginate(27); 
             return view('equip.gaming_equipment')->with('equipments',$equipments)
                                             ->with('feedbackCount', $feedbackCount)
                                             ->with('countEquip', $this->countEquip);

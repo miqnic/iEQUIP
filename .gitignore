@@ -19,3 +19,5 @@ composer.lock
 *.lock
 *.lock
 *.lock
+config/mail.php
+composer.lock
