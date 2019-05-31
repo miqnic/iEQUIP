@@ -562,7 +562,7 @@ class TransactionFormsController extends Controller
             }
 
             Mail::to('ac01f813b2-8ea59b@inbox.mailtrap.io')->send(new Approved($request));               
-            return redirect()->back()->with('success', 'Transaction Form has been successfully Approved!');
+            return redirect()->back()->with('success', 'Transaction Form #'.$$request->get('currentForm').' has been successfully approved!');
         } else {
             TransactionForm::where('transaction_id', $request->get('currentForm'))
                             ->update([
@@ -570,7 +570,7 @@ class TransactionFormsController extends Controller
                                 'approval_date' => Carbon::now()
                             ]);
             Mail::to('ac01f813b2-8ea59b@inbox.mailtrap.io')->send(new Declined($request)); 
-            return redirect()->back()->with('success', 'Transaction Form has been successfully Declined!');
+            return redirect()->back()->with('success', 'Transaction Form #'.$$request->get('currentForm').' has been successfully declined.');
         }
 
         
@@ -595,7 +595,7 @@ class TransactionFormsController extends Controller
                 }
             }
 
-            return redirect()->back()->with('success', 'Transaction Form has been successfully Cancelled!');
+            return redirect()->back()->with('success', 'Transaction Form #'.$$request->get('currentForm').' has been successfully cancelled.');
     }
 
     public function afterApproval(Request $request){
@@ -603,7 +603,7 @@ class TransactionFormsController extends Controller
             TransactionForm::where('transaction_id', $request->get('currentForm'))
                             ->update(array('claimed' => '1', 'claimed_date' => Carbon::now()));
             
-            return redirect()->back()->with('success', 'Transaction# '.$request->get('currentForm').' has been successfully claimed!');
+            return redirect()->back()->with('success', 'Transaction Form #'.$request->get('currentForm').' has been successfully claimed!');
         }
     }
 }
