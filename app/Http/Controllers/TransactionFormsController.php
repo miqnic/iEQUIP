@@ -361,9 +361,9 @@ class TransactionFormsController extends Controller
         
 
         $startDate = Carbon::parse($request->get('startdate'))->toDateString();
-        $startTime = Carbon::parse($request->get('starttime'))->format('h:i:s');
+        $startTime = Carbon::parse($request->get('starttime'))->format('H:i:s');
         $endDate = Carbon::parse($request->get('enddate'))->toDateString();
-        $endTime = Carbon::parse($request->get('endtime'))->format('h:i:s');
+        $endTime = Carbon::parse($request->get('endtime'))->format('H:i:s');
         
         $now = Carbon::now();
         $start = Carbon::parse($startDate." ".$startTime)->toDateTimeString();
