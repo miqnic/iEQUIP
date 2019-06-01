@@ -577,7 +577,7 @@ class TransactionFormsController extends Controller
                 }
             }
             Mail::to('ac01f813b2-8ea59b@inbox.mailtrap.io')->send(new Declined($request)); 
-            return redirect()->back()->with('success', 'Transaction Form #'.$$request->get('currentForm').' has been successfully declined.');
+            return redirect()->back()->with('success', 'Transaction Form #'.$request->get('currentForm').' has been successfully declined.');
         }
 
         
@@ -602,7 +602,7 @@ class TransactionFormsController extends Controller
                 }
             }
 
-            return redirect()->back()->with('success', 'Transaction Form #'.$$request->get('currentForm').' has been successfully cancelled.');
+            return redirect()->back()->with('success', 'Transaction Form #'.$request->get('currentForm').' has been successfully cancelled.');
     }
 
     public function afterApproval(Request $request){
