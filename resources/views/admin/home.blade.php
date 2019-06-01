@@ -317,7 +317,7 @@
                 </tbody>
             </table>
         </div>
-        <span><b>Legend:</b> <i class="fas fa-exclamation-triangle text-danger"></i> - due date has passed</span>
+        <span><b>Legend:</b> <i class="fas fa-exclamation-triangle text-danger"></i> - due date has passed/due today</span>
     </div>
 </div>
 @endsection

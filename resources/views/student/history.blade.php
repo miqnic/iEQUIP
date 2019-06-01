@@ -23,7 +23,7 @@
                       selected: null
                   }
               },
-              download: 'open'
+              //download: 'open'
               }
           ]
         });

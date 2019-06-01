@@ -7,7 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Equipment;
+use App\Cart;
 use Carbon\Carbon;
 
 class Received extends Mailable
@@ -26,7 +26,7 @@ class Received extends Mailable
     public $reason;
     public $form_id;
 
-    public $equipments;
+    public $carts;
     public $unique;
 
     public $subject;
@@ -51,7 +51,7 @@ class Received extends Mailable
         $this->reason = $request->reason;   
         $this->form_id = $request->currentForm;   
 
-        $this->equipments = Equipment::where('transaction_id', $this->form_id)->get();
+        $this->carts = Cart::where('transaction_id', $this->form_id)->get();
         //dd($this->equipments);
         //$this->unique = Equipment::where('transaction_id', $this->form_id)->get()->unique();
         //dd($this->equipments);
@@ -80,7 +80,7 @@ class Received extends Mailable
             'reason' => $this->reason,
             'form_id' => $this->form_id,
             //'unique' => $this->unique,
-            'equipments' => $this->equipments
+            'carts' => $this->carts
         ]);
     }
 }

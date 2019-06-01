@@ -16,7 +16,7 @@
 </div>
 @endif
 <span class="float-right"><b>Legend:</b> <i class="fas fa-exclamation-triangle text-danger"></i> - due/overdue</span>
-<div class="row pt-3">
+<div class="row pt-5">
    <div class="col-md-6">
        <table class="table table-borderless border table-md">
            <thead class="bg-dark text-light" style="font-size:14px">

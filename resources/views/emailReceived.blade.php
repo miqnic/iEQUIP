@@ -69,12 +69,12 @@
                 <div>
                     <ul style="padding-left: 0; padding-bottom: 20px;">
                         <h3 style="border-bottom: 1px solid #a7a7a7;">Items Requested</h3>
-                        @foreach ($equipments->unique('equip_name') as $equipment)
+                        @foreach ($carts->unique('equip_name') as $equipment)
                             <li style="display:-ms-flexbox; display:flex; -ms-flex-align:start; align-items:flex-start; padding-top: 10px; padding-left:3px; padding-bottom:10px;">
                                     <div style="-ms-flex:1; flex:1;">
                                     <h4 style="margin-bottom: 2px; margin-top:0;">{{$equipment->equip_name}}</h4>
                                     <small>
-                                        @foreach ($equipments as $item)
+                                        @foreach ($carts as $item)
                                             @if ($item->equip_name == $equipment->equip_name && $item->transaction_id == $form_id)
                                                 {{$item->equipID}}
                                             @endif
