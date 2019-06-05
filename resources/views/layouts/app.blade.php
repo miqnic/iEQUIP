@@ -14,8 +14,6 @@
     <script type="text/javascript" src="{{ asset('js/vfs_fonts.js')}}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('js/dataTables.bootstrap4.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('js/dataTables.editor.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('js/editor.bootstrap4.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('js/dataTables.buttons.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('js/buttons.bootstrap4.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('js/buttons.html5.min.js')}}"></script>
@@ -30,7 +28,6 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     {{-- <link rel="stylesheet" type="text/css" href="css/datatables.min.css"/> --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/dataTables.bootstrap4.min.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/editor.bootstrap4.min.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/buttons.bootstrap4.min.css')}}"/>
 
     <!--Additional view css-->
